@@ -3,3 +3,25 @@ Thumbs.db
 node_modules/
 .vercel
 *.log
+.npm/
+.codeium/
+package.json
+package-lock.json
+upload/
+
+# InsForge & AI agent skills
+.insforge
+.agent
+.agents
+.augment
+.claude
+.cline
+.github/copilot*
+.kilocode
+.qoder
+.qwen
+.roo
+.trae
+.windsurf
+
+Screenshot_*.jpg

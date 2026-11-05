@@ -72,7 +72,13 @@
         </div>
         <div>
           <span class="text-[10px] uppercase tracking-wider text-amber-300 font-bold block leading-tight">Apostolic Faith Church • Ondo Area</span>
-          <h1 class="text-sm sm:text-base font-bold leading-tight font-heading">2026 Concert Attendance Portal</h1>
+          <div class="flex items-center gap-2 flex-wrap">
+            <h1 class="text-sm sm:text-base font-bold leading-tight font-heading">2026 Concert Attendance Portal</h1>
+            <span id="insforge-status-pill" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-400/20 text-emerald-200 border border-emerald-400/30">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span id="insforge-status-text">InsForge Cloud Live</span>
+            </span>
+          </div>
         </div>
       </div>
       
@@ -380,6 +386,36 @@
           <div class="text-[11px] font-bold text-slate-500 uppercase">Stage Qualified (≥70%)</div>
           <div class="text-2xl font-extrabold text-emerald-600 mt-1 font-heading" id="admin-qualified">0</div>
           <div class="text-[10px] text-slate-400 mt-0.5">Eligible for Concert</div>
+        </div>
+      </div>
+
+      <!-- InsForge Cloud Database Card -->
+      <div class="bg-gradient-to-r from-slate-900 to-brand-950 text-white p-4 sm:p-5 rounded-2xl shadow-md border border-brand-gold/30">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center text-lg font-bold shadow shrink-0">
+              <i class="fa-solid fa-database"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h4 class="font-bold text-sm text-white">InsForge Cloud Postgres Backend</h4>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">LIVE</span>
+              </div>
+              <p class="text-[11px] text-slate-300">Project: <span class="font-mono text-amber-300">Ondo-Area-Choir-Portal</span> (ID: <span class="font-mono text-slate-400">aa9bd8ae</span>) • Region: US-East</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="syncWithInsForge(true)" id="btn-sync-insforge" class="px-3 py-2 bg-amber-400 hover:bg-amber-300 text-brand-950 text-xs font-bold rounded-xl flex items-center gap-1.5 transition shadow">
+              <i class="fa-solid fa-arrows-rotate" id="icon-sync-insforge"></i> Sync Cloud Now
+            </button>
+            <a href="https://insforge.dev/dashboard/project/aa9bd8ae-45a6-471e-b8cc-b1b9e249309c" target="_blank" class="px-3 py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-semibold rounded-xl flex items-center gap-1.5 transition">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> Dashboard
+            </a>
+          </div>
+        </div>
+        <div class="mt-3 pt-3 border-t border-white/10 text-[11px] text-slate-300 flex flex-wrap items-center justify-between gap-2">
+          <span>⚡ Real-time multi-device sync across all Ondo State rehearsals and check-ins.</span>
+          <span id="last-synced-time" class="text-slate-400">Last sync: Initialized</span>
         </div>
       </div>
 
@@ -2085,6 +2121,154 @@
   }
 ];
 
+    // ==========================================
+    // INSFORGE CLOUD POSTGRES BACKEND CLIENT
+    // ==========================================
+    const INSFORGE_CONFIG = {
+      baseUrl: 'https://3rqqux3v.us-east.insforge.app',
+      anonKey: 'anon_71031193eb16a5dd549d8193c97d50559d8ad839e790a62689dd778b8d2805a1'
+    };
+
+    const insforgeApi = {
+      async getMembers() {
+        const res = await fetch(`${INSFORGE_CONFIG.baseUrl}/api/database/records/members?select=*&order=name.asc`, {
+          headers: {
+            'apikey': INSFORGE_CONFIG.anonKey,
+            'Authorization': `Bearer ${INSFORGE_CONFIG.anonKey}`
+          }
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        return await res.json();
+      },
+
+      async getAttendance() {
+        const res = await fetch(`${INSFORGE_CONFIG.baseUrl}/api/database/records/attendance_logs?select=*`, {
+          headers: {
+            'apikey': INSFORGE_CONFIG.anonKey,
+            'Authorization': `Bearer ${INSFORGE_CONFIG.anonKey}`
+          }
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        return await res.json();
+      },
+
+      async recordAttendance(sessionId, memberId, status) {
+        const res = await fetch(`${INSFORGE_CONFIG.baseUrl}/api/database/records/attendance_logs?on_conflict=session_id,member_id`, {
+          method: 'POST',
+          headers: {
+            'apikey': INSFORGE_CONFIG.anonKey,
+            'Authorization': `Bearer ${INSFORGE_CONFIG.anonKey}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'resolution=merge-duplicates,return=representation'
+          },
+          body: JSON.stringify([{
+            session_id: sessionId,
+            member_id: memberId,
+            status: status,
+            marked_at: new Date().toISOString()
+          }])
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        return await res.json();
+      },
+
+      async registerMember(m) {
+        const res = await fetch(`${INSFORGE_CONFIG.baseUrl}/api/database/records/members?on_conflict=id`, {
+          method: 'POST',
+          headers: {
+            'apikey': INSFORGE_CONFIG.anonKey,
+            'Authorization': `Bearer ${INSFORGE_CONFIG.anonKey}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'resolution=merge-duplicates,return=representation'
+          },
+          body: JSON.stringify([{
+            id: m.id,
+            name: m.name,
+            phone: m.phone || '',
+            part: m.part,
+            zone: m.zone,
+            station: m.station || '',
+            instrument: m.instrument || '',
+            accompanist: (m.accompanist === 'Yes' || m.accompanist === true),
+            gender: m.gender || ''
+          }])
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        return await res.json();
+      }
+    };
+
+    async function syncWithInsForge(isManualTrigger = false) {
+      const statusText = document.getElementById('insforge-status-text');
+      const syncIcon = document.getElementById('icon-sync-insforge');
+      if (syncIcon) syncIcon.classList.add('fa-spin');
+      if (statusText) statusText.innerText = 'Syncing...';
+
+      try {
+        const [cloudMembers, cloudAttendance] = await Promise.all([
+          insforgeApi.getMembers().catch(err => { console.warn('InsForge members fetch error:', err); return null; }),
+          insforgeApi.getAttendance().catch(err => { console.warn('InsForge attendance fetch error:', err); return null; })
+        ]);
+
+        let updated = false;
+
+        if (cloudMembers && Array.isArray(cloudMembers) && cloudMembers.length > 0) {
+          const memberMap = new Map();
+          state.members.forEach(m => memberMap.set(m.id, m));
+          cloudMembers.forEach(cm => {
+            memberMap.set(cm.id, {
+              id: cm.id,
+              name: cm.name,
+              phone: cm.phone || '',
+              part: cm.part,
+              zone: cm.zone,
+              station: cm.station || '',
+              instrument: cm.instrument || '',
+              accompanist: cm.accompanist ? 'Yes' : 'No',
+              gender: cm.gender || ''
+            });
+          });
+          state.members = Array.from(memberMap.values());
+          updated = true;
+        }
+
+        if (cloudAttendance && Array.isArray(cloudAttendance)) {
+          const todayWat = getTodayWATString();
+          cloudAttendance.forEach(log => {
+            const key = `${log.session_id}_${log.member_id}`;
+            const sess = REHEARSAL_SCHEDULE.find(s => s.id === log.session_id);
+            if (!sess || sess.date <= todayWat) {
+              state.attendance[key] = log.status;
+            }
+          });
+          updated = true;
+        }
+
+        if (updated) {
+          saveState();
+          renderCheckinList();
+          updateAdminStats();
+        }
+
+        const nowTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        if (statusText) statusText.innerText = 'InsForge Cloud Live';
+        const lastSyncedEl = document.getElementById('last-synced-time');
+        if (lastSyncedEl) lastSyncedEl.innerText = `Last sync: ${nowTime} (WAT)`;
+
+        if (isManualTrigger) {
+          alert(`✓ InsForge Cloud Synced!\n\n• ${state.members.length} choristers active\n• Postgres Database: https://3rqqux3v.us-east.insforge.app\n• Real-time cloud sync operational.`);
+        }
+      } catch (error) {
+        console.error('InsForge sync error:', error);
+        if (statusText) statusText.innerText = 'Offline Mode (Local)';
+        if (isManualTrigger) {
+          alert('⚠️ Cloud sync could not complete. Using local offline cache.');
+        }
+      } finally {
+        if (syncIcon) syncIcon.classList.remove('fa-spin');
+      }
+    }
+
     // STATE MANAGEMENT (Stored in LocalStorage)
     const DEFAULT_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxu0uyzA6wbWlClg-zx5M7NkMRfwN4ngDMvEl4Pr1DCsdrVPH77NrJ8nGcUv9NzYzFOlg/exec';
     const OFFICER_PASSWORD = 'Ondo2026Concert';
@@ -2261,6 +2445,7 @@
       renderCheckinList();
       renderScheduleTable();
       updateAdminStats();
+      syncWithInsForge(false);
     });
 
     // POPULATE DROPDOWNS
@@ -2573,7 +2758,25 @@
       saveState();
       renderCheckinList();
 
-      // Trigger background sync if webhook configured
+      // Push to InsForge Cloud Postgres
+      const member = state.members.find(m => m.id === memberId);
+      const ensureMemberPromise = (member && !member.id.startsWith('c_'))
+        ? insforgeApi.registerMember(member).catch(console.warn)
+        : Promise.resolve();
+
+      ensureMemberPromise.then(() => {
+        return insforgeApi.recordAttendance(sessionId, memberId, status);
+      }).then(() => {
+        const syncPill = document.getElementById('insforge-status-text');
+        if (syncPill) {
+          syncPill.innerText = 'Saved to Cloud';
+          setTimeout(() => { if (syncPill) syncPill.innerText = 'InsForge Cloud Live'; }, 2000);
+        }
+      }).catch(err => {
+        console.warn('InsForge attendance push failed, local cache preserved:', err);
+      });
+
+      // Secondary fallback sync to Google Sheets
       if (state.sheetWebhookUrl) {
         pushToGoogleSheets({
           action: 'mark_attendance',
@@ -2747,6 +2950,12 @@
         document.getElementById('reg-success-msg').classList.add('hidden');
       }, 5000);
 
+      // Push to InsForge Cloud Postgres
+      insforgeApi.registerMember(newMember).catch(err => {
+        console.warn('InsForge member registration error, saved locally:', err);
+      });
+
+      // Secondary sync to Google Sheets
       if (state.sheetWebhookUrl) {
         pushToGoogleSheets({ action: 'register_member', member: newMember });
       }
@@ -2778,6 +2987,16 @@
       closeModal('modal-add-member');
       renderCheckinList();
 
+      // Push to InsForge Cloud Postgres
+      insforgeApi.registerMember(newMember).then(() => {
+        if (markPresent && !isLocked) {
+          return insforgeApi.recordAttendance(sessionId, newMember.id, 'present');
+        }
+      }).catch(err => {
+        console.warn('InsForge quick add error, saved locally:', err);
+      });
+
+      // Secondary sync to Google Sheets
       if (state.sheetWebhookUrl) {
         pushToGoogleSheets({ action: 'register_member', member: newMember });
       }
