@@ -70,12 +70,13 @@
         </div>
       </div>
       
-      <!-- Quick Action / Drive Link -->
-      <a href="https://drive.google.com/drive/folders/1pQFYas64laWmdm__zjuPAoYSbA_hp3FD" target="_blank" rel="noopener noreferrer" 
-         class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-400 text-brand-900 rounded-lg text-xs font-bold hover:bg-amber-300 transition shadow">
+      <!-- Quick Action / Drive Link (Officers Only) -->
+      <button onclick="handleOfficerUploadDrive()" 
+         class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-400 text-brand-900 rounded-lg text-xs font-bold hover:bg-amber-300 transition shadow cursor-pointer">
+        <i class="fa-solid fa-lock text-[10px]"></i>
         <i class="fa-brands fa-google-drive"></i>
-        <span>Practice Videos</span>
-      </a>
+        <span>Officers Video Upload</span>
+      </button>
     </div>
 
     <!-- NAVIGATION TABS -->
@@ -102,10 +103,11 @@
   <!-- DRIVE BANNER FOR MOBILE -->
   <div class="sm:hidden bg-amber-500 text-brand-900 px-3 py-1.5 text-xs font-medium flex items-center justify-between">
     <div class="flex items-center gap-1.5">
+      <i class="fa-solid fa-lock text-[10px]"></i>
       <i class="fa-brands fa-google-drive font-bold"></i>
-      <span>Practice Videos are updated</span>
+      <span>Officers Evidence Upload</span>
     </div>
-    <a href="https://drive.google.com/drive/folders/1pQFYas64laWmdm__zjuPAoYSbA_hp3FD" target="_blank" class="font-bold underline text-[11px]">Open Drive &rarr;</a>
+    <button onclick="handleOfficerUploadDrive()" class="font-bold underline text-[11px] cursor-pointer">Open Drive &rarr;</button>
   </div>
 
   <!-- MAIN CONTAINER -->
@@ -131,11 +133,12 @@
               <p class="text-xs text-slate-600 mt-0.5">Attendance Officers: Submit compressed rehearsal videos to Google Drive after each session.</p>
             </div>
           </div>
-          <a href="https://drive.google.com/drive/folders/1pQFYas64laWmdm__zjuPAoYSbA_hp3FD" target="_blank" rel="noopener noreferrer" 
-             class="px-3.5 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-xl transition shadow flex items-center justify-center gap-2 shrink-0">
+          <button onclick="handleOfficerUploadDrive()" 
+             class="px-3.5 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-xl transition shadow flex items-center justify-center gap-2 shrink-0 cursor-pointer">
+            <i class="fa-solid fa-lock text-[10px]"></i>
             <i class="fa-brands fa-google-drive"></i>
             <span>Upload Practice Video &rarr;</span>
-          </a>
+          </button>
         </div>
 
         <!-- 3-Step Guideline Checklist -->
@@ -678,6 +681,18 @@
     }
 
     // OFFICER AUTHENTICATION & LOCK CONTROLS
+    const DRIVE_UPLOAD_URL = 'https://drive.google.com/drive/folders/1pQFYas64laWmdm__zjuPAoYSbA_hp3FD';
+
+    function handleOfficerUploadDrive() {
+      if (!state.isOfficerUnlocked) {
+        openOfficerLoginModal(() => {
+          window.open(DRIVE_UPLOAD_URL, '_blank');
+        });
+        return;
+      }
+      window.open(DRIVE_UPLOAD_URL, '_blank');
+    }
+
     function openOfficerLoginModal(callback) {
       pendingActionCallback = callback || null;
       document.getElementById('officer-password-input').value = '';
