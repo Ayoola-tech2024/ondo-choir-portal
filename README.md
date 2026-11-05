@@ -7,6 +7,7 @@ A lightweight, mobile-first web app built for Zonal & Station Attendance Officer
 ## 🌟 Key Features
 
 1. **Mark Attendance (Officers Check-In Tab)**:
+   - **🔐 Officer Access Lock**: Protected by the official Officer Password (`Ondo2026Concert`). Choristers cannot mark themselves present.
    - One-tap **Present**, **Excused**, or **Absent**.
    - Filters by Zone, Station, and Voice Part (Soprano, Alto, Tenor, Bass, Musician).
    - Pre-loaded with all 11 rehearsal sessions from the 2026 Schedule.

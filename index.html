@@ -169,6 +169,11 @@
         </div>
       </div>
 
+      <!-- Officer Lock & Access Banner -->
+      <div id="officer-lock-banner">
+        <!-- Rendered by renderOfficerLockBanner() -->
+      </div>
+
       <!-- Session Selector Card -->
       <div class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-slate-200">
         <div class="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between mb-4">
@@ -179,7 +184,7 @@
             </h2>
             <p class="text-xs text-slate-500">Attendance Officers: Select rehearsal date, zone, and tap names.</p>
           </div>
-          <button onclick="openModal('modal-add-member')" class="self-start sm:self-auto px-3.5 py-2 bg-brand-600 text-white text-xs font-bold rounded-xl hover:bg-brand-700 transition flex items-center gap-1.5 shadow-sm">
+          <button onclick="promptAddMember()" class="self-start sm:self-auto px-3.5 py-2 bg-brand-600 text-white text-xs font-bold rounded-xl hover:bg-brand-700 transition flex items-center gap-1.5 shadow-sm">
             <i class="fa-solid fa-plus"></i> Add New Chorister
           </button>
         </div>
@@ -477,6 +482,40 @@
   </div>
 
   <!-- ========================================== -->
+  <!-- MODAL: OFFICER AUTHENTICATION             -->
+  <!-- ========================================== -->
+  <div id="modal-officer-login" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-200 text-center animate-in fade-in zoom-in duration-150">
+      <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center text-2xl mx-auto mb-3 shadow-inner">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <h3 class="text-base font-bold text-slate-900 font-heading">Attendance Officer Access</h3>
+      <p class="text-xs text-slate-500 mt-1 mb-4">Enter the password shared on the Officers WhatsApp group to unlock attendance marking.</p>
+      
+      <form onsubmit="handleOfficerLogin(event)" class="space-y-3">
+        <div class="relative text-left">
+          <input type="password" id="officer-password-input" required placeholder="Enter Officer Password" 
+                 class="w-full p-3 pl-10 pr-10 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-brand-500 focus:outline-none">
+          <i class="fa-solid fa-key absolute left-3.5 top-3.5 text-slate-400 text-xs"></i>
+          <button type="button" onclick="togglePasswordVisibility('officer-password-input')" class="absolute right-3.5 top-3.5 text-slate-400 hover:text-slate-600 text-xs">
+            <i class="fa-solid fa-eye" id="toggle-pw-icon"></i>
+          </button>
+        </div>
+        <p id="officer-login-error" class="text-[11px] text-rose-600 font-semibold hidden">Incorrect password. Please check the WhatsApp group.</p>
+        
+        <div class="pt-2 flex gap-2">
+          <button type="button" onclick="closeModal('modal-officer-login')" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition">
+            Cancel
+          </button>
+          <button type="submit" class="flex-1 py-2.5 bg-brand-700 hover:bg-brand-800 text-white font-bold rounded-xl text-xs shadow-md transition">
+            Unlock
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
   <!-- MODAL 2: GOOGLE SHEETS LIVE SYNC SETUP     -->
   <!-- ========================================== -->
   <div id="modal-sheets-sync" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
@@ -571,18 +610,22 @@
 
     // STATE MANAGEMENT (Stored in LocalStorage)
     const DEFAULT_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxu0uyzA6wbWlClg-zx5M7NkMRfwN4ngDMvEl4Pr1DCsdrVPH77NrJ8nGcUv9NzYzFOlg/exec';
+    const OFFICER_PASSWORD = 'Ondo2026Concert';
+    let pendingActionCallback = null;
 
     let state = {
       members: [],
       attendance: {}, // { "sess_3_m1": "present" | "absent" | "excused" }
       activePartFilter: 'ALL',
-      sheetWebhookUrl: DEFAULT_WEBHOOK_URL
+      sheetWebhookUrl: DEFAULT_WEBHOOK_URL,
+      isOfficerUnlocked: false
     };
 
     function loadState() {
       const savedMembers = localStorage.getItem('ondo_choir_members');
       const savedAttendance = localStorage.getItem('ondo_choir_attendance');
       const savedWebhook = localStorage.getItem('ondo_choir_webhook');
+      const savedAuth = localStorage.getItem('ondo_officer_authenticated');
 
       state.members = savedMembers ? JSON.parse(savedMembers) : DEFAULT_MEMBERS;
       state.attendance = savedAttendance ? JSON.parse(savedAttendance) : {
@@ -595,6 +638,7 @@
         'sess_2_m3': 'present'
       };
       state.sheetWebhookUrl = savedWebhook || DEFAULT_WEBHOOK_URL;
+      state.isOfficerUnlocked = (savedAuth === 'true');
       if (document.getElementById('sheet-webhook-url')) {
         document.getElementById('sheet-webhook-url').value = state.sheetWebhookUrl;
       }
@@ -610,6 +654,7 @@
     window.addEventListener('DOMContentLoaded', () => {
       loadState();
       populateDropdowns();
+      renderOfficerLockBanner();
       renderCheckinList();
       renderScheduleTable();
       updateAdminStats();
@@ -639,8 +684,116 @@
       });
     }
 
+    // OFFICER AUTHENTICATION & LOCK CONTROLS
+    function openOfficerLoginModal(callback) {
+      pendingActionCallback = callback || null;
+      document.getElementById('officer-password-input').value = '';
+      document.getElementById('officer-login-error').classList.add('hidden');
+      openModal('modal-officer-login');
+      setTimeout(() => {
+        const el = document.getElementById('officer-password-input');
+        if (el) el.focus();
+      }, 100);
+    }
+
+    function handleOfficerLogin(e) {
+      e.preventDefault();
+      const input = document.getElementById('officer-password-input').value.trim();
+      const errorEl = document.getElementById('officer-login-error');
+      if (input === OFFICER_PASSWORD) {
+        state.isOfficerUnlocked = true;
+        localStorage.setItem('ondo_officer_authenticated', 'true');
+        closeModal('modal-officer-login');
+        errorEl.classList.add('hidden');
+        renderOfficerLockBanner();
+        renderCheckinList();
+        if (pendingActionCallback) {
+          const cb = pendingActionCallback;
+          pendingActionCallback = null;
+          cb();
+        }
+      } else {
+        errorEl.classList.remove('hidden');
+      }
+    }
+
+    function lockOfficerMode() {
+      state.isOfficerUnlocked = false;
+      localStorage.removeItem('ondo_officer_authenticated');
+      renderOfficerLockBanner();
+      renderCheckinList();
+      if (document.getElementById('tab-admin') && !document.getElementById('tab-admin').classList.contains('hidden')) {
+        switchTab('checkin');
+      }
+    }
+
+    function togglePasswordVisibility(inputId) {
+      const input = document.getElementById(inputId);
+      const icon = document.getElementById('toggle-pw-icon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        if (icon) icon.className = 'fa-solid fa-eye-slash';
+      } else {
+        input.type = 'password';
+        if (icon) icon.className = 'fa-solid fa-eye';
+      }
+    }
+
+    function promptAddMember() {
+      if (!state.isOfficerUnlocked) {
+        openOfficerLoginModal(() => openModal('modal-add-member'));
+        return;
+      }
+      openModal('modal-add-member');
+    }
+
+    function renderOfficerLockBanner() {
+      const banner = document.getElementById('officer-lock-banner');
+      if (!banner) return;
+      if (state.isOfficerUnlocked) {
+        banner.innerHTML = `
+          <div class="bg-emerald-50 border border-emerald-300 rounded-2xl p-3 px-4 flex items-center justify-between text-xs text-emerald-900 shadow-xs">
+            <div class="flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-sm shadow-xs">
+                <i class="fa-solid fa-unlock"></i>
+              </span>
+              <div>
+                <span class="font-bold block text-emerald-950">Officer Mode Active (Unlocked)</span>
+                <span class="text-[11px] text-emerald-700">You are authorized to mark attendance and add choristers.</span>
+              </div>
+            </div>
+            <button onclick="lockOfficerMode()" class="px-3 py-1.5 bg-white hover:bg-emerald-100 text-emerald-800 font-bold rounded-xl text-xs border border-emerald-300 transition flex items-center gap-1.5 shadow-xs">
+              <i class="fa-solid fa-lock"></i> Lock
+            </button>
+          </div>
+        `;
+      } else {
+        banner.innerHTML = `
+          <div class="bg-amber-50 border border-amber-300 rounded-2xl p-3 px-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-amber-950 shadow-xs">
+            <div class="flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-bold text-sm shadow-xs">
+                <i class="fa-solid fa-lock"></i>
+              </span>
+              <div>
+                <span class="font-bold block text-amber-950">Attendance Marking is Locked</span>
+                <span class="text-[11px] text-amber-800">Only designated Attendance Officers with the password can mark present / excused.</span>
+              </div>
+            </div>
+            <button onclick="openOfficerLoginModal()" class="px-3.5 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl text-xs shadow-xs transition flex items-center justify-center gap-1.5 self-start sm:self-auto shrink-0">
+              <i class="fa-solid fa-key"></i> Unlock Officer Mode
+            </button>
+          </div>
+        `;
+      }
+    }
+
     // TAB SWITCHING
     function switchTab(tabId) {
+      if (tabId === 'admin' && !state.isOfficerUnlocked) {
+        openOfficerLoginModal(() => switchTab('admin'));
+        return;
+      }
+
       const tabs = ['checkin', 'score', 'register', 'admin'];
       tabs.forEach(t => {
         const section = document.getElementById(`tab-${t}`);
@@ -655,7 +808,10 @@
           btn.classList.add('border-transparent', 'text-slate-300');
         }
       });
-      if (tabId === 'checkin') renderCheckinList();
+      if (tabId === 'checkin') {
+        renderOfficerLockBanner();
+        renderCheckinList();
+      }
       if (tabId === 'admin') updateAdminStats();
     }
 
@@ -704,7 +860,7 @@
           <div class="bg-white p-8 text-center rounded-2xl border border-dashed border-slate-300 text-slate-400">
             <i class="fa-solid fa-users-slash text-3xl mb-2 text-slate-300"></i>
             <p class="text-xs font-semibold">No choristers found matching this filter.</p>
-            <button onclick="openModal('modal-add-member')" class="mt-3 px-3 py-1.5 bg-brand-700 text-white text-xs font-bold rounded-lg">
+            <button onclick="promptAddMember()" class="mt-3 px-3 py-1.5 bg-brand-700 text-white text-xs font-bold rounded-lg">
               + Register New Chorister
             </button>
           </div>
@@ -774,8 +930,13 @@
       }
     }
 
-    // SET ATTENDANCE
+    // SET ATTENDANCE (PROTECTED BY OFFICER PASSWORD)
     function setAttendance(sessionId, memberId, status) {
+      if (!state.isOfficerUnlocked) {
+        openOfficerLoginModal(() => setAttendance(sessionId, memberId, status));
+        return;
+      }
+
       const key = `${sessionId}_${memberId}`;
       state.attendance[key] = status;
       saveState();
