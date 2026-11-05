@@ -516,11 +516,13 @@
     ];
 
     // STATE MANAGEMENT (Stored in LocalStorage)
+    const DEFAULT_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxu0uyzA6wbWlClg-zx5M7NkMRfwN4ngDMvEl4Pr1DCsdrVPH77NrJ8nGcUv9NzYzFOlg/exec';
+
     let state = {
       members: [],
       attendance: {}, // { "sess_3_m1": "present" | "absent" | "excused" }
       activePartFilter: 'ALL',
-      sheetWebhookUrl: ''
+      sheetWebhookUrl: DEFAULT_WEBHOOK_URL
     };
 
     function loadState() {
@@ -538,7 +540,7 @@
         'sess_1_m3': 'present',
         'sess_2_m3': 'present'
       };
-      state.sheetWebhookUrl = savedWebhook || '';
+      state.sheetWebhookUrl = savedWebhook || DEFAULT_WEBHOOK_URL;
       if (document.getElementById('sheet-webhook-url')) {
         document.getElementById('sheet-webhook-url').value = state.sheetWebhookUrl;
       }

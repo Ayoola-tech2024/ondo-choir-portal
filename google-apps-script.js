@@ -1,22 +1,22 @@
 /**
  * ONDO AREA MUSIC COMMITTEE — 2026 CONCERT ATTENDANCE SYNC SCRIPT
- * 
- * Instructions:
- * 1. Open the Google Sheet linked to your Google Form.
- * 2. Click "Extensions" > "Apps Script".
- * 3. Delete any default code and paste this entire file.
- * 4. Click "Deploy" > "New deployment".
- * 5. Select type: "Web app".
- *    - Description: "Attendance Webhook"
- *    - Execute as: "Me"
- *    - Who has access: "Anyone"
- * 6. Click "Deploy", authorize access, and copy the Web App URL.
- * 7. In the portal (Admin & Sync tab), paste that Web App URL!
+ * Master Spreadsheet ID: 1ifZRqfU435qg0AONB8o30lgohpUKp-RB-3hoECOx15g
+ * Web App URL: https://script.google.com/macros/s/AKfycbxu0uyzA6wbWlClg-zx5M7NkMRfwN4ngDMvEl4Pr1DCsdrVPH77NrJ8nGcUv9NzYzFOlg/exec
  */
+
+var SPREADSHEET_ID = "1ifZRqfU435qg0AONB8o30lgohpUKp-RB-3hoECOx15g";
+
+function getTargetSpreadsheet() {
+  try {
+    var active = SpreadsheetApp.getActiveSpreadsheet();
+    if (active) return active;
+  } catch (e) {}
+  return SpreadsheetApp.openById(SPREADSHEET_ID);
+}
 
 function doPost(e) {
   try {
-    var sheetApp = SpreadsheetApp.getActiveSpreadsheet();
+    var sheetApp = getTargetSpreadsheet();
     var contents = JSON.parse(e.postData.contents);
     var action = contents.action;
     
