@@ -11,6 +11,8 @@ A lightweight, mobile-first web app built for Zonal & Station Attendance Officer
    - Filters by Zone, Station, and Voice Part (Soprano, Alto, Tenor, Bass, Musician).
    - Pre-loaded with all 11 rehearsal sessions from the 2026 Schedule.
    - Quick **"+ Add New Chorister"** button right at rehearsal so no one is delayed.
+   - **📹 Evidence of Practice Video Upload Card**: 1-click button to upload rehearsal videos directly to Google Drive, with step-by-step Panda Video app compression guidelines (MEDIUM size) and Zone folder structure.
+   - Zonal Officers quick directory (e.g., Ondo Zone: Bro. Bamidele Raymond).
 
 2. **Check My Score (Chorister Self-Service Tab)**:
    - Enter phone number or name to see instant attendance %.
