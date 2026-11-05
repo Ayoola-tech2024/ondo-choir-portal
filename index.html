@@ -598,15 +598,8 @@
       'Idanre Zone'
     ];
 
-    // 3. SEED MEMBERS (Will be replaced/augmented by CSV import or user registrations)
-    const DEFAULT_MEMBERS = [
-      { id: 'm1', name: 'Sister Grace Adesina', phone: '08031234561', part: 'Soprano', zone: 'Ondo Central', station: 'Cathedral', gender: 'Female' },
-      { id: 'm2', name: 'Brother Emmanuel Adeleke', phone: '08029876542', part: 'Tenor', zone: 'Akure Zone', station: 'Alagbaka Station', gender: 'Male' },
-      { id: 'm3', name: 'Sister Deborah Ojo', phone: '08161234563', part: 'Alto', zone: 'Ondo Central', station: 'Yaba Station', gender: 'Female' },
-      { id: 'm4', name: 'Brother Damilola Babatunde', phone: '08051234564', part: 'Bass', zone: 'Owo Zone', station: 'Owo Central', gender: 'Male' },
-      { id: 'm5', name: 'Sister Aanuoluwapo Fashola', phone: '07031234565', part: 'Soprano', zone: 'Ikare Zone', station: 'Ikare Main', gender: 'Female' },
-      { id: 'm6', name: 'Brother Femi Futa', phone: '08071234566', part: 'Musician', zone: 'Akure Zone', station: 'FUTA Station', gender: 'Male' }
-    ];
+    // 3. SEED MEMBERS (Clean state; populated via CSV import or user registrations)
+    const DEFAULT_MEMBERS = [];
 
     // STATE MANAGEMENT (Stored in LocalStorage)
     const DEFAULT_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxu0uyzA6wbWlClg-zx5M7NkMRfwN4ngDMvEl4Pr1DCsdrVPH77NrJ8nGcUv9NzYzFOlg/exec';
@@ -622,21 +615,21 @@
     };
 
     function loadState() {
+      // Auto-migrate: clear old placeholder demo data
+      const dataVersion = localStorage.getItem('ondo_data_version');
+      if (dataVersion !== '2026_prod_v2') {
+        localStorage.removeItem('ondo_choir_members');
+        localStorage.removeItem('ondo_choir_attendance');
+        localStorage.setItem('ondo_data_version', '2026_prod_v2');
+      }
+
       const savedMembers = localStorage.getItem('ondo_choir_members');
       const savedAttendance = localStorage.getItem('ondo_choir_attendance');
       const savedWebhook = localStorage.getItem('ondo_choir_webhook');
       const savedAuth = localStorage.getItem('ondo_officer_authenticated');
 
-      state.members = savedMembers ? JSON.parse(savedMembers) : DEFAULT_MEMBERS;
-      state.attendance = savedAttendance ? JSON.parse(savedAttendance) : {
-        // Pre-fill dummy past rehearsals for demonstration
-        'sess_1_m1': 'present',
-        'sess_2_m1': 'present',
-        'sess_1_m2': 'present',
-        'sess_2_m2': 'absent',
-        'sess_1_m3': 'present',
-        'sess_2_m3': 'present'
-      };
+      state.members = savedMembers ? JSON.parse(savedMembers) : [];
+      state.attendance = savedAttendance ? JSON.parse(savedAttendance) : {};
       state.sheetWebhookUrl = savedWebhook || DEFAULT_WEBHOOK_URL;
       state.isOfficerUnlocked = (savedAuth === 'true');
       if (document.getElementById('sheet-webhook-url')) {
