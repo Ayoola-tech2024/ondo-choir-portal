@@ -79,9 +79,8 @@
       <!-- Quick Action / Drive Link (Officers Only) -->
       <button onclick="handleOfficerUploadDrive()" 
          class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-400 text-brand-900 rounded-lg text-xs font-bold hover:bg-amber-300 transition shadow cursor-pointer">
-        <i class="fa-solid fa-lock text-[10px]"></i>
         <i class="fa-brands fa-google-drive"></i>
-        <span>Officers Video Upload</span>
+        <span>Practice Video Upload</span>
       </button>
     </div>
 
@@ -109,9 +108,8 @@
   <!-- DRIVE BANNER FOR MOBILE -->
   <div class="sm:hidden bg-amber-500 text-brand-900 px-3 py-1.5 text-xs font-medium flex items-center justify-between">
     <div class="flex items-center gap-1.5">
-      <i class="fa-solid fa-lock text-[10px]"></i>
       <i class="fa-brands fa-google-drive font-bold"></i>
-      <span>Officers Evidence Upload</span>
+      <span>Evidence of Practice Upload</span>
     </div>
     <button onclick="handleOfficerUploadDrive()" class="font-bold underline text-[11px] cursor-pointer">Open Drive &rarr;</button>
   </div>
@@ -141,7 +139,6 @@
           </div>
           <button onclick="handleOfficerUploadDrive()" 
              class="px-3.5 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-xl transition shadow flex items-center justify-center gap-2 shrink-0 cursor-pointer">
-            <i class="fa-solid fa-lock text-[10px]"></i>
             <i class="fa-brands fa-google-drive"></i>
             <span>Upload Practice Video &rarr;</span>
           </button>
@@ -191,7 +188,7 @@
               <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
               Zonal & Station Check-In
             </h2>
-            <p class="text-xs text-slate-500">Attendance Officers: Select rehearsal date, zone, and tap names.</p>
+            <p class="text-xs text-slate-500">Select rehearsal date, zone, and tap names to mark attendance.</p>
           </div>
           <button onclick="promptAddMember()" class="self-start sm:self-auto px-3.5 py-2 bg-brand-600 text-white text-xs font-bold rounded-xl hover:bg-brand-700 transition flex items-center gap-1.5 shadow-sm">
             <i class="fa-solid fa-plus"></i> Add New Chorister
@@ -595,20 +592,1495 @@
       { id: 'sess_11', date: '2026-12-27', displayDate: '27th Dec 2026', day: 'Sunday', type: 'Final Rehearsal & CONCERT', time: '12:00noon / 4:00pm' }
     ];
 
-    // 2. DEFAULT ZONES
+    // 2. DEFAULT ZONES (From Ondo 2026 Roster)
     const ZONES = [
-      'Ondo Central',
-      'Akure Zone',
-      'Owo Zone',
-      'Ikare Zone',
-      'Ore Zone',
-      'Okitipupa Zone',
-      'Ile-Oluji Zone',
-      'Idanre Zone'
+      'Akure',
+      'Ikare',
+      'Oka',
+      'Okitipupa',
+      'Ondo',
+      'Ondo Road',
+      'Ore',
+      'Owo'
     ];
 
-    // 3. SEED MEMBERS (Clean state; populated via CSV import or user registrations)
-    const DEFAULT_MEMBERS = [];
+    // 3. SEED MEMBERS (Pre-loaded with official 134 registered choristers)
+    const DEFAULT_MEMBERS = [
+  {
+    "name": "Adegboyega Olufunke Adeola",
+    "zone": "Akure",
+    "part": "Alto",
+    "instrument": "Viola",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_001"
+  },
+  {
+    "name": "Adejoro Ruth",
+    "zone": "Akure",
+    "part": "Alto",
+    "instrument": "Violin",
+    "accompanist": "Yes",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_002"
+  },
+  {
+    "name": "Ajayi Oluwatoyin Esther",
+    "zone": "Akure",
+    "part": "Alto",
+    "instrument": "Viola",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_003"
+  },
+  {
+    "name": "Alabi oliwasade Ruth",
+    "zone": "Akure",
+    "part": "Alto",
+    "instrument": "Clarinet",
+    "accompanist": "Yes",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_004"
+  },
+  {
+    "name": "Alfred Bosede Yetunde",
+    "zone": "Akure",
+    "part": "Alto",
+    "instrument": "Clarinet",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_005"
+  },
+  {
+    "name": "Alomaja Opemiposi Eniola",
+    "zone": "Akure",
+    "part": "Alto",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_006"
+  },
+  {
+    "name": "Olagookun Folubi",
+    "zone": "Akure",
+    "part": "Alto",
+    "instrument": "Clarinet",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_007"
+  },
+  {
+    "name": "Olayeye Bolanle",
+    "zone": "Akure",
+    "part": "Alto",
+    "instrument": "Clarinet",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_008"
+  },
+  {
+    "name": "Adelabu Oluwasefunmi Michael",
+    "zone": "Akure",
+    "part": "Bass",
+    "instrument": "Trumpet",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_009"
+  },
+  {
+    "name": "Adewusi Felix",
+    "zone": "Akure",
+    "part": "Bass",
+    "instrument": "Clarinet",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_010"
+  },
+  {
+    "name": "Adewusi Great",
+    "zone": "Akure",
+    "part": "Bass",
+    "instrument": "Trombonee",
+    "accompanist": "Yes",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_011"
+  },
+  {
+    "name": "Adewusi John Oluwabukunmi",
+    "zone": "Akure",
+    "part": "Bass",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_012"
+  },
+  {
+    "name": "Ajayi Ayomide",
+    "zone": "Akure",
+    "part": "Bass",
+    "instrument": "Trumpet",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_013"
+  },
+  {
+    "name": "Ajayi Oladapo T",
+    "zone": "Akure",
+    "part": "Bass",
+    "instrument": "Baritone",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_014"
+  },
+  {
+    "name": "Akintokunbo Theophilus Ayobami",
+    "zone": "Akure",
+    "part": "Bass",
+    "instrument": "Trombonee",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_015"
+  },
+  {
+    "name": "Ambrose Osadugba",
+    "zone": "Akure",
+    "part": "Bass",
+    "instrument": "Trombonee",
+    "accompanist": "Yes",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_016"
+  },
+  {
+    "name": "David Teminijesu",
+    "zone": "Akure",
+    "part": "Bass",
+    "instrument": "Clarinet",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_017"
+  },
+  {
+    "name": "Ekundayo oluwatobiloba Daniel",
+    "zone": "Akure",
+    "part": "Bass",
+    "instrument": "Trumpet",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_018"
+  },
+  {
+    "name": "Femi Adesanya",
+    "zone": "Akure",
+    "part": "Bass",
+    "instrument": "Violin",
+    "accompanist": "Yes",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_019"
+  },
+  {
+    "name": "Idowu Silas",
+    "zone": "Akure",
+    "part": "Bass",
+    "instrument": "Trombonee",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_020"
+  },
+  {
+    "name": "Kayode Adewole",
+    "zone": "Akure",
+    "part": "Bass",
+    "instrument": "Clarinet",
+    "accompanist": "Yes",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_021"
+  },
+  {
+    "name": "Oladegbe Adebayo Daniel",
+    "zone": "Akure",
+    "part": "Bass",
+    "instrument": "Baritone",
+    "accompanist": "Yes",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_022"
+  },
+  {
+    "name": "Olowu Bamidele Ayodeji",
+    "zone": "Akure",
+    "part": "Bass",
+    "instrument": "Trumpet",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_023"
+  },
+  {
+    "name": "Olumuyiwa Ademola ALAO",
+    "zone": "Akure",
+    "part": "Bass",
+    "instrument": "Flute",
+    "accompanist": "Yes",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_024"
+  },
+  {
+    "name": "Paul Ayeni",
+    "zone": "Akure",
+    "part": "Bass",
+    "instrument": "Violin",
+    "accompanist": "Yes",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_025"
+  },
+  {
+    "name": "Abiola Ruth Erioluwa",
+    "zone": "Akure",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_026"
+  },
+  {
+    "name": "Abisagbo Fayokemi",
+    "zone": "Akure",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_027"
+  },
+  {
+    "name": "Adaramola Oluwadamilola",
+    "zone": "Akure",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_028"
+  },
+  {
+    "name": "Adewusi Elizabeth Aanuoluwapo",
+    "zone": "Akure",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "Yes",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_029"
+  },
+  {
+    "name": "Agatha Olisa",
+    "zone": "Akure",
+    "part": "Soprano",
+    "instrument": "Clarinet",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_030"
+  },
+  {
+    "name": "Akinola Anike",
+    "zone": "Akure",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_031"
+  },
+  {
+    "name": "Akinola Faith",
+    "zone": "Akure",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_032"
+  },
+  {
+    "name": "Akomolafe Jumoke",
+    "zone": "Akure",
+    "part": "Soprano",
+    "instrument": "Viola",
+    "accompanist": "Yes",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_033"
+  },
+  {
+    "name": "Akpan Comfort Alarape",
+    "zone": "Akure",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_034"
+  },
+  {
+    "name": "Aladetimehin Kehinde",
+    "zone": "Akure",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_035"
+  },
+  {
+    "name": "Apata Blessing",
+    "zone": "Akure",
+    "part": "Soprano",
+    "instrument": "Flute",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_036"
+  },
+  {
+    "name": "Awosika Caroline",
+    "zone": "Akure",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_037"
+  },
+  {
+    "name": "Ayomipo Alabi",
+    "zone": "Akure",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_038"
+  },
+  {
+    "name": "Ayoola Damilola",
+    "zone": "Akure",
+    "part": "Soprano",
+    "instrument": "Clarinet",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_039"
+  },
+  {
+    "name": "Fagbamigbe Deborah",
+    "zone": "Akure",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_040"
+  },
+  {
+    "name": "Famewo Oludunni Demilade",
+    "zone": "Akure",
+    "part": "Soprano",
+    "instrument": "Flute",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_041"
+  },
+  {
+    "name": "Famori Onaopemipo",
+    "zone": "Akure",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_042"
+  },
+  {
+    "name": "Iwasanmi Victoria Olufunbi",
+    "zone": "Akure",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_043"
+  },
+  {
+    "name": "Lois Kolawole",
+    "zone": "Akure",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_044"
+  },
+  {
+    "name": "Oladele Opemipo",
+    "zone": "Akure",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_045"
+  },
+  {
+    "name": "Oladumiye Temitope Catherine",
+    "zone": "Akure",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_046"
+  },
+  {
+    "name": "Olowookere Mabel",
+    "zone": "Akure",
+    "part": "Soprano",
+    "instrument": "First violin",
+    "accompanist": "Yes",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_047"
+  },
+  {
+    "name": "Olusegun Alice",
+    "zone": "Akure",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_048"
+  },
+  {
+    "name": "Oyewo Omowumi.O.",
+    "zone": "Akure",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_049"
+  },
+  {
+    "name": "Racheal Abosede Abolaji",
+    "zone": "Akure",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_050"
+  },
+  {
+    "name": "UduakObong Bamidele Olowu",
+    "zone": "Akure",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "Yes",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_051"
+  },
+  {
+    "name": "Akinbobola Isaac",
+    "zone": "Akure",
+    "part": "Tenor",
+    "instrument": "Piccolo",
+    "accompanist": "Yes",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_052"
+  },
+  {
+    "name": "Akinyilola Joshua Oluwafemi",
+    "zone": "Akure",
+    "part": "Tenor",
+    "instrument": "Trumpet",
+    "accompanist": "Yes",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_053"
+  },
+  {
+    "name": "Akpan-Effiong Angel",
+    "zone": "Akure",
+    "part": "Tenor",
+    "instrument": "Trumpet",
+    "accompanist": "Yes",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_054"
+  },
+  {
+    "name": "Aladetimehin Adefemi F",
+    "zone": "Akure",
+    "part": "Tenor",
+    "instrument": "Trombone",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_055"
+  },
+  {
+    "name": "Asebueye Olaniran Raphael",
+    "zone": "Akure",
+    "part": "Tenor",
+    "instrument": "Trumpet",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_056"
+  },
+  {
+    "name": "Awosika Emmanuel",
+    "zone": "Akure",
+    "part": "Tenor",
+    "instrument": "Viola",
+    "accompanist": "Yes",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_057"
+  },
+  {
+    "name": "Daniel Abisodun ADARAMOLA",
+    "zone": "Akure",
+    "part": "Tenor",
+    "instrument": "Organ",
+    "accompanist": "Yes",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_058"
+  },
+  {
+    "name": "Daniel Joshua",
+    "zone": "Akure",
+    "part": "Tenor",
+    "instrument": "Trumpet",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_059"
+  },
+  {
+    "name": "Edet Uduak Ofeorise",
+    "zone": "Akure",
+    "part": "Tenor",
+    "instrument": "Clarinet",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_060"
+  },
+  {
+    "name": "Glory Akinola",
+    "zone": "Akure",
+    "part": "Tenor",
+    "instrument": "Organ",
+    "accompanist": "Yes",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_061"
+  },
+  {
+    "name": "Ogundairo Marvelous Olamilekan",
+    "zone": "Akure",
+    "part": "Tenor",
+    "instrument": "Violin",
+    "accompanist": "Yes",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_062"
+  },
+  {
+    "name": "Ogundairo Oluwasegun Emmanuel",
+    "zone": "Akure",
+    "part": "Tenor",
+    "instrument": "Violin",
+    "accompanist": "Yes",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_063"
+  },
+  {
+    "name": "Ogunkorode Boluwatife",
+    "zone": "Akure",
+    "part": "Tenor",
+    "instrument": "Trumpet",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_064"
+  },
+  {
+    "name": "Ogunyankin Akinbolade",
+    "zone": "Akure",
+    "part": "Tenor",
+    "instrument": "Clarinet",
+    "accompanist": "No",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_065"
+  },
+  {
+    "name": "Orungbeja Japheth Olamilekan",
+    "zone": "Akure",
+    "part": "Tenor",
+    "instrument": "Flute",
+    "accompanist": "Yes",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_066"
+  },
+  {
+    "name": "Promise Aladegbola",
+    "zone": "Akure",
+    "part": "Tenor",
+    "instrument": "Viola",
+    "accompanist": "Yes",
+    "station": "Akure",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_067"
+  },
+  {
+    "name": "Ayegbusi Bosede",
+    "zone": "Ikare",
+    "part": "Alto",
+    "instrument": "Violin",
+    "accompanist": "Yes",
+    "station": "Ikare",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_068"
+  },
+  {
+    "name": "Adeola felix Ayodele rympet",
+    "zone": "Ikare",
+    "part": "Bass",
+    "instrument": "Trumpet",
+    "accompanist": "No",
+    "station": "Ikare",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_069"
+  },
+  {
+    "name": "Kadri Success Oluwatosin",
+    "zone": "Ikare",
+    "part": "Bass",
+    "instrument": "Trumpet",
+    "accompanist": "No",
+    "station": "Ikare",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_070"
+  },
+  {
+    "name": "Kolade Lugard",
+    "zone": "Ikare",
+    "part": "Bass",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Ikare",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_071"
+  },
+  {
+    "name": "Adeola Praise Esther",
+    "zone": "Ikare",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Ikare",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_072"
+  },
+  {
+    "name": "Faith Babatunde",
+    "zone": "Ikare",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Ikare",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_073"
+  },
+  {
+    "name": "Kadri Omolara Abigail",
+    "zone": "Ikare",
+    "part": "Soprano",
+    "instrument": "Viola",
+    "accompanist": "No",
+    "station": "Ikare",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_074"
+  },
+  {
+    "name": "Olubunmi Oluwaferanmi Bright",
+    "zone": "Ikare",
+    "part": "Tenor",
+    "instrument": "Trumpet",
+    "accompanist": "No",
+    "station": "Ikare",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_075"
+  },
+  {
+    "name": "Atere stella",
+    "zone": "Oka",
+    "part": "Alto",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Oka",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_076"
+  },
+  {
+    "name": "Alimi Samuel",
+    "zone": "Oka",
+    "part": "Bass",
+    "instrument": "Trumpet",
+    "accompanist": "No",
+    "station": "Oka",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_077"
+  },
+  {
+    "name": "Balogun Sunday Ayokunle",
+    "zone": "Oka",
+    "part": "Bass",
+    "instrument": "Flute",
+    "accompanist": "No",
+    "station": "Oka",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_078"
+  },
+  {
+    "name": "Oni Oluwaferanmi Ayomide",
+    "zone": "Oka",
+    "part": "Bass",
+    "instrument": "Clarinet",
+    "accompanist": "No",
+    "station": "Oka",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_079"
+  },
+  {
+    "name": "Ojo Esther Olufunke",
+    "zone": "Oka",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Oka",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_080"
+  },
+  {
+    "name": "Oladimeji Oluwafunmilayo",
+    "zone": "Oka",
+    "part": "Soprano",
+    "instrument": "Flute",
+    "accompanist": "No",
+    "station": "Oka",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_081"
+  },
+  {
+    "name": "Oladiran Oluwadarasimi",
+    "zone": "Oka",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "Yes",
+    "station": "Oka",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_082"
+  },
+  {
+    "name": "Ajisafe Sunday Paul",
+    "zone": "Oka",
+    "part": "Tenor",
+    "instrument": "Organ",
+    "accompanist": "No",
+    "station": "Oka",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_083"
+  },
+  {
+    "name": "Alomajs Oladele",
+    "zone": "Oka",
+    "part": "Tenor",
+    "instrument": "Trumpet",
+    "accompanist": "No",
+    "station": "Oka",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_084"
+  },
+  {
+    "name": "Ogedengbe Joseph",
+    "zone": "Oka",
+    "part": "Tenor",
+    "instrument": "Flute",
+    "accompanist": "Yes",
+    "station": "Oka",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_085"
+  },
+  {
+    "name": "Ojo Ayobami Samuel",
+    "zone": "Oka",
+    "part": "Tenor",
+    "instrument": "Clarinet",
+    "accompanist": "No",
+    "station": "Oka",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_086"
+  },
+  {
+    "name": "Akinbamini Precious",
+    "zone": "Okitipupa",
+    "part": "Bass",
+    "instrument": "Trombonee",
+    "accompanist": "No",
+    "station": "Okitipupa",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_087"
+  },
+  {
+    "name": "Isowa Oladele Maxwell",
+    "zone": "Okitipupa",
+    "part": "Bass",
+    "instrument": "Trumpet",
+    "accompanist": "Yes",
+    "station": "Okitipupa",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_088"
+  },
+  {
+    "name": "Obasanmi Oladele Sunday",
+    "zone": "Okitipupa",
+    "part": "Bass",
+    "instrument": "Clarinet",
+    "accompanist": "No",
+    "station": "Okitipupa",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_089"
+  },
+  {
+    "name": "Olowu Ayodeji",
+    "zone": "Okitipupa",
+    "part": "Bass",
+    "instrument": "Cello",
+    "accompanist": "Yes",
+    "station": "Okitipupa",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_090"
+  },
+  {
+    "name": "Abisagbo Grace",
+    "zone": "Okitipupa",
+    "part": "Soprano",
+    "instrument": "Clarinet",
+    "accompanist": "No",
+    "station": "Okitipupa",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_091"
+  },
+  {
+    "name": "Adesawe Stella Temitope",
+    "zone": "Okitipupa",
+    "part": "Soprano",
+    "instrument": "Flute",
+    "accompanist": "No",
+    "station": "Okitipupa",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_092"
+  },
+  {
+    "name": "Adesawe faith toluwalase",
+    "zone": "Okitipupa",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Okitipupa",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_093"
+  },
+  {
+    "name": "Olatujouye Stella",
+    "zone": "Okitipupa",
+    "part": "Soprano",
+    "instrument": "Flute",
+    "accompanist": "No",
+    "station": "Okitipupa",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_094"
+  },
+  {
+    "name": "Orimisan Faith Ayomiposi",
+    "zone": "Okitipupa",
+    "part": "Soprano",
+    "instrument": "Flute",
+    "accompanist": "No",
+    "station": "Okitipupa",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_095"
+  },
+  {
+    "name": "Johnson Michael",
+    "zone": "Okitipupa",
+    "part": "Tenor",
+    "instrument": "Baritone",
+    "accompanist": "Yes",
+    "station": "Okitipupa",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_096"
+  },
+  {
+    "name": "Olatemiju Adeolu",
+    "zone": "Okitipupa",
+    "part": "Tenor",
+    "instrument": "Flute",
+    "accompanist": "No",
+    "station": "Okitipupa",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_097"
+  },
+  {
+    "name": "Olatemiju Ebunoluwa Erastus",
+    "zone": "Okitipupa",
+    "part": "Tenor",
+    "instrument": "Trumpet",
+    "accompanist": "No",
+    "station": "Okitipupa",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_098"
+  },
+  {
+    "name": "Oluyede Adegoke Felix",
+    "zone": "Okitipupa",
+    "part": "Tenor",
+    "instrument": "Clarinet",
+    "accompanist": "Yes",
+    "station": "Okitipupa",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_099"
+  },
+  {
+    "name": "Ogundare Fehintola J",
+    "zone": "Ondo",
+    "part": "Alto",
+    "instrument": "Flute",
+    "accompanist": "No",
+    "station": "Ondo",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_100"
+  },
+  {
+    "name": "Thomas Deborah",
+    "zone": "Ondo",
+    "part": "Alto",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Ondo",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_101"
+  },
+  {
+    "name": "Akin Fawehinmi",
+    "zone": "Ondo",
+    "part": "Bass",
+    "instrument": "Trumpet",
+    "accompanist": "No",
+    "station": "Ondo",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_102"
+  },
+  {
+    "name": "Iwasanmi Segun",
+    "zone": "Ondo",
+    "part": "Bass",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Ondo",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_103"
+  },
+  {
+    "name": "Olafusi Abiola",
+    "zone": "Ondo",
+    "part": "Bass",
+    "instrument": "Trombonee",
+    "accompanist": "No",
+    "station": "Ondo",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_104"
+  },
+  {
+    "name": "Adebayo Funke Abosede",
+    "zone": "Ondo",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Ondo",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_105"
+  },
+  {
+    "name": "Bamidele Ayomide",
+    "zone": "Ondo",
+    "part": "Soprano",
+    "instrument": "Viola",
+    "accompanist": "No",
+    "station": "Ondo",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_106"
+  },
+  {
+    "name": "Grace Onaolapo",
+    "zone": "Ondo",
+    "part": "Soprano",
+    "instrument": "Viola",
+    "accompanist": "No",
+    "station": "Ondo",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_107"
+  },
+  {
+    "name": "Helen Adebayo",
+    "zone": "Ondo",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Ondo",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_108"
+  },
+  {
+    "name": "Olafusi Oluwasola Favour",
+    "zone": "Ondo",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "Yes",
+    "station": "Ondo",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_109"
+  },
+  {
+    "name": "Akinduro Hope",
+    "zone": "Ondo",
+    "part": "Tenor",
+    "instrument": "Trumpet",
+    "accompanist": "Yes",
+    "station": "Ondo",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_110"
+  },
+  {
+    "name": "Akinmolayan Sunday Blessing",
+    "zone": "Ondo",
+    "part": "Tenor",
+    "instrument": "Trombonee",
+    "accompanist": "No",
+    "station": "Ondo",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_111"
+  },
+  {
+    "name": "Matthew Ifawunmi",
+    "zone": "Ondo",
+    "part": "Tenor",
+    "instrument": "Trumpet",
+    "accompanist": "Yes",
+    "station": "Ondo",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_112"
+  },
+  {
+    "name": "Afariogun Olubunmi",
+    "zone": "Ondo Road",
+    "part": "Alto",
+    "instrument": "Viola",
+    "accompanist": "Yes",
+    "station": "Ondo Road",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_113"
+  },
+  {
+    "name": "Afariogun Titobioluwa",
+    "zone": "Ondo Road",
+    "part": "Bass",
+    "instrument": "Trumpet",
+    "accompanist": "No",
+    "station": "Ondo Road",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_114"
+  },
+  {
+    "name": "Olakunle Gideon",
+    "zone": "Ondo Road",
+    "part": "Bass",
+    "instrument": "French horn",
+    "accompanist": "No",
+    "station": "Ondo Road",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_115"
+  },
+  {
+    "name": "Afariogun Okikioluwa Fortune",
+    "zone": "Ondo Road",
+    "part": "Soprano",
+    "instrument": "Flute",
+    "accompanist": "No",
+    "station": "Ondo Road",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_116"
+  },
+  {
+    "name": "Afariogun Oreoluwa",
+    "zone": "Ondo Road",
+    "part": "Soprano",
+    "instrument": "Flute",
+    "accompanist": "Yes",
+    "station": "Ondo Road",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_117"
+  },
+  {
+    "name": "Moses Victory",
+    "zone": "Ondo Road",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Ondo Road",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_118"
+  },
+  {
+    "name": "Agboola Marvellous",
+    "zone": "Ondo Road",
+    "part": "Tenor",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Ondo Road",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_119"
+  },
+  {
+    "name": "Aniekeme Sam",
+    "zone": "Ondo Road",
+    "part": "Tenor",
+    "instrument": "Flute",
+    "accompanist": "No",
+    "station": "Ondo Road",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_120"
+  },
+  {
+    "name": "Akinbamini Justina",
+    "zone": "Ore",
+    "part": "Alto",
+    "instrument": "Clarinet",
+    "accompanist": "No",
+    "station": "Ore",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_121"
+  },
+  {
+    "name": "Lawson Ajike",
+    "zone": "Ore",
+    "part": "Alto",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Ore",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_122"
+  },
+  {
+    "name": "Abolaji Femi",
+    "zone": "Ore",
+    "part": "Bass",
+    "instrument": "Trumpet",
+    "accompanist": "Yes",
+    "station": "Ore",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_123"
+  },
+  {
+    "name": "Akinmeji Emmanuel",
+    "zone": "Ore",
+    "part": "Bass",
+    "instrument": "Baritone",
+    "accompanist": "Yes",
+    "station": "Ore",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_124"
+  },
+  {
+    "name": "Akpan Effiong Paul",
+    "zone": "Ore",
+    "part": "Bass",
+    "instrument": "Violin",
+    "accompanist": "Yes",
+    "station": "Ore",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_125"
+  },
+  {
+    "name": "Lawson John",
+    "zone": "Ore",
+    "part": "Bass",
+    "instrument": "Trumpet",
+    "accompanist": "Yes",
+    "station": "Ore",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_126"
+  },
+  {
+    "name": "Abolaji Cecelia",
+    "zone": "Ore",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Ore",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_127"
+  },
+  {
+    "name": "Adedayo Ibukunoluwa",
+    "zone": "Ore",
+    "part": "Soprano",
+    "instrument": "Flute",
+    "accompanist": "No",
+    "station": "Ore",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_128"
+  },
+  {
+    "name": "Agboola Olatunji Clement",
+    "zone": "Ore",
+    "part": "Tenor",
+    "instrument": "Trumpet",
+    "accompanist": "No",
+    "station": "Ore",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_129"
+  },
+  {
+    "name": "Ajayi jacob",
+    "zone": "Ore",
+    "part": "Tenor",
+    "instrument": "Trumpet",
+    "accompanist": "No",
+    "station": "Ore",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_130"
+  },
+  {
+    "name": "OGUNYAKIN Esther O.",
+    "zone": "Owo",
+    "part": "Alto",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Owo",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_131"
+  },
+  {
+    "name": "Matthew Ayigi",
+    "zone": "Owo",
+    "part": "Bass",
+    "instrument": "Trumpet",
+    "accompanist": "No",
+    "station": "Owo",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_132"
+  },
+  {
+    "name": "Ogunyankin Olubunmi Grace",
+    "zone": "Owo",
+    "part": "Soprano",
+    "instrument": "Violin",
+    "accompanist": "No",
+    "station": "Owo",
+    "phone": "",
+    "gender": "Female",
+    "id": "c_133"
+  },
+  {
+    "name": "Faith Folajimi",
+    "zone": "Owo",
+    "part": "Tenor",
+    "instrument": "Flute",
+    "accompanist": "No",
+    "station": "Owo",
+    "phone": "",
+    "gender": "Male",
+    "id": "c_134"
+  }
+];
 
     // STATE MANAGEMENT (Stored in LocalStorage)
     const DEFAULT_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxu0uyzA6wbWlClg-zx5M7NkMRfwN4ngDMvEl4Pr1DCsdrVPH77NrJ8nGcUv9NzYzFOlg/exec';
@@ -620,27 +2092,25 @@
       attendance: {}, // { "sess_3_m1": "present" | "absent" | "excused" }
       activePartFilter: 'ALL',
       sheetWebhookUrl: DEFAULT_WEBHOOK_URL,
-      isOfficerUnlocked: false
+      isOfficerUnlocked: true
     };
 
     function loadState() {
-      // Auto-migrate: clear old placeholder demo data
+      // Auto-migrate: seed master choristers
       const dataVersion = localStorage.getItem('ondo_data_version');
-      if (dataVersion !== '2026_prod_v2') {
-        localStorage.removeItem('ondo_choir_members');
-        localStorage.removeItem('ondo_choir_attendance');
-        localStorage.setItem('ondo_data_version', '2026_prod_v2');
+      if (dataVersion !== '2026_choristers_v1') {
+        localStorage.setItem('ondo_choir_members', JSON.stringify(DEFAULT_MEMBERS));
+        localStorage.setItem('ondo_data_version', '2026_choristers_v1');
       }
 
       const savedMembers = localStorage.getItem('ondo_choir_members');
       const savedAttendance = localStorage.getItem('ondo_choir_attendance');
       const savedWebhook = localStorage.getItem('ondo_choir_webhook');
-      const savedAuth = localStorage.getItem('ondo_officer_authenticated');
 
-      state.members = savedMembers ? JSON.parse(savedMembers) : [];
+      state.members = (savedMembers && JSON.parse(savedMembers).length > 0) ? JSON.parse(savedMembers) : DEFAULT_MEMBERS;
       state.attendance = savedAttendance ? JSON.parse(savedAttendance) : {};
       state.sheetWebhookUrl = savedWebhook || DEFAULT_WEBHOOK_URL;
-      state.isOfficerUnlocked = (savedAuth === 'true');
+      state.isOfficerUnlocked = true;
       if (document.getElementById('sheet-webhook-url')) {
         document.getElementById('sheet-webhook-url').value = state.sheetWebhookUrl;
       }
@@ -690,12 +2160,6 @@
     const DRIVE_UPLOAD_URL = 'https://drive.google.com/drive/folders/1pQFYas64laWmdm__zjuPAoYSbA_hp3FD';
 
     function handleOfficerUploadDrive() {
-      if (!state.isOfficerUnlocked) {
-        openOfficerLoginModal(() => {
-          window.open(DRIVE_UPLOAD_URL, '_blank');
-        });
-        return;
-      }
       window.open(DRIVE_UPLOAD_URL, '_blank');
     }
 
@@ -754,60 +2218,17 @@
     }
 
     function promptAddMember() {
-      if (!state.isOfficerUnlocked) {
-        openOfficerLoginModal(() => openModal('modal-add-member'));
-        return;
-      }
       openModal('modal-add-member');
     }
 
     function renderOfficerLockBanner() {
       const banner = document.getElementById('officer-lock-banner');
       if (!banner) return;
-      if (state.isOfficerUnlocked) {
-        banner.innerHTML = `
-          <div class="bg-emerald-50 border border-emerald-300 rounded-2xl p-3 px-4 flex items-center justify-between text-xs text-emerald-900 shadow-xs">
-            <div class="flex items-center gap-2.5">
-              <span class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-sm shadow-xs">
-                <i class="fa-solid fa-unlock"></i>
-              </span>
-              <div>
-                <span class="font-bold block text-emerald-950">Officer Mode Active (Unlocked)</span>
-                <span class="text-[11px] text-emerald-700">You are authorized to mark attendance and add choristers.</span>
-              </div>
-            </div>
-            <button onclick="lockOfficerMode()" class="px-3 py-1.5 bg-white hover:bg-emerald-100 text-emerald-800 font-bold rounded-xl text-xs border border-emerald-300 transition flex items-center gap-1.5 shadow-xs">
-              <i class="fa-solid fa-lock"></i> Lock
-            </button>
-          </div>
-        `;
-      } else {
-        banner.innerHTML = `
-          <div class="bg-amber-50 border border-amber-300 rounded-2xl p-3 px-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-amber-950 shadow-xs">
-            <div class="flex items-center gap-2.5">
-              <span class="w-8 h-8 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-bold text-sm shadow-xs">
-                <i class="fa-solid fa-lock"></i>
-              </span>
-              <div>
-                <span class="font-bold block text-amber-950">Attendance Marking is Locked</span>
-                <span class="text-[11px] text-amber-800">Only designated Attendance Officers with the password can mark present / excused.</span>
-              </div>
-            </div>
-            <button onclick="openOfficerLoginModal()" class="px-3.5 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl text-xs shadow-xs transition flex items-center justify-center gap-1.5 self-start sm:self-auto shrink-0">
-              <i class="fa-solid fa-key"></i> Unlock Officer Mode
-            </button>
-          </div>
-        `;
-      }
+      banner.innerHTML = '';
     }
 
     // TAB SWITCHING
     function switchTab(tabId) {
-      if (tabId === 'admin' && !state.isOfficerUnlocked) {
-        openOfficerLoginModal(() => switchTab('admin'));
-        return;
-      }
-
       const tabs = ['checkin', 'score', 'register', 'admin'];
       tabs.forEach(t => {
         const section = document.getElementById(`tab-${t}`);
@@ -851,7 +2272,7 @@
       let filtered = state.members.filter(m => {
         const matchesZone = (zoneFilter === 'ALL' || m.zone === zoneFilter);
         const matchesPart = (state.activePartFilter === 'ALL' || m.part.toLowerCase() === state.activePartFilter.toLowerCase());
-        const matchesSearch = !search || m.name.toLowerCase().includes(search) || m.phone.includes(search);
+        const matchesSearch = !search || m.name.toLowerCase().includes(search) || (m.phone && m.phone.includes(search));
         return matchesZone && matchesPart && matchesSearch;
       });
 
@@ -901,8 +2322,8 @@
                   <span class="font-medium text-brand-700">${m.part}</span>
                   <span>•</span>
                   <span>${m.zone}</span>
-                  <span>•</span>
-                  <span>${m.station}</span>
+                  ${m.instrument ? `<span>•</span><span class="text-slate-600"><i class="fa-solid fa-music text-[9px] text-amber-600 mr-0.5"></i>${m.instrument}</span>` : ''}
+                  ${m.accompanist === 'Yes' ? `<span class="px-1.5 py-0.2 bg-amber-100 text-amber-900 rounded font-semibold text-[10px]">Accompanist</span>` : ''}
                 </div>
               </div>
             </div>
@@ -944,13 +2365,8 @@
       }
     }
 
-    // SET ATTENDANCE (PROTECTED BY OFFICER PASSWORD)
+    // SET ATTENDANCE (OPEN ACCESS)
     function setAttendance(sessionId, memberId, status) {
-      if (!state.isOfficerUnlocked) {
-        openOfficerLoginModal(() => setAttendance(sessionId, memberId, status));
-        return;
-      }
-
       const key = `${sessionId}_${memberId}`;
       state.attendance[key] = status;
       saveState();
@@ -972,7 +2388,8 @@
     function handleMemberLookup(e) {
       e.preventDefault();
       const query = document.getElementById('member-lookup-input').value.trim().toLowerCase();
-      const member = state.members.find(m => m.phone.includes(query) || m.name.toLowerCase().includes(query));
+      if (!query) return;
+      const member = state.members.find(m => (m.phone && m.phone.includes(query)) || m.name.toLowerCase().includes(query));
 
       const resultBox = document.getElementById('member-score-result');
       resultBox.classList.remove('hidden');
