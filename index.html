@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Ondo Area Music Ministry — 2026 Concert Attendance & Registry</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f5ff',
+              100: '#e5edff',
+              500: '#1e40af',
+              600: '#1d3557',
+              700: '#15253d',
+              800: '#0f172a',
+              900: '#080d1a',
+              gold: '#e0a926',
+              goldDark: '#b8860b'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    h1, h2, h3, h4, .font-heading {
+      font-family: 'Outfit', sans-serif;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col antialiased selection:bg-amber-100 selection:text-amber-900">
+
+  <!-- TOP HEADER -->
+  <header class="bg-gradient-to-r from-brand-900 via-brand-700 to-brand-800 text-white shadow-lg sticky top-0 z-30 border-b border-brand-gold/30">
+    <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-amber-400/20 border border-amber-400/40 flex items-center justify-center text-amber-300 text-lg shadow-inner">
+          <i class="fa-solid fa-music"></i>
+        </div>
+        <div>
+          <span class="text-[11px] uppercase tracking-wider text-amber-300 font-bold block">Ondo Area Music Committee</span>
+          <h1 class="text-base sm:text-lg font-bold leading-tight">2026 Christmas Concert Portal</h1>
+        </div>
+      </div>
+      
+      <!-- Quick Action / Drive Link -->
+      <a href="https://drive.google.com/drive/folders/1pQFYas64laWmdm__zjuPAoYSbA_hp3FD" target="_blank" rel="noopener noreferrer" 
+         class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-400 text-brand-900 rounded-lg text-xs font-bold hover:bg-amber-300 transition shadow">
+        <i class="fa-brands fa-google-drive"></i>
+        <span>Practice Videos</span>
+      </a>
+    </div>
+
+    <!-- NAVIGATION TABS -->
+    <div class="max-w-4xl mx-auto px-2 flex border-t border-white/10 text-xs sm:text-sm font-semibold overflow-x-auto custom-scroll">
+      <button onclick="switchTab('checkin')" id="tab-btn-checkin" class="tab-btn active-tab flex-1 py-3 px-3 text-center border-b-2 border-amber-400 text-amber-300 flex items-center justify-center gap-2 whitespace-nowrap">
+        <i class="fa-solid fa-clipboard-check"></i>
+        <span>Mark Attendance</span>
+      </button>
+      <button onclick="switchTab('score')" id="tab-btn-score" class="tab-btn flex-1 py-3 px-3 text-center border-b-2 border-transparent text-slate-300 hover:text-white flex items-center justify-center gap-2 whitespace-nowrap">
+        <i class="fa-solid fa-chart-pie"></i>
+        <span>Check My Score</span>
+      </button>
+      <button onclick="switchTab('register')" id="tab-btn-register" class="tab-btn flex-1 py-3 px-3 text-center border-b-2 border-transparent text-slate-300 hover:text-white flex items-center justify-center gap-2 whitespace-nowrap">
+        <i class="fa-solid fa-user-plus"></i>
+        <span>Register Member</span>
+      </button>
+      <button onclick="switchTab('admin')" id="tab-btn-admin" class="tab-btn flex-1 py-3 px-3 text-center border-b-2 border-transparent text-slate-300 hover:text-white flex items-center justify-center gap-2 whitespace-nowrap">
+        <i class="fa-solid fa-sliders"></i>
+        <span>Admin & Sync</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- DRIVE BANNER FOR MOBILE -->
+  <div class="sm:hidden bg-amber-500 text-brand-900 px-3 py-1.5 text-xs font-medium flex items-center justify-between">
+    <div class="flex items-center gap-1.5">
+      <i class="fa-brands fa-google-drive font-bold"></i>
+      <span>Practice Videos are updated</span>
+    </div>
+    <a href="https://drive.google.com/drive/folders/1pQFYas64laWmdm__zjuPAoYSbA_hp3FD" target="_blank" class="font-bold underline text-[11px]">Open Drive &rarr;</a>
+  </div>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-4xl w-full mx-auto p-4 sm:p-6 flex-1">
+
+    <!-- ========================================== -->
+    <!-- TAB 1: OFFICER CHECK-IN                   -->
+    <!-- ========================================== -->
+    <section id="tab-checkin" class="space-y-5">
+      <!-- Session Selector Card -->
+      <div class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-slate-200">
+        <div class="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between mb-4">
+          <div>
+            <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              Zonal & Station Check-In
+            </h2>
+            <p class="text-xs text-slate-500">Attendance Officers: Select rehearsal date, zone, and tap names.</p>
+          </div>
+          <button onclick="openModal('modal-add-member')" class="self-start sm:self-auto px-3.5 py-2 bg-brand-600 text-white text-xs font-bold rounded-xl hover:bg-brand-700 transition flex items-center gap-1.5 shadow-sm">
+            <i class="fa-solid fa-plus"></i> Add New Chorister
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <!-- Session Select -->
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Rehearsal Session:</label>
+            <select id="checkin-session-select" onchange="renderCheckinList()" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-medium focus:ring-2 focus:ring-brand-500 focus:outline-none">
+              <!-- Populated by JS -->
+            </select>
+          </div>
+
+          <!-- Zone / Station Select -->
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Filter by Zone / Station:</label>
+            <select id="checkin-zone-select" onchange="renderCheckinList()" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-medium focus:ring-2 focus:ring-brand-500 focus:outline-none">
+              <option value="ALL">All Zones & Stations</option>
+              <!-- Populated by JS -->
+            </select>
+          </div>
+        </div>
+
+        <!-- Voice Part Filter Pills & Search -->
+        <div class="mt-4 pt-3 border-t border-slate-100 flex flex-col sm:flex-row gap-3 sm:items-center justify-between">
+          <div class="flex flex-wrap gap-1 text-[11px]" id="part-filter-container">
+            <button onclick="filterPart('ALL')" class="part-pill active-part px-2.5 py-1 rounded-lg border font-semibold bg-brand-700 text-white border-brand-700">All</button>
+            <button onclick="filterPart('Soprano')" class="part-pill px-2.5 py-1 rounded-lg border font-medium bg-slate-100 text-slate-700 border-slate-200">Soprano</button>
+            <button onclick="filterPart('Alto')" class="part-pill px-2.5 py-1 rounded-lg border font-medium bg-slate-100 text-slate-700 border-slate-200">Alto</button>
+            <button onclick="filterPart('Tenor')" class="part-pill px-2.5 py-1 rounded-lg border font-medium bg-slate-100 text-slate-700 border-slate-200">Tenor</button>
+            <button onclick="filterPart('Bass')" class="part-pill px-2.5 py-1 rounded-lg border font-medium bg-slate-100 text-slate-700 border-slate-200">Bass</button>
+            <button onclick="filterPart('Musician')" class="part-pill px-2.5 py-1 rounded-lg border font-medium bg-slate-100 text-slate-700 border-slate-200">Musician</button>
+          </div>
+          
+          <div class="relative">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+            <input type="text" id="checkin-search" oninput="renderCheckinList()" placeholder="Search name or phone..." class="w-full sm:w-56 pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-brand-500 focus:outline-none">
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Session Stats Bar -->
+      <div class="bg-gradient-to-r from-brand-900 to-brand-700 text-white rounded-xl p-3 px-4 flex items-center justify-between text-xs shadow-sm">
+        <div class="flex items-center gap-4">
+          <div><span class="text-slate-300">Total in View:</span> <strong id="stat-total" class="text-white text-sm">0</strong></div>
+          <div><span class="text-emerald-300">Present:</span> <strong id="stat-present" class="text-emerald-300 text-sm">0</strong></div>
+          <div><span class="text-amber-300">Excused:</span> <strong id="stat-excused" class="text-amber-300 text-sm">0</strong></div>
+        </div>
+        <button onclick="saveSyncNotification()" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 rounded-lg text-[11px] font-semibold text-white flex items-center gap-1 transition">
+          <i class="fa-solid fa-cloud-arrow-up"></i> Auto-saved
+        </button>
+      </div>
+
+      <!-- Member Roster Checklist -->
+      <div id="checkin-list" class="space-y-2.5">
+        <!-- Roster Cards Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 2: MEMBER SELF-CHECK ("CHECK MY SCORE") -->
+    <!-- ========================================== -->
+    <section id="tab-score" class="hidden space-y-6">
+      <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200 text-center max-w-lg mx-auto">
+        <div class="w-14 h-14 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center text-2xl mx-auto mb-3 shadow-inner">
+          <i class="fa-solid fa-id-card-clip"></i>
+        </div>
+        <h2 class="text-lg font-bold text-slate-900 font-heading">Check Your Rehearsal Attendance</h2>
+        <p class="text-xs text-slate-500 mb-5">Enter your registered Phone Number or Name to see your total score, stage clearance, and practice status.</p>
+
+        <form onsubmit="handleMemberLookup(event)" class="space-y-3">
+          <div class="relative">
+            <i class="fa-solid fa-phone absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+            <input type="text" id="member-lookup-input" required placeholder="Enter Phone Number (e.g. 08012345678)" class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-brand-500 focus:outline-none">
+          </div>
+          <button type="submit" class="w-full py-3 bg-brand-700 hover:bg-brand-800 text-white text-sm font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-magnifying-glass"></i> View My Attendance Score
+          </button>
+        </form>
+      </div>
+
+      <!-- Result Card (Hidden until searched) -->
+      <div id="member-score-result" class="hidden max-w-lg mx-auto space-y-4">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 3: MEMBER REGISTRATION FORM            -->
+    <!-- ========================================== -->
+    <section id="tab-register" class="hidden max-w-lg mx-auto">
+      <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200">
+        <div class="flex items-center gap-3 mb-5 border-b pb-4 border-slate-100">
+          <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-700 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-user-pen"></i>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-slate-900 font-heading">Register for 2026 Concert</h2>
+            <p class="text-xs text-slate-500">Choristers & Musicians Registration of Interest</p>
+          </div>
+        </div>
+
+        <form id="public-reg-form" onsubmit="handlePublicRegistration(event)" class="space-y-4 text-xs">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Full Name (Surname First) *</label>
+            <input type="text" id="reg-name" required placeholder="e.g. Akinwumi Emmanuel Damilola" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Phone Number (WhatsApp) *</label>
+              <input type="tel" id="reg-phone" required placeholder="080XXXXXXXX" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+            </div>
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Voice Part / Role *</label>
+              <select id="reg-part" required class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+                <option value="Soprano">Soprano</option>
+                <option value="Alto">Alto</option>
+                <option value="Tenor">Tenor</option>
+                <option value="Bass">Bass</option>
+                <option value="Musician">Musician / Instrumentalist</option>
+                <option value="Technical">Technical / Media</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Zone *</label>
+              <select id="reg-zone" required class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+                <!-- populated by JS -->
+              </select>
+            </div>
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Station / Assembly *</label>
+              <input type="text" id="reg-station" required placeholder="e.g. Cathedral / Assembly" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Gender</label>
+            <div class="flex gap-4 pt-1">
+              <label class="flex items-center gap-1.5"><input type="radio" name="gender" value="Female" checked> Female</label>
+              <label class="flex items-center gap-1.5"><input type="radio" name="gender" value="Male"> Male</label>
+            </div>
+          </div>
+
+          <div class="pt-3">
+            <button type="submit" class="w-full py-3 bg-brand-700 hover:bg-brand-800 text-white font-bold rounded-xl shadow-md transition text-sm flex items-center justify-center gap-2">
+              <i class="fa-solid fa-check-circle"></i> Submit Registration
+            </button>
+          </div>
+        </form>
+
+        <div id="reg-success-msg" class="hidden mt-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-xs flex items-center gap-2">
+          <i class="fa-solid fa-circle-check text-base text-emerald-600"></i>
+          <div>Registration successful! You are now eligible to be marked for rehearsals.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 4: ADMIN, STATS & CLOUD SYNC           -->
+    <!-- ========================================== -->
+    <section id="tab-admin" class="hidden space-y-5">
+      <!-- Overview Cards -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <div class="text-[11px] font-bold text-slate-500 uppercase">Total Registered</div>
+          <div class="text-2xl font-extrabold text-brand-900 mt-1 font-heading" id="admin-total-reg">0</div>
+          <div class="text-[10px] text-slate-400 mt-0.5">Across all zones</div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <div class="text-[11px] font-bold text-slate-500 uppercase">Sopranos / Altos</div>
+          <div class="text-2xl font-extrabold text-pink-600 mt-1 font-heading" id="admin-soprano-alto">0 / 0</div>
+          <div class="text-[10px] text-slate-400 mt-0.5">Female voice parts</div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <div class="text-[11px] font-bold text-slate-500 uppercase">Tenors / Basses</div>
+          <div class="text-2xl font-extrabold text-blue-700 mt-1 font-heading" id="admin-tenor-bass">0 / 0</div>
+          <div class="text-[10px] text-slate-400 mt-0.5">Male voice parts</div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <div class="text-[11px] font-bold text-slate-500 uppercase">Stage Qualified (≥70%)</div>
+          <div class="text-2xl font-extrabold text-emerald-600 mt-1 font-heading" id="admin-qualified">0</div>
+          <div class="text-[10px] text-slate-400 mt-0.5">Eligible for Concert</div>
+        </div>
+      </div>
+
+      <!-- Action Buttons Row -->
+      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-wrap gap-2.5 items-center justify-between text-xs">
+        <div class="font-bold text-slate-700">Data Management:</div>
+        <div class="flex flex-wrap gap-2">
+          <button onclick="exportToCSV()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 font-bold rounded-lg border border-slate-300 text-slate-700 flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-file-excel text-emerald-600"></i> Export to Excel/CSV
+          </button>
+          <label class="px-3 py-2 bg-slate-100 hover:bg-slate-200 font-bold rounded-lg border border-slate-300 text-slate-700 flex items-center gap-1.5 transition cursor-pointer">
+            <i class="fa-solid fa-file-import text-blue-600"></i> Import Member CSV
+            <input type="file" id="csv-file-input" accept=".csv" class="hidden" onchange="importFromCSV(event)">
+          </label>
+          <button onclick="openModal('modal-sheets-sync')" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-700 font-bold rounded-lg text-white flex items-center gap-1.5 transition shadow-sm">
+            <i class="fa-brands fa-google"></i> Connect Google Sheet
+          </button>
+        </div>
+      </div>
+
+      <!-- Rehearsals Schedule Reference -->
+      <div class="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-sm">
+        <h3 class="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
+          <i class="fa-regular fa-calendar-days text-brand-600"></i> Official 2026 Rehearsal Schedule & Weighting
+        </h3>
+        <div class="overflow-x-auto text-xs">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold">
+                <th class="p-2">Date</th>
+                <th class="p-2">Day</th>
+                <th class="p-2">Rehearsal Level</th>
+                <th class="p-2">Time</th>
+                <th class="p-2">Status</th>
+              </tr>
+            </thead>
+            <tbody id="schedule-table-body" class="divide-y divide-slate-100 text-slate-700">
+              <!-- Rendered by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- MODAL 1: ADD NEW MEMBER ON THE SPOT        -->
+  <!-- ========================================== -->
+  <div id="modal-add-member" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-2xl border border-slate-200 animate-in fade-in zoom-in duration-150">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
+        <h3 class="font-bold text-slate-900 text-sm font-heading flex items-center gap-2">
+          <i class="fa-solid fa-user-plus text-brand-600"></i> Quick Add Chorister at Practice
+        </h3>
+        <button onclick="closeModal('modal-add-member')" class="text-slate-400 hover:text-slate-600 text-lg">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form onsubmit="handleQuickAdd(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Full Name *</label>
+          <input type="text" id="quick-name" required placeholder="e.g. Samuel Olawale" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Phone Number *</label>
+            <input type="tel" id="quick-phone" required placeholder="080XXXXXXXX" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Voice Part *</label>
+            <select id="quick-part" required class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+              <option value="Soprano">Soprano</option>
+              <option value="Alto">Alto</option>
+              <option value="Tenor">Tenor</option>
+              <option value="Bass">Bass</option>
+              <option value="Musician">Musician</option>
+              <option value="Technical">Technical</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Zone *</label>
+            <select id="quick-zone" required class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+              <!-- Populated by JS -->
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Station *</label>
+            <input type="text" id="quick-station" required placeholder="Station name" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+          </div>
+        </div>
+        
+        <div class="pt-2 flex items-center justify-between">
+          <label class="flex items-center gap-2 text-slate-700 font-semibold cursor-pointer">
+            <input type="checkbox" id="quick-mark-present" checked class="w-4 h-4 text-emerald-600 rounded">
+            Mark Present for Today
+          </label>
+        </div>
+
+        <div class="pt-3 flex gap-2">
+          <button type="button" onclick="closeModal('modal-add-member')" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition">Cancel</button>
+          <button type="submit" class="flex-1 py-2.5 bg-brand-700 hover:bg-brand-800 text-white font-bold rounded-xl transition shadow">Save & Check In</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL 2: GOOGLE SHEETS LIVE SYNC SETUP     -->
+  <!-- ========================================== -->
+  <div id="modal-sheets-sync" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-5 shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
+        <h3 class="font-bold text-slate-900 text-sm font-heading flex items-center gap-2">
+          <i class="fa-brands fa-google text-emerald-600"></i> Google Sheets Live Sync
+        </h3>
+        <button onclick="closeModal('modal-sheets-sync')" class="text-slate-400 hover:text-slate-600 text-lg">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3 text-xs text-slate-600">
+        <p>This allows attendance marked on officers' phones to stream live into your Google Spreadsheet!</p>
+        
+        <div class="bg-amber-50 p-3 rounded-xl border border-amber-200 text-amber-900 space-y-1">
+          <strong>How to get your Webhook URL in 1 minute:</strong>
+          <ol class="list-decimal pl-4 space-y-0.5 text-[11px]">
+            <li>Open your Google Sheet linked to the Form.</li>
+            <li>Go to <b>Extensions &gt; Apps Script</b>.</li>
+            <li>Paste the <code>google-apps-script.js</code> code provided in the project.</li>
+            <li>Click <b>Deploy &gt; New deployment &gt; Web app</b> (Who has access: <i>Anyone</i>).</li>
+            <li>Copy the Web App URL and paste it below!</li>
+          </ol>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Google Apps Script Web App URL:</label>
+          <input type="url" id="sheet-webhook-url" placeholder="https://script.google.com/macros/s/.../exec" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-brand-500 focus:outline-none">
+        </div>
+
+        <div class="pt-2 flex gap-2">
+          <button type="button" onclick="saveSheetWebhook()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition shadow">
+            Save Webhook & Enable Cloud Sync
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500">
+    <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div>© 2026 Ondo Area Music Committee. All rights reserved.</div>
+      <div class="flex items-center gap-3">
+        <a href="https://forms.gle/HCQ7BKiUMUSESFjHA" target="_blank" class="hover:text-brand-600 transition underline">Original Form</a>
+        <span>•</span>
+        <a href="https://drive.google.com/drive/folders/1pQFYas64laWmdm__zjuPAoYSbA_hp3FD" target="_blank" class="hover:text-brand-600 transition underline">Drive Videos</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT LOGIC -->
+  <script>
+    // 1. OFFICIAL REHEARSAL SCHEDULE (From Official Image)
+    const REHEARSAL_SCHEDULE = [
+      { id: 'sess_1', date: '2026-10-30', displayDate: '30th Oct 2026', day: 'Friday', type: 'State', time: '7:00pm - 11:00pm' },
+      { id: 'sess_2', date: '2026-10-31', displayDate: '31st Oct 2026', day: 'Saturday', type: 'State Practice', time: '7:00am - 10:00am' },
+      { id: 'sess_3', date: '2026-11-06', displayDate: '6th Nov 2026', day: 'Friday', type: 'Station Practice', time: '5:00pm - 7:00pm', isTomorrow: true },
+      { id: 'sess_4', date: '2026-11-13', displayDate: '13th Nov 2026', day: 'Friday', type: 'Zonal Practice', time: '5:00pm - 7:00pm' },
+      { id: 'sess_5', date: '2026-11-20', displayDate: '20th Nov 2026', day: 'Friday', type: 'Station Practice', time: '5:00pm - 7:00pm' },
+      { id: 'sess_6', date: '2026-11-27', displayDate: '27th Nov 2026', day: 'Friday', type: 'State', time: '7:00pm - 11:00pm' },
+      { id: 'sess_7', date: '2026-11-28', displayDate: '28th Nov 2026', day: 'Saturday', type: 'Practice', time: '7:00am - 10:00am' },
+      { id: 'sess_8', date: '2026-12-04', displayDate: '4th Dec 2026', day: 'Friday', type: 'Station Practice', time: '5:00pm - 7:00pm' },
+      { id: 'sess_9', date: '2026-12-07', displayDate: '7th Dec 2026', day: 'Monday', type: 'Station Practice', time: '5:00pm - 7:00pm' },
+      { id: 'sess_10', date: '2026-12-23', displayDate: '23rd Dec 2026', day: 'Wednesday', type: 'State Rehearsal', time: '7:00pm - 12:00am' },
+      { id: 'sess_11', date: '2026-12-27', displayDate: '27th Dec 2026', day: 'Sunday', type: 'Final Rehearsal & CONCERT', time: '12:00noon / 4:00pm' }
+    ];
+
+    // 2. DEFAULT ZONES
+    const ZONES = [
+      'Ondo Central',
+      'Akure Zone',
+      'Owo Zone',
+      'Ikare Zone',
+      'Ore Zone',
+      'Okitipupa Zone',
+      'Ile-Oluji Zone',
+      'Idanre Zone'
+    ];
+
+    // 3. SEED MEMBERS (Will be replaced/augmented by CSV import or user registrations)
+    const DEFAULT_MEMBERS = [
+      { id: 'm1', name: 'Sister Grace Adesina', phone: '08031234561', part: 'Soprano', zone: 'Ondo Central', station: 'Cathedral', gender: 'Female' },
+      { id: 'm2', name: 'Brother Emmanuel Adeleke', phone: '08029876542', part: 'Tenor', zone: 'Akure Zone', station: 'Alagbaka Station', gender: 'Male' },
+      { id: 'm3', name: 'Sister Deborah Ojo', phone: '08161234563', part: 'Alto', zone: 'Ondo Central', station: 'Yaba Station', gender: 'Female' },
+      { id: 'm4', name: 'Brother Damilola Babatunde', phone: '08051234564', part: 'Bass', zone: 'Owo Zone', station: 'Owo Central', gender: 'Male' },
+      { id: 'm5', name: 'Sister Aanuoluwapo Fashola', phone: '07031234565', part: 'Soprano', zone: 'Ikare Zone', station: 'Ikare Main', gender: 'Female' },
+      { id: 'm6', name: 'Brother Femi Futa', phone: '08071234566', part: 'Musician', zone: 'Akure Zone', station: 'FUTA Station', gender: 'Male' }
+    ];
+
+    // STATE MANAGEMENT (Stored in LocalStorage)
+    let state = {
+      members: [],
+      attendance: {}, // { "sess_3_m1": "present" | "absent" | "excused" }
+      activePartFilter: 'ALL',
+      sheetWebhookUrl: ''
+    };
+
+    function loadState() {
+      const savedMembers = localStorage.getItem('ondo_choir_members');
+      const savedAttendance = localStorage.getItem('ondo_choir_attendance');
+      const savedWebhook = localStorage.getItem('ondo_choir_webhook');
+
+      state.members = savedMembers ? JSON.parse(savedMembers) : DEFAULT_MEMBERS;
+      state.attendance = savedAttendance ? JSON.parse(savedAttendance) : {
+        // Pre-fill dummy past rehearsals for demonstration
+        'sess_1_m1': 'present',
+        'sess_2_m1': 'present',
+        'sess_1_m2': 'present',
+        'sess_2_m2': 'absent',
+        'sess_1_m3': 'present',
+        'sess_2_m3': 'present'
+      };
+      state.sheetWebhookUrl = savedWebhook || '';
+      if (document.getElementById('sheet-webhook-url')) {
+        document.getElementById('sheet-webhook-url').value = state.sheetWebhookUrl;
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem('ondo_choir_members', JSON.stringify(state.members));
+      localStorage.setItem('ondo_choir_attendance', JSON.stringify(state.attendance));
+      updateAdminStats();
+    }
+
+    // INITIALIZATION
+    window.addEventListener('DOMContentLoaded', () => {
+      loadState();
+      populateDropdowns();
+      renderCheckinList();
+      renderScheduleTable();
+      updateAdminStats();
+    });
+
+    // POPULATE DROPDOWNS
+    function populateDropdowns() {
+      const sessionSelect = document.getElementById('checkin-session-select');
+      sessionSelect.innerHTML = REHEARSAL_SCHEDULE.map(s => `
+        <option value="${s.id}" ${s.id === 'sess_3' ? 'selected' : ''}>
+          ${s.displayDate} — ${s.type} (${s.time}) ${s.isTomorrow ? '★ TOMORROW' : ''}
+        </option>
+      `).join('');
+
+      const zoneSelects = [
+        document.getElementById('checkin-zone-select'),
+        document.getElementById('reg-zone'),
+        document.getElementById('quick-zone')
+      ];
+
+      zoneSelects.forEach(select => {
+        if (!select) return;
+        const isFilter = select.id === 'checkin-zone-select';
+        let options = isFilter ? '<option value="ALL">All Zones & Stations</option>' : '';
+        options += ZONES.map(z => `<option value="${z}">${z}</option>`).join('');
+        select.innerHTML = options;
+      });
+    }
+
+    // TAB SWITCHING
+    function switchTab(tabId) {
+      const tabs = ['checkin', 'score', 'register', 'admin'];
+      tabs.forEach(t => {
+        const section = document.getElementById(`tab-${t}`);
+        const btn = document.getElementById(`tab-btn-${t}`);
+        if (t === tabId) {
+          section.classList.remove('hidden');
+          btn.classList.add('border-amber-400', 'text-amber-300');
+          btn.classList.remove('border-transparent', 'text-slate-300');
+        } else {
+          section.classList.add('hidden');
+          btn.classList.remove('border-amber-400', 'text-amber-300');
+          btn.classList.add('border-transparent', 'text-slate-300');
+        }
+      });
+      if (tabId === 'checkin') renderCheckinList();
+      if (tabId === 'admin') updateAdminStats();
+    }
+
+    // VOICE PART FILTER
+    function filterPart(part) {
+      state.activePartFilter = part;
+      document.querySelectorAll('.part-pill').forEach(btn => {
+        if (btn.innerText.trim() === part || (part === 'ALL' && btn.innerText.trim() === 'All')) {
+          btn.className = 'part-pill active-part px-2.5 py-1 rounded-lg border font-semibold bg-brand-700 text-white border-brand-700';
+        } else {
+          btn.className = 'part-pill px-2.5 py-1 rounded-lg border font-medium bg-slate-100 text-slate-700 border-slate-200';
+        }
+      });
+      renderCheckinList();
+    }
+
+    // RENDER CHECK-IN ROSTER
+    function renderCheckinList() {
+      const sessionId = document.getElementById('checkin-session-select').value;
+      const zoneFilter = document.getElementById('checkin-zone-select').value;
+      const search = (document.getElementById('checkin-search').value || '').toLowerCase().trim();
+
+      let filtered = state.members.filter(m => {
+        const matchesZone = (zoneFilter === 'ALL' || m.zone === zoneFilter);
+        const matchesPart = (state.activePartFilter === 'ALL' || m.part.toLowerCase() === state.activePartFilter.toLowerCase());
+        const matchesSearch = !search || m.name.toLowerCase().includes(search) || m.phone.includes(search);
+        return matchesZone && matchesPart && matchesSearch;
+      });
+
+      // Update counters
+      let presentCount = 0;
+      let excusedCount = 0;
+      filtered.forEach(m => {
+        const key = `${sessionId}_${m.id}`;
+        if (state.attendance[key] === 'present') presentCount++;
+        if (state.attendance[key] === 'excused') excusedCount++;
+      });
+
+      document.getElementById('stat-total').innerText = filtered.length;
+      document.getElementById('stat-present').innerText = presentCount;
+      document.getElementById('stat-excused').innerText = excusedCount;
+
+      const container = document.getElementById('checkin-list');
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="bg-white p-8 text-center rounded-2xl border border-dashed border-slate-300 text-slate-400">
+            <i class="fa-solid fa-users-slash text-3xl mb-2 text-slate-300"></i>
+            <p class="text-xs font-semibold">No choristers found matching this filter.</p>
+            <button onclick="openModal('modal-add-member')" class="mt-3 px-3 py-1.5 bg-brand-700 text-white text-xs font-bold rounded-lg">
+              + Register New Chorister
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(m => {
+        const key = `${sessionId}_${m.id}`;
+        const currentStatus = state.attendance[key] || 'absent';
+
+        const isPresent = currentStatus === 'present';
+        const isExcused = currentStatus === 'excused';
+
+        return `
+          <div class="bg-white p-3.5 rounded-2xl border ${isPresent ? 'border-emerald-300 bg-emerald-50/20' : 'border-slate-200'} shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition">
+            <div class="flex items-start gap-3">
+              <div class="w-10 h-10 rounded-xl ${getPartBadgeColor(m.part)} flex items-center justify-center font-bold text-sm shrink-0">
+                ${m.part.charAt(0)}
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-slate-900 leading-tight">${m.name}</h4>
+                <div class="text-[11px] text-slate-500 flex flex-wrap items-center gap-1.5 mt-0.5">
+                  <span class="font-medium text-brand-700">${m.part}</span>
+                  <span>•</span>
+                  <span>${m.zone}</span>
+                  <span>•</span>
+                  <span>${m.station}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Attendance Action Buttons -->
+            <div class="flex items-center gap-1.5 self-end sm:self-auto">
+              <button onclick="setAttendance('${sessionId}', '${m.id}', 'present')" 
+                      class="px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition ${isPresent ? 'bg-emerald-600 text-white shadow-sm ring-2 ring-emerald-400' : 'bg-slate-100 hover:bg-emerald-100 text-slate-700'}">
+                <i class="fa-solid fa-check"></i>
+                <span>${isPresent ? 'Present ✓' : 'Present'}</span>
+              </button>
+
+              <button onclick="setAttendance('${sessionId}', '${m.id}', 'excused')" 
+                      class="px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1 transition ${isExcused ? 'bg-amber-500 text-white shadow-sm' : 'bg-slate-100 hover:bg-amber-100 text-slate-600'}">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                <span>Excused</span>
+              </button>
+
+              ${isPresent || isExcused ? `
+                <button onclick="setAttendance('${sessionId}', '${m.id}', 'absent')" title="Clear"
+                        class="px-2 py-1.5 rounded-xl text-xs bg-slate-100 hover:bg-rose-100 text-slate-400 hover:text-rose-600 transition">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function getPartBadgeColor(part) {
+      switch((part||'').toLowerCase()) {
+        case 'soprano': return 'bg-pink-100 text-pink-700';
+        case 'alto': return 'bg-purple-100 text-purple-700';
+        case 'tenor': return 'bg-blue-100 text-blue-700';
+        case 'bass': return 'bg-indigo-100 text-indigo-700';
+        case 'musician': return 'bg-amber-100 text-amber-700';
+        default: return 'bg-slate-100 text-slate-700';
+      }
+    }
+
+    // SET ATTENDANCE
+    function setAttendance(sessionId, memberId, status) {
+      const key = `${sessionId}_${memberId}`;
+      state.attendance[key] = status;
+      saveState();
+      renderCheckinList();
+
+      // Trigger background sync if webhook configured
+      if (state.sheetWebhookUrl) {
+        pushToGoogleSheets({
+          action: 'mark_attendance',
+          sessionId,
+          memberId,
+          status,
+          timestamp: new Date().toISOString()
+        });
+      }
+    }
+
+    // MEMBER LOOKUP / SCORE CARD
+    function handleMemberLookup(e) {
+      e.preventDefault();
+      const query = document.getElementById('member-lookup-input').value.trim().toLowerCase();
+      const member = state.members.find(m => m.phone.includes(query) || m.name.toLowerCase().includes(query));
+
+      const resultBox = document.getElementById('member-score-result');
+      resultBox.classList.remove('hidden');
+
+      if (!member) {
+        resultBox.innerHTML = `
+          <div class="bg-rose-50 border border-rose-200 text-rose-800 p-4 rounded-2xl text-xs">
+            <div class="font-bold text-sm mb-1">No registered member found!</div>
+            <p>Please check your phone number or register your interest using the "Register Member" tab.</p>
+          </div>
+        `;
+        return;
+      }
+
+      // Calculate Attendance Percentage based on completed sessions up to now
+      // Let's count sessions up to Nov 6 (session 3) as active, or all completed sessions
+      const totalSessionsSoFar = 3; // Oct 30, Oct 31, Nov 6
+      let attendedCount = 0;
+      
+      REHEARSAL_SCHEDULE.forEach(s => {
+        const key = `${s.id}_${member.id}`;
+        if (state.attendance[key] === 'present') {
+          attendedCount++;
+        }
+      });
+
+      const percentage = Math.round((attendedCount / totalSessionsSoFar) * 100);
+      const isQualified = percentage >= 70;
+      const isBorderline = percentage >= 50 && percentage < 70;
+
+      let statusBadge = '';
+      if (isQualified) {
+        statusBadge = `<span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-full font-bold text-xs border border-emerald-300">🟢 ON TRACK FOR CONCERT STAGE</span>`;
+      } else if (isBorderline) {
+        statusBadge = `<span class="px-2.5 py-1 bg-amber-100 text-amber-800 rounded-full font-bold text-xs border border-amber-300">🟡 BORDERLINE (NEEDS ATTENDANCE)</span>`;
+      } else {
+        statusBadge = `<span class="px-2.5 py-1 bg-rose-100 text-rose-800 rounded-full font-bold text-xs border border-rose-300">🔴 AT RISK OF DISQUALIFICATION</span>`;
+      }
+
+      resultBox.innerHTML = `
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm text-left space-y-4">
+          <div class="flex items-center justify-between border-b pb-3 border-slate-100">
+            <div>
+              <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Chorister Profile</span>
+              <h3 class="text-base font-bold text-slate-900">${member.name}</h3>
+              <p class="text-xs text-slate-500">${member.part} • ${member.zone} (${member.station})</p>
+            </div>
+            <div class="text-right">
+              <div class="text-2xl font-black font-heading ${isQualified ? 'text-emerald-600' : isBorderline ? 'text-amber-600' : 'text-rose-600'}">
+                ${percentage}%
+              </div>
+              <div class="text-[10px] text-slate-400 font-medium">${attendedCount} of ${totalSessionsSoFar} attended</div>
+            </div>
+          </div>
+
+          <div class="text-center py-1">
+            ${statusBadge}
+          </div>
+
+          <!-- Progress Bar -->
+          <div>
+            <div class="flex justify-between text-[11px] font-bold mb-1 text-slate-600">
+              <span>Stage Qualification Target</span>
+              <span>70% Required</span>
+            </div>
+            <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+              <div class="h-full ${isQualified ? 'bg-emerald-500' : isBorderline ? 'bg-amber-500' : 'bg-rose-500'} rounded-full transition-all duration-500" style="width: ${Math.min(percentage, 100)}%"></div>
+            </div>
+          </div>
+
+          <!-- Rehearsal History List -->
+          <div>
+            <h4 class="text-xs font-bold text-slate-700 mb-2">Rehearsal History & Upcoming:</h4>
+            <div class="space-y-1.5 text-xs max-h-48 overflow-y-auto custom-scroll pr-1">
+              ${REHEARSAL_SCHEDULE.map(s => {
+                const key = `${s.id}_${member.id}`;
+                const status = state.attendance[key];
+                let icon = '<i class="fa-regular fa-circle text-slate-300"></i>';
+                let label = '<span class="text-slate-400">Upcoming</span>';
+
+                if (status === 'present') {
+                  icon = '<i class="fa-solid fa-circle-check text-emerald-500"></i>';
+                  label = '<span class="text-emerald-700 font-bold">Present</span>';
+                } else if (status === 'excused') {
+                  icon = '<i class="fa-solid fa-clock text-amber-500"></i>';
+                  label = '<span class="text-amber-700 font-medium">Excused</span>';
+                } else if (s.id === 'sess_1' || s.id === 'sess_2') {
+                  icon = '<i class="fa-solid fa-circle-xmark text-rose-400"></i>';
+                  label = '<span class="text-rose-600 font-medium">Absent</span>';
+                }
+
+                return `
+                  <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-100">
+                    <div class="flex items-center gap-2">
+                      ${icon}
+                      <div>
+                        <div class="font-semibold text-slate-800 text-[11px]">${s.displayDate} — ${s.type}</div>
+                        <div class="text-[10px] text-slate-400">${s.time}</div>
+                      </div>
+                    </div>
+                    ${label}
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+
+          <!-- Direct Drive Practice Link -->
+          <a href="https://drive.google.com/drive/folders/1pQFYas64laWmdm__zjuPAoYSbA_hp3FD" target="_blank" 
+             class="w-full py-2.5 bg-amber-400 hover:bg-amber-300 text-brand-900 font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition shadow">
+            <i class="fa-brands fa-google-drive text-base"></i> Open Practice Videos on Google Drive
+          </a>
+        </div>
+      `;
+    }
+
+    // HANDLE REGISTRATIONS
+    function handlePublicRegistration(e) {
+      e.preventDefault();
+      const newMember = {
+        id: 'm_' + Date.now(),
+        name: document.getElementById('reg-name').value.trim(),
+        phone: document.getElementById('reg-phone').value.trim(),
+        part: document.getElementById('reg-part').value,
+        zone: document.getElementById('reg-zone').value,
+        station: document.getElementById('reg-station').value.trim(),
+        gender: document.querySelector('input[name="gender"]:checked').value
+      };
+
+      state.members.push(newMember);
+      saveState();
+
+      document.getElementById('public-reg-form').reset();
+      document.getElementById('reg-success-msg').classList.remove('hidden');
+      setTimeout(() => {
+        document.getElementById('reg-success-msg').classList.add('hidden');
+      }, 5000);
+
+      if (state.sheetWebhookUrl) {
+        pushToGoogleSheets({ action: 'register_member', member: newMember });
+      }
+    }
+
+    function handleQuickAdd(e) {
+      e.preventDefault();
+      const sessionId = document.getElementById('checkin-session-select').value;
+      const newMember = {
+        id: 'm_' + Date.now(),
+        name: document.getElementById('quick-name').value.trim(),
+        phone: document.getElementById('quick-phone').value.trim(),
+        part: document.getElementById('quick-part').value,
+        zone: document.getElementById('quick-zone').value,
+        station: document.getElementById('quick-station').value.trim(),
+        gender: 'Not specified'
+      };
+
+      state.members.push(newMember);
+
+      const markPresent = document.getElementById('quick-mark-present').checked;
+      if (markPresent) {
+        state.attendance[`${sessionId}_${newMember.id}`] = 'present';
+      }
+
+      saveState();
+      closeModal('modal-add-member');
+      renderCheckinList();
+
+      if (state.sheetWebhookUrl) {
+        pushToGoogleSheets({ action: 'register_member', member: newMember });
+      }
+    }
+
+    // SCHEDULE TABLE
+    function renderScheduleTable() {
+      const tbody = document.getElementById('schedule-table-body');
+      tbody.innerHTML = REHEARSAL_SCHEDULE.map(s => `
+        <tr class="hover:bg-slate-50">
+          <td class="p-2 font-bold">${s.displayDate}</td>
+          <td class="p-2">${s.day}</td>
+          <td class="p-2 font-semibold text-brand-700">${s.type}</td>
+          <td class="p-2 text-slate-500">${s.time}</td>
+          <td class="p-2">
+            ${s.isTomorrow ? '<span class="px-2 py-0.5 bg-amber-100 text-amber-800 rounded font-bold text-[10px]">TOMORROW</span>' : '<span class="text-slate-400">Scheduled</span>'}
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // ADMIN STATS
+    function updateAdminStats() {
+      const total = state.members.length;
+      let sopranos = 0, altos = 0, tenors = 0, basses = 0;
+
+      state.members.forEach(m => {
+        const p = (m.part || '').toLowerCase();
+        if (p === 'soprano') sopranos++;
+        if (p === 'alto') altos++;
+        if (p === 'tenor') tenors++;
+        if (p === 'bass') basses++;
+      });
+
+      let qualified = 0;
+      const totalSessionsSoFar = 3;
+      state.members.forEach(m => {
+        let attended = 0;
+        REHEARSAL_SCHEDULE.forEach(s => {
+          if (state.attendance[`${s.id}_${m.id}`] === 'present') attended++;
+        });
+        if ((attended / totalSessionsSoFar) >= 0.70) qualified++;
+      });
+
+      if (document.getElementById('admin-total-reg')) {
+        document.getElementById('admin-total-reg').innerText = total;
+        document.getElementById('admin-soprano-alto').innerText = `${sopranos} / ${altos}`;
+        document.getElementById('admin-tenor-bass').innerText = `${tenors} / ${basses}`;
+        document.getElementById('admin-qualified').innerText = qualified;
+      }
+    }
+
+    // CSV EXPORT
+    function exportToCSV() {
+      let csv = 'ID,Full Name,Phone Number,Voice Part,Zone,Station,Attendance Count,Percentage,Cleared for Concert\n';
+      const totalSessionsSoFar = 3;
+
+      state.members.forEach(m => {
+        let attended = 0;
+        REHEARSAL_SCHEDULE.forEach(s => {
+          if (state.attendance[`${s.id}_${m.id}`] === 'present') attended++;
+        });
+        const pct = Math.round((attended / totalSessionsSoFar) * 100);
+        const cleared = pct >= 70 ? 'YES' : 'NO';
+        csv += `"${m.id}","${m.name}","${m.phone}","${m.part}","${m.zone}","${m.station}","${attended}","${pct}%","${cleared}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', `ondo_choir_attendance_${new Date().toISOString().slice(0, 10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // CSV IMPORT
+    function importFromCSV(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const text = event.target.result;
+        const lines = text.split('\n');
+        let importedCount = 0;
+
+        for (let i = 1; i < lines.length; i++) {
+          const row = lines[i].split(',');
+          if (row.length >= 3 && row[1]) {
+            const clean = str => (str || '').replace(/"/g, '').trim();
+            const name = clean(row[1]) || clean(row[0]);
+            const phone = clean(row[2]) || clean(row[1]);
+            const part = clean(row[3]) || 'Soprano';
+            const zone = clean(row[4]) || 'Ondo Central';
+            const station = clean(row[5]) || 'Central Station';
+
+            if (name && !state.members.some(m => m.phone === phone)) {
+              state.members.push({
+                id: 'm_' + Date.now() + '_' + i,
+                name,
+                phone,
+                part,
+                zone,
+                station,
+                gender: 'Not specified'
+              });
+              importedCount++;
+            }
+          }
+        }
+
+        saveState();
+        renderCheckinList();
+        alert(`Successfully imported ${importedCount} choristers!`);
+      };
+      reader.readAsText(file);
+    }
+
+    // GOOGLE SHEETS LIVE WEBHOOK
+    function saveSheetWebhook() {
+      const url = document.getElementById('sheet-webhook-url').value.trim();
+      state.sheetWebhookUrl = url;
+      localStorage.setItem('ondo_choir_webhook', url);
+      closeModal('modal-sheets-sync');
+      alert('Google Sheets Webhook saved! All attendance entries will now sync to Google Sheets in real time.');
+    }
+
+    function pushToGoogleSheets(payload) {
+      if (!state.sheetWebhookUrl) return;
+      fetch(state.sheetWebhookUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).catch(err => console.error('Cloud sync failed:', err));
+    }
+
+    function saveSyncNotification() {
+      alert('All attendance records are securely saved on your device and ready to sync!');
+    }
+
+    // MODAL HELPERS
+    function openModal(id) {
+      document.getElementById(id).classList.remove('hidden');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+  </script>
+</body>
+</html>
