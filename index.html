@@ -582,17 +582,17 @@
   <script>
     // 1. OFFICIAL REHEARSAL SCHEDULE (From Official Image)
     const REHEARSAL_SCHEDULE = [
-      { id: 'sess_1', date: '2026-10-30', displayDate: '30th Oct 2026', day: 'Friday', type: 'State', time: '7:00pm - 11:00pm' },
-      { id: 'sess_2', date: '2026-10-31', displayDate: '31st Oct 2026', day: 'Saturday', type: 'State Practice', time: '7:00am - 10:00am' },
-      { id: 'sess_3', date: '2026-11-06', displayDate: '6th Nov 2026', day: 'Friday', type: 'Station Practice', time: '5:00pm - 7:00pm', isTomorrow: true },
-      { id: 'sess_4', date: '2026-11-13', displayDate: '13th Nov 2026', day: 'Friday', type: 'Zonal Practice', time: '5:00pm - 7:00pm' },
-      { id: 'sess_5', date: '2026-11-20', displayDate: '20th Nov 2026', day: 'Friday', type: 'Station Practice', time: '5:00pm - 7:00pm' },
-      { id: 'sess_6', date: '2026-11-27', displayDate: '27th Nov 2026', day: 'Friday', type: 'State', time: '7:00pm - 11:00pm' },
-      { id: 'sess_7', date: '2026-11-28', displayDate: '28th Nov 2026', day: 'Saturday', type: 'Practice', time: '7:00am - 10:00am' },
-      { id: 'sess_8', date: '2026-12-04', displayDate: '4th Dec 2026', day: 'Friday', type: 'Station Practice', time: '5:00pm - 7:00pm' },
-      { id: 'sess_9', date: '2026-12-07', displayDate: '7th Dec 2026', day: 'Monday', type: 'Station Practice', time: '5:00pm - 7:00pm' },
-      { id: 'sess_10', date: '2026-12-23', displayDate: '23rd Dec 2026', day: 'Wednesday', type: 'State Rehearsal', time: '7:00pm - 12:00am' },
-      { id: 'sess_11', date: '2026-12-27', displayDate: '27th Dec 2026', day: 'Sunday', type: 'Final Rehearsal & CONCERT', time: '12:00noon / 4:00pm' }
+      { id: 'sess_1', date: '2026-10-30', displayDate: '30th Oct 2026', day: 'Friday', type: 'State', time: '7:00pm - 11:00pm', startTime: '19:00', endTime: '23:00' },
+      { id: 'sess_2', date: '2026-10-31', displayDate: '31st Oct 2026', day: 'Saturday', type: 'State Practice', time: '7:00am - 10:00am', startTime: '07:00', endTime: '10:00' },
+      { id: 'sess_3', date: '2026-11-06', displayDate: '6th Nov 2026', day: 'Friday', type: 'Station Practice', time: '5:00pm - 7:00pm', startTime: '17:00', endTime: '19:00', isTomorrow: true },
+      { id: 'sess_4', date: '2026-11-13', displayDate: '13th Nov 2026', day: 'Friday', type: 'Zonal Practice', time: '5:00pm - 7:00pm', startTime: '17:00', endTime: '19:00' },
+      { id: 'sess_5', date: '2026-11-20', displayDate: '20th Nov 2026', day: 'Friday', type: 'Station Practice', time: '5:00pm - 7:00pm', startTime: '17:00', endTime: '19:00' },
+      { id: 'sess_6', date: '2026-11-27', displayDate: '27th Nov 2026', day: 'Friday', type: 'State', time: '7:00pm - 11:00pm', startTime: '19:00', endTime: '23:00' },
+      { id: 'sess_7', date: '2026-11-28', displayDate: '28th Nov 2026', day: 'Saturday', type: 'Practice', time: '7:00am - 10:00am', startTime: '07:00', endTime: '10:00' },
+      { id: 'sess_8', date: '2026-12-04', displayDate: '4th Dec 2026', day: 'Friday', type: 'Station Practice', time: '5:00pm - 7:00pm', startTime: '17:00', endTime: '19:00' },
+      { id: 'sess_9', date: '2026-12-07', displayDate: '7th Dec 2026', day: 'Monday', type: 'Station Practice', time: '5:00pm - 7:00pm', startTime: '17:00', endTime: '19:00' },
+      { id: 'sess_10', date: '2026-12-23', displayDate: '23rd Dec 2026', day: 'Wednesday', type: 'State Rehearsal', time: '7:00pm - 12:00am', startTime: '19:00', endTime: '24:00' },
+      { id: 'sess_11', date: '2026-12-27', displayDate: '27th Dec 2026', day: 'Sunday', type: 'Final Rehearsal & CONCERT', time: '12:00noon / 4:00pm', startTime: '12:00', endTime: '18:00' }
     ];
 
     // 2. DEFAULT ZONES (From Ondo 2026 Roster)
@@ -1033,8 +1033,8 @@
     "part": "Soprano",
     "instrument": "Clarinet",
     "accompanist": "No",
-    "station": "Akure",
-    "phone": "",
+    "station": "Ijoka",
+    "phone": "08141072377",
     "gender": "Female",
     "id": "c_039"
   },
@@ -1176,8 +1176,8 @@
     "part": "Tenor",
     "instrument": "Piccolo",
     "accompanist": "Yes",
-    "station": "Akure",
-    "phone": "",
+    "station": "Ijoka",
+    "phone": "08036384571",
     "gender": "Male",
     "id": "c_052"
   },
@@ -2101,9 +2101,9 @@
     function loadState() {
       // Auto-migrate: seed master choristers
       const dataVersion = localStorage.getItem('ondo_data_version');
-      if (dataVersion !== '2026_choristers_v1') {
+      if (dataVersion !== '2026_choristers_v3') {
         localStorage.setItem('ondo_choir_members', JSON.stringify(DEFAULT_MEMBERS));
-        localStorage.setItem('ondo_data_version', '2026_choristers_v1');
+        localStorage.setItem('ondo_data_version', '2026_choristers_v3');
       }
 
       const savedMembers = localStorage.getItem('ondo_choir_members');
@@ -2136,16 +2136,109 @@
     }
 
     // REHEARSAL TIME GUARDRAILS (WEST AFRICA TIME - UTC+1)
-    function getTodayWATString() {
+    function getNowWAT() {
       const now = new Date();
-      const watTime = new Date(now.getTime() + (1 * 60 * 60 * 1000));
-      return watTime.toISOString().split('T')[0];
+      const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+      return new Date(utc + 3600000);
+    }
+
+    function getTodayWATString() {
+      const wat = getNowWAT();
+      const y = wat.getUTCFullYear();
+      const m = String(wat.getUTCMonth() + 1).padStart(2, '0');
+      const d = String(wat.getUTCDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
+
+    function formatMinutesToTime(totalMins) {
+      let h = Math.floor(totalMins / 60) % 24;
+      let m = totalMins % 60;
+      let ampm = h >= 12 ? 'PM' : 'AM';
+      let h12 = h % 12 || 12;
+      return `${h12}:${String(m).padStart(2, '0')} ${ampm}`;
+    }
+
+    /**
+     * Exact Business Rule:
+     * Opens 30 minutes after rehearsal start time
+     * Closes 30 minutes after rehearsal end time
+     */
+    function getSessionWindow(session) {
+      if (!session || !session.date) return { isOpen: true, status: 'open' };
+
+      const startTimeStr = session.startTime || '17:00';
+      const endTimeStr = session.endTime || '19:00';
+
+      const [sHour, sMin] = startTimeStr.split(':').map(Number);
+      const [eHour, eMin] = endTimeStr.split(':').map(Number);
+
+      const openMins = (sHour * 60 + sMin) + 30; // +30 mins after start
+      const closeMins = (eHour * 60 + eMin) + 30; // +30 mins after end
+
+      const openDisplay = formatMinutesToTime(openMins);
+      const closeDisplay = formatMinutesToTime(closeMins);
+
+      const nowWat = getNowWAT();
+      const todayWat = getTodayWATString();
+      const nowMinutes = nowWat.getUTCHours() * 60 + nowWat.getUTCMinutes();
+
+      // Future date
+      if (session.date > todayWat) {
+        return {
+          isOpen: false,
+          status: 'upcoming',
+          openTimeDisplay: openDisplay,
+          closeTimeDisplay: closeDisplay,
+          message: `Attendance opens on ${session.displayDate} at ${openDisplay} (30 mins after practice starts)`
+        };
+      }
+
+      // Past date
+      if (session.date < todayWat) {
+        return {
+          isOpen: false,
+          status: 'closed',
+          openTimeDisplay: openDisplay,
+          closeTimeDisplay: closeDisplay,
+          message: `Attendance window closed for ${session.displayDate}`
+        };
+      }
+
+      // Today - Before 30 min window
+      if (nowMinutes < openMins) {
+        return {
+          isOpen: false,
+          status: 'today_before_open',
+          openTimeDisplay: openDisplay,
+          closeTimeDisplay: closeDisplay,
+          message: `Attendance opens today at ${openDisplay} (30 mins after practice starts)`
+        };
+      }
+
+      // Today - After 30 min window
+      if (nowMinutes > closeMins) {
+        return {
+          isOpen: false,
+          status: 'closed',
+          openTimeDisplay: openDisplay,
+          closeTimeDisplay: closeDisplay,
+          message: `Attendance window closed today at ${closeDisplay} (30 mins after practice ended)`
+        };
+      }
+
+      // In the window right now!
+      return {
+        isOpen: true,
+        status: 'active',
+        openTimeDisplay: openDisplay,
+        closeTimeDisplay: closeDisplay,
+        message: `Live Rehearsal Check-In Active (Window closes at ${closeDisplay})`
+      };
     }
 
     function isSessionLocked(session) {
-      if (!session || !session.date) return false;
-      const todayWat = getTodayWATString();
-      return session.date > todayWat;
+      const win = getSessionWindow(session);
+      return !win.isOpen;
     }
 
     function getCompletedSessionsCount() {
@@ -2324,25 +2417,41 @@
       const isLocked = isSessionLocked(currentSession);
 
       const lockBanner = document.getElementById('session-lock-notice');
+      const win = getSessionWindow(currentSession);
       if (lockBanner && currentSession) {
-        if (isLocked) {
+        if (!win.isOpen) {
+          const isClosed = win.status === 'closed';
           lockBanner.innerHTML = `
-            <div class="bg-amber-50 border border-amber-300 rounded-2xl p-3.5 px-4 flex items-center gap-3 text-xs text-amber-950 mb-4 shadow-xs">
-              <div class="w-9 h-9 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-bold text-base shrink-0 shadow-xs">
-                <i class="fa-solid fa-lock"></i>
+            <div class="${isClosed ? 'bg-slate-100 border-slate-300 text-slate-800' : 'bg-amber-50 border-amber-300 text-amber-950'} border rounded-2xl p-3.5 px-4 flex items-center gap-3 text-xs mb-4 shadow-xs">
+              <div class="w-9 h-9 rounded-xl ${isClosed ? 'bg-slate-300 text-slate-700' : 'bg-amber-400 text-slate-950'} flex items-center justify-center font-bold text-base shrink-0 shadow-xs">
+                <i class="fa-solid ${isClosed ? 'fa-lock' : 'fa-clock'}"></i>
               </div>
               <div class="flex-1">
-                <span class="font-bold text-slate-900 block text-xs sm:text-sm">Attendance Check-In is Locked for this Date</span>
-                <span class="text-[11px] text-amber-900">
-                  This rehearsal is scheduled for <b>${currentSession.displayDate} (${currentSession.time})</b>. Early check-in is disabled until rehearsal day.
+                <span class="font-bold text-slate-900 block text-xs sm:text-sm">
+                  ${isClosed ? 'Attendance Check-In Window Closed' : 'Attendance Check-In is Locked'}
+                </span>
+                <span class="text-[11px] ${isClosed ? 'text-slate-600' : 'text-amber-900'}">
+                  ${win.message}. Practice time: <b>${currentSession.time}</b>. Window: <b>${win.openTimeDisplay} – ${win.closeTimeDisplay}</b>.
                 </span>
               </div>
             </div>
           `;
           lockBanner.classList.remove('hidden');
         } else {
-          lockBanner.innerHTML = '';
-          lockBanner.classList.add('hidden');
+          lockBanner.innerHTML = `
+            <div class="bg-emerald-50 border border-emerald-300 rounded-2xl p-3.5 px-4 flex items-center gap-3 text-xs text-emerald-950 mb-4 shadow-xs">
+              <div class="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-base shrink-0 shadow-xs">
+                <i class="fa-solid fa-clipboard-check"></i>
+              </div>
+              <div class="flex-1">
+                <span class="font-bold text-emerald-950 block text-xs sm:text-sm">🟢 Live Rehearsal Check-In Active</span>
+                <span class="text-[11px] text-emerald-800">
+                  Attendance window is OPEN! Window closes at <b>${win.closeTimeDisplay}</b> (30 mins after practice ends).
+                </span>
+              </div>
+            </div>
+          `;
+          lockBanner.classList.remove('hidden');
         }
       }
 
@@ -2411,7 +2520,7 @@
                 <button onclick="setAttendance('${sessionId}', '${m.id}', 'present')" 
                         class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-500 border border-slate-200 hover:bg-amber-50 hover:text-amber-900 hover:border-amber-300 transition flex items-center gap-1.5 shadow-xs cursor-pointer">
                   <i class="fa-solid fa-lock text-[10px] text-amber-600"></i>
-                  <span>Opens ${currentSession.displayDate.split(' ')[0]} ${currentSession.displayDate.split(' ')[1]}</span>
+                  <span>${win.status === 'closed' ? 'Closed' : 'Opens ' + win.openTimeDisplay}</span>
                 </button>
               ` : `
                 <button onclick="setAttendance('${sessionId}', '${m.id}', 'present')" 
@@ -2453,8 +2562,9 @@
     // SET ATTENDANCE (GUARDED BY REHEARSAL SCHEDULE TIME)
     function setAttendance(sessionId, memberId, status) {
       const session = REHEARSAL_SCHEDULE.find(s => s.id === sessionId);
-      if (isSessionLocked(session)) {
-        alert(`⚠️ Rehearsal Check-In is Locked!\n\nAttendance for ${session.displayDate} (${session.type}) cannot be marked in advance.\n\nCheck-in opens on rehearsal day (${session.displayDate} at ${session.time}).`);
+      const win = getSessionWindow(session);
+      if (!win.isOpen) {
+        alert(`⚠️ Rehearsal Attendance Locked!\n\n${win.message}\n\nRehearsal schedule: ${session.displayDate} (${session.time}).\nOfficial window: ${win.openTimeDisplay} – ${win.closeTimeDisplay}.`);
         return;
       }
 
@@ -2475,12 +2585,30 @@
       }
     }
 
+    function cleanPhoneDigits(p) {
+      if (!p) return '';
+      let s = String(p).replace(/\D/g, '');
+      if (s.startsWith('234')) s = s.slice(3);
+      if (s.startsWith('0')) s = s.slice(1);
+      return s;
+    }
+
     // MEMBER LOOKUP / SCORE CARD
     function handleMemberLookup(e) {
       e.preventDefault();
-      const query = document.getElementById('member-lookup-input').value.trim().toLowerCase();
-      if (!query) return;
-      const member = state.members.find(m => (m.phone && m.phone.includes(query)) || m.name.toLowerCase().includes(query));
+      const rawQuery = document.getElementById('member-lookup-input').value.trim();
+      if (!rawQuery) return;
+      const query = rawQuery.toLowerCase();
+      const cleanQ = cleanPhoneDigits(rawQuery);
+
+      const member = state.members.find(m => {
+        // Name match (full, first, or last name)
+        const nameMatch = m.name && m.name.toLowerCase().includes(query);
+        // Clean phone match
+        const memberPhoneClean = cleanPhoneDigits(m.phone);
+        const phoneMatch = cleanQ && memberPhoneClean && (memberPhoneClean === cleanQ || memberPhoneClean.includes(cleanQ) || cleanQ.includes(memberPhoneClean));
+        return nameMatch || phoneMatch;
+      });
 
       const resultBox = document.getElementById('member-score-result');
       resultBox.classList.remove('hidden');
