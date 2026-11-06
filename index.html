@@ -2472,7 +2472,7 @@
     /**
      * Exact Business Rule:
      * Opens 30 minutes after rehearsal start time
-     * Stays active throughout the rehearsal session for officers & choristers
+     * Closes 2 hours after rehearsal end time (grace period for officers & choristers to mark and register)
      */
     function getSessionWindow(session) {
       if (!session || !session.date) return { isOpen: true, status: 'open' };
@@ -2483,8 +2483,8 @@
       const [sHour, sMin] = startTimeStr.split(':').map(Number);
       const [eHour, eMin] = endTimeStr.split(':').map(Number);
 
-      const openMins = (sHour * 60 + sMin) + 30; // +30 mins after start (5:30 PM)
-      const closeMins = (eHour * 60 + eMin) + 30; // 7:30 PM
+      const openMins = (sHour * 60 + sMin) + 30; // +30 mins after start (e.g. 5:30 PM)
+      const closeMins = (eHour * 60 + eMin) + 120; // +2 hours (120 mins) grace period after practice ends (e.g. 9:00 PM)
 
       const openDisplay = formatMinutesToTime(openMins);
       const closeDisplay = formatMinutesToTime(closeMins);
@@ -2526,13 +2526,24 @@
         };
       }
 
+      // Today - After close time + 2-hour grace period (e.g. after 9:00 PM)
+      if (nowMinutes > closeMins) {
+        return {
+          isOpen: false,
+          status: 'closed',
+          openTimeDisplay: openDisplay,
+          closeTimeDisplay: closeDisplay,
+          message: `Attendance window closed today at ${closeDisplay} (includes 2-hour grace period after practice)`
+        };
+      }
+
       // Today - Active rehearsal check-in open!
       return {
         isOpen: true,
         status: 'active',
         openTimeDisplay: openDisplay,
         closeTimeDisplay: closeDisplay,
-        message: `Live Rehearsal Check-In Active (Window opened at ${openDisplay})`
+        message: `Live Rehearsal Check-In Active (Open until ${closeDisplay} with 2-hour grace period)`
       };
     }
 
@@ -2781,7 +2792,7 @@
               <div class="flex-1">
                 <span class="font-bold text-emerald-950 block text-xs sm:text-sm">🟢 Live Rehearsal Check-In Active</span>
                 <span class="text-[11px] text-emerald-800">
-                  Attendance window is OPEN! Window closes at <b>${win.closeTimeDisplay}</b> (30 mins after practice ends).
+                  Attendance window is OPEN! Window closes at <b>${win.closeTimeDisplay}</b> (includes 2-hour grace period after practice ends).
                 </span>
               </div>
             </div>
