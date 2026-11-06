@@ -72,13 +72,7 @@
         </div>
         <div>
           <span class="text-[10px] uppercase tracking-wider text-amber-300 font-bold block leading-tight">Apostolic Faith Church • Ondo Area</span>
-          <div class="flex items-center gap-2 flex-wrap">
-            <h1 class="text-sm sm:text-base font-bold leading-tight font-heading">2026 Concert Attendance Portal</h1>
-            <span id="insforge-status-pill" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-400/20 text-emerald-200 border border-emerald-400/30">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span id="insforge-status-text">InsForge Cloud Live</span>
-            </span>
-          </div>
+          <h1 class="text-sm sm:text-base font-bold leading-tight font-heading">2026 Concert Attendance Portal</h1>
         </div>
       </div>
       
@@ -389,40 +383,13 @@
         </div>
       </div>
 
-      <!-- InsForge Cloud Database Card -->
-      <div class="bg-gradient-to-r from-slate-900 to-brand-950 text-white p-4 sm:p-5 rounded-2xl shadow-md border border-brand-gold/30">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center text-lg font-bold shadow shrink-0">
-              <i class="fa-solid fa-database"></i>
-            </div>
-            <div>
-              <div class="flex items-center gap-2">
-                <h4 class="font-bold text-sm text-white">InsForge Cloud Postgres Backend</h4>
-                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">LIVE</span>
-              </div>
-              <p class="text-[11px] text-slate-300">Project: <span class="font-mono text-amber-300">Ondo-Area-Choir-Portal</span> (ID: <span class="font-mono text-slate-400">aa9bd8ae</span>) • Region: US-East</p>
-            </div>
-          </div>
-          <div class="flex items-center gap-2">
-            <button onclick="syncWithInsForge(true)" id="btn-sync-insforge" class="px-3 py-2 bg-amber-400 hover:bg-amber-300 text-brand-950 text-xs font-bold rounded-xl flex items-center gap-1.5 transition shadow">
-              <i class="fa-solid fa-arrows-rotate" id="icon-sync-insforge"></i> Sync Cloud Now
-            </button>
-            <a href="https://insforge.dev/dashboard/project/aa9bd8ae-45a6-471e-b8cc-b1b9e249309c" target="_blank" class="px-3 py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-semibold rounded-xl flex items-center gap-1.5 transition">
-              <i class="fa-solid fa-arrow-up-right-from-square"></i> Dashboard
-            </a>
-          </div>
-        </div>
-        <div class="mt-3 pt-3 border-t border-white/10 text-[11px] text-slate-300 flex flex-wrap items-center justify-between gap-2">
-          <span>⚡ Real-time multi-device sync across all Ondo State rehearsals and check-ins.</span>
-          <span id="last-synced-time" class="text-slate-400">Last sync: Initialized</span>
-        </div>
-      </div>
-
       <!-- Action Buttons Row -->
       <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-wrap gap-2.5 items-center justify-between text-xs">
         <div class="font-bold text-slate-700">Data Management:</div>
         <div class="flex flex-wrap gap-2">
+          <button onclick="syncWithInsForge(true)" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 font-bold rounded-lg border border-slate-300 text-slate-700 flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-arrows-rotate text-brand-600"></i> Refresh Live Data
+          </button>
           <button onclick="exportToCSV()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 font-bold rounded-lg border border-slate-300 text-slate-700 flex items-center gap-1.5 transition">
             <i class="fa-solid fa-file-excel text-emerald-600"></i> Export to Excel/CSV
           </button>
@@ -2256,13 +2223,13 @@
         if (lastSyncedEl) lastSyncedEl.innerText = `Last sync: ${nowTime} (WAT)`;
 
         if (isManualTrigger) {
-          alert(`✓ InsForge Cloud Synced!\n\n• ${state.members.length} choristers active\n• Postgres Database: https://3rqqux3v.us-east.insforge.app\n• Real-time cloud sync operational.`);
+          alert(`✓ Live Attendance Records Refreshed!\n\n• ${state.members.length} registered choristers loaded\n• All records are up to date.`);
         }
       } catch (error) {
-        console.error('InsForge sync error:', error);
+        console.error('Sync error:', error);
         if (statusText) statusText.innerText = 'Offline Mode (Local)';
         if (isManualTrigger) {
-          alert('⚠️ Cloud sync could not complete. Using local offline cache.');
+          alert('⚠️ Sync could not complete right now. Working from local cache.');
         }
       } finally {
         if (syncIcon) syncIcon.classList.remove('fa-spin');
