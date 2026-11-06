@@ -2526,24 +2526,13 @@
         };
       }
 
-      // Today - After close time + 2-hour grace period (e.g. after 9:00 PM)
-      if (nowMinutes > closeMins) {
-        return {
-          isOpen: false,
-          status: 'closed',
-          openTimeDisplay: openDisplay,
-          closeTimeDisplay: closeDisplay,
-          message: `Attendance window closed today at ${closeDisplay} (includes 2-hour grace period after practice)`
-        };
-      }
-
-      // Today - Active rehearsal check-in open!
+      // Today - Active rehearsal check-in open throughout tonight!
       return {
         isOpen: true,
         status: 'active',
         openTimeDisplay: openDisplay,
-        closeTimeDisplay: closeDisplay,
-        message: `Live Rehearsal Check-In Active (Open until ${closeDisplay} with 2-hour grace period)`
+        closeTimeDisplay: 'Open Tonight',
+        message: `Live Rehearsal Check-In Active (Open for tonight's practice)`
       };
     }
 
@@ -2792,7 +2781,7 @@
               <div class="flex-1">
                 <span class="font-bold text-emerald-950 block text-xs sm:text-sm">🟢 Live Rehearsal Check-In Active</span>
                 <span class="text-[11px] text-emerald-800">
-                  Attendance window is OPEN! Window closes at <b>${win.closeTimeDisplay}</b> (includes 2-hour grace period after practice ends).
+                  Attendance window is OPEN! Check-in and member registrations are active for tonight's practice.
                 </span>
               </div>
             </div>
