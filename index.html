@@ -620,7 +620,7 @@
     const REHEARSAL_SCHEDULE = [
       { id: 'sess_1', date: '2026-10-30', displayDate: '30th Oct 2026', day: 'Friday', type: 'State', time: '7:00pm - 11:00pm', startTime: '19:00', endTime: '23:00' },
       { id: 'sess_2', date: '2026-10-31', displayDate: '31st Oct 2026', day: 'Saturday', type: 'State Practice', time: '7:00am - 10:00am', startTime: '07:00', endTime: '10:00' },
-      { id: 'sess_3', date: '2026-11-06', displayDate: '6th Nov 2026', day: 'Friday', type: 'Station Practice', time: '5:00pm - 7:00pm', startTime: '17:00', endTime: '19:00', isTomorrow: true },
+      { id: 'sess_3', date: '2026-11-06', displayDate: '6th Nov 2026', day: 'Friday', type: 'Station Practice', time: '5:00pm - 7:00pm', startTime: '17:00', endTime: '19:00' },
       { id: 'sess_4', date: '2026-11-13', displayDate: '13th Nov 2026', day: 'Friday', type: 'Zonal Practice', time: '5:00pm - 7:00pm', startTime: '17:00', endTime: '19:00' },
       { id: 'sess_5', date: '2026-11-20', displayDate: '20th Nov 2026', day: 'Friday', type: 'Station Practice', time: '5:00pm - 7:00pm', startTime: '17:00', endTime: '19:00' },
       { id: 'sess_6', date: '2026-11-27', displayDate: '27th Nov 2026', day: 'Friday', type: 'State', time: '7:00pm - 11:00pm', startTime: '19:00', endTime: '23:00' },
@@ -2321,9 +2321,9 @@
 
     // REHEARSAL TIME GUARDRAILS (WEST AFRICA TIME - UTC+1)
     function getNowWAT() {
+      // Africa/Lagos (West Africa Time, WAT) is strictly UTC+1 (3600000 ms ahead of UTC) year-round
       const now = new Date();
-      const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-      return new Date(utc + 3600000);
+      return new Date(now.getTime() + 3600000);
     }
 
     function getTodayWATString() {
@@ -2345,7 +2345,7 @@
     /**
      * Exact Business Rule:
      * Opens 30 minutes after rehearsal start time
-     * Closes 30 minutes after rehearsal end time
+     * Stays active throughout the rehearsal session for officers & choristers
      */
     function getSessionWindow(session) {
       if (!session || !session.date) return { isOpen: true, status: 'open' };
@@ -2356,8 +2356,8 @@
       const [sHour, sMin] = startTimeStr.split(':').map(Number);
       const [eHour, eMin] = endTimeStr.split(':').map(Number);
 
-      const openMins = (sHour * 60 + sMin) + 30; // +30 mins after start
-      const closeMins = (eHour * 60 + eMin) + 30; // +30 mins after end
+      const openMins = (sHour * 60 + sMin) + 30; // +30 mins after start (5:30 PM)
+      const closeMins = (eHour * 60 + eMin) + 30; // 7:30 PM
 
       const openDisplay = formatMinutesToTime(openMins);
       const closeDisplay = formatMinutesToTime(closeMins);
@@ -2377,7 +2377,7 @@
         };
       }
 
-      // Past date
+      // Past date (strictly before today)
       if (session.date < todayWat) {
         return {
           isOpen: false,
@@ -2388,7 +2388,7 @@
         };
       }
 
-      // Today - Before 30 min window
+      // Today - Before 30 min window (e.g. before 5:30 PM)
       if (nowMinutes < openMins) {
         return {
           isOpen: false,
@@ -2399,24 +2399,13 @@
         };
       }
 
-      // Today - After 30 min window
-      if (nowMinutes > closeMins) {
-        return {
-          isOpen: false,
-          status: 'closed',
-          openTimeDisplay: openDisplay,
-          closeTimeDisplay: closeDisplay,
-          message: `Attendance window closed today at ${closeDisplay} (30 mins after practice ended)`
-        };
-      }
-
-      // In the window right now!
+      // Today - Active rehearsal check-in open!
       return {
         isOpen: true,
         status: 'active',
         openTimeDisplay: openDisplay,
         closeTimeDisplay: closeDisplay,
-        message: `Live Rehearsal Check-In Active (Window closes at ${closeDisplay})`
+        message: `Live Rehearsal Check-In Active (Window opened at ${openDisplay})`
       };
     }
 
@@ -2460,10 +2449,13 @@
       sessionSelect.innerHTML = REHEARSAL_SCHEDULE.map(s => {
         const isLocked = isSessionLocked(s);
         let badge = '';
-        if (s.date === todayWat) badge = ' ★ TODAY';
-        else if (s.isTomorrow) badge = ' ⏳ TOMORROW (Opens 6th Nov)';
-        else if (isLocked) badge = ' 🔒 UPCOMING';
-        else badge = ' ✓ PAST';
+        if (s.date === todayWat) {
+          badge = isLocked ? ' ⏳ TODAY (Opens 5:30 PM)' : ' 🟢 LIVE TODAY (OPEN)';
+        } else if (s.date < todayWat) {
+          badge = ' ✓ PAST';
+        } else {
+          badge = ' 🔒 UPCOMING';
+        }
 
         return `<option value="${s.id}" ${s.id === defaultSessId ? 'selected' : ''}>
           ${s.displayDate} — ${s.type} (${s.time})${badge}
