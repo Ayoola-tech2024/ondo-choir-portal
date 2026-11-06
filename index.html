@@ -2337,10 +2337,10 @@
         let updated = false;
 
         if (cloudMembers && Array.isArray(cloudMembers) && cloudMembers.length > 0) {
-          const memberMap = new Map();
-          state.members.forEach(m => memberMap.set(m.id, m));
+          const nameMap = new Map();
           cloudMembers.forEach(cm => {
-            memberMap.set(cm.id, {
+            const k = normalizeNameForCompare(cm.name) || cm.id;
+            const obj = {
               id: cm.id,
               name: cm.name,
               phone: cm.phone || '',
@@ -2350,9 +2350,22 @@
               instrument: cm.instrument || '',
               accompanist: cm.accompanist ? 'Yes' : 'No',
               gender: cm.gender || ''
-            });
+            };
+            if (!nameMap.has(k)) {
+              nameMap.set(k, obj);
+            } else {
+              const existing = nameMap.get(k);
+              if (obj.id.startsWith('c_') && !existing.id.startsWith('c_')) {
+                if (!obj.phone && existing.phone) obj.phone = existing.phone;
+                if (!obj.station && existing.station) obj.station = existing.station;
+                nameMap.set(k, obj);
+              } else {
+                if (!existing.phone && obj.phone) existing.phone = obj.phone;
+                if (!existing.station && obj.station) existing.station = obj.station;
+              }
+            }
           });
-          state.members = Array.from(memberMap.values());
+          state.members = Array.from(nameMap.values());
           updated = true;
         }
 
@@ -2408,12 +2421,60 @@
       rawAttendanceLogs: []
     };
 
+    // DUPLICATE DETECTION & DATA CLEANING UTILITIES
+    function normalizeNameForCompare(name) {
+      if (!name) return '';
+      return name
+        .toLowerCase()
+        .replace(/^(bro\.|brother|sis\.|sister)\s+/i, '')
+        .replace(/[^a-z0-9]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    function normalizePhoneForCompare(phone) {
+      if (!phone) return '';
+      let digits = phone.replace(/\D/g, '');
+      if (digits.startsWith('234') && digits.length >= 10) digits = digits.slice(3);
+      if (digits.startsWith('0') && digits.length >= 10) digits = digits.slice(1);
+      return digits.length >= 7 ? digits : '';
+    }
+
+    function findExistingDuplicate(name, phone) {
+      const normNewName = normalizeNameForCompare(name);
+      const normNewPhone = normalizePhoneForCompare(phone);
+
+      if (!normNewName && !normNewPhone) return null;
+
+      for (const m of state.members) {
+        const existingName = normalizeNameForCompare(m.name);
+        if (normNewName && existingName) {
+          if (normNewName === existingName) return { member: m, matchReason: 'exact_name' };
+
+          const wordsNew = normNewName.split(' ').sort().join(' ');
+          const wordsExisting = existingName.split(' ').sort().join(' ');
+          if (wordsNew.length > 5 && wordsNew === wordsExisting) {
+            return { member: m, matchReason: 'name_permutation' };
+          }
+        }
+
+        if (normNewPhone) {
+          const existingPhone = normalizePhoneForCompare(m.phone);
+          if (existingPhone && normNewPhone === existingPhone) {
+            return { member: m, matchReason: 'phone_number' };
+          }
+        }
+      }
+
+      return null;
+    }
+
     function loadState() {
-      // Auto-migrate: seed master choristers
+      // Auto-migrate: seed master choristers (v4 deduplicated)
       const dataVersion = localStorage.getItem('ondo_data_version');
-      if (dataVersion !== '2026_choristers_v3') {
+      if (dataVersion !== '2026_choristers_v4') {
         localStorage.setItem('ondo_choir_members', JSON.stringify(DEFAULT_MEMBERS));
-        localStorage.setItem('ondo_data_version', '2026_choristers_v3');
+        localStorage.setItem('ondo_data_version', '2026_choristers_v4');
       }
 
       const savedMembers = localStorage.getItem('ondo_choir_members');
@@ -2421,6 +2482,28 @@
       const savedWebhook = localStorage.getItem('ondo_choir_webhook');
 
       state.members = (savedMembers && JSON.parse(savedMembers).length > 0) ? JSON.parse(savedMembers) : DEFAULT_MEMBERS;
+      
+      // Auto-deduplicate state.members in local storage
+      const dedupedMap = new Map();
+      state.members.forEach(m => {
+        const k = normalizeNameForCompare(m.name) || m.id;
+        if (!dedupedMap.has(k)) {
+          dedupedMap.set(k, m);
+        } else {
+          const ex = dedupedMap.get(k);
+          if (m.id.startsWith('c_') && !ex.id.startsWith('c_')) {
+            if (!m.phone && ex.phone) m.phone = ex.phone;
+            if (!m.station && ex.station) m.station = ex.station;
+            dedupedMap.set(k, m);
+          } else {
+            if (!ex.phone && m.phone) ex.phone = m.phone;
+            if (!ex.station && m.station) ex.station = m.station;
+          }
+        }
+      });
+      state.members = Array.from(dedupedMap.values());
+      localStorage.setItem('ondo_choir_members', JSON.stringify(state.members));
+
       state.attendance = savedAttendance ? JSON.parse(savedAttendance) : {};
       state.sheetWebhookUrl = savedWebhook || DEFAULT_WEBHOOK_URL;
       const savedAuth = localStorage.getItem('ondo_officer_authenticated');
@@ -3088,17 +3171,40 @@
       `;
     }
 
-    // HANDLE REGISTRATIONS
+    // HANDLE REGISTRATIONS WITH DUPLICATE PREVENTION
     function handlePublicRegistration(e) {
       e.preventDefault();
+      const name = document.getElementById('reg-name').value.trim();
+      const phone = document.getElementById('reg-phone').value.trim();
+      const part = document.getElementById('reg-part').value;
+      const zone = document.getElementById('reg-zone').value;
+      const station = document.getElementById('reg-station').value.trim();
+      const gender = document.querySelector('input[name="gender"]:checked').value;
+
+      // Duplicate Prevention Check
+      const dup = findExistingDuplicate(name, phone);
+      if (dup) {
+        const em = dup.member;
+        const reasonText = dup.matchReason === 'phone_number'
+          ? `phone number (${em.phone})`
+          : `name ("${em.name}")`;
+
+        alert(
+          `⚠️ Chorister Already Registered!\n\n` +
+          `"${em.name}" is already registered in the Ondo Area Choir database under ${em.station || em.zone} (${em.part}) [ID: ${em.id}], matched by ${reasonText}.\n\n` +
+          `Duplicate entries are prevented. You can view your record under the Check-In or Score Card tab.`
+        );
+        return;
+      }
+
       const newMember = {
         id: 'm_' + Date.now(),
-        name: document.getElementById('reg-name').value.trim(),
-        phone: document.getElementById('reg-phone').value.trim(),
-        part: document.getElementById('reg-part').value,
-        zone: document.getElementById('reg-zone').value,
-        station: document.getElementById('reg-station').value.trim(),
-        gender: document.querySelector('input[name="gender"]:checked').value
+        name: name,
+        phone: phone,
+        part: part,
+        zone: zone,
+        station: station,
+        gender: gender
       };
 
       state.members.push(newMember);
@@ -3124,13 +3230,50 @@
     function handleQuickAdd(e) {
       e.preventDefault();
       const sessionId = document.getElementById('checkin-session-select').value;
+      const name = document.getElementById('quick-name').value.trim();
+      const phone = document.getElementById('quick-phone').value.trim();
+      const part = document.getElementById('quick-part').value;
+      const zone = document.getElementById('quick-zone').value;
+      const station = document.getElementById('quick-station').value.trim();
+      const markPresent = document.getElementById('quick-mark-present').checked;
+
+      // Duplicate Prevention Check
+      const dup = findExistingDuplicate(name, phone);
+      if (dup) {
+        const em = dup.member;
+        const reasonText = dup.matchReason === 'phone_number'
+          ? `phone number (${em.phone})`
+          : `name ("${em.name}")`;
+
+        const markExisting = confirm(
+          `⚠️ Chorister Already Registered!\n\n` +
+          `"${em.name}" is already registered in the choir database under ${em.station || em.zone} (${em.part}) [ID: ${em.id}], matched by ${reasonText}.\n\n` +
+          `Would you like to mark "${em.name}" as Present right now instead of creating a duplicate?`
+        );
+
+        if (markExisting) {
+          const session = REHEARSAL_SCHEDULE.find(s => s.id === sessionId);
+          const isLocked = isSessionLocked(session);
+          if (!isLocked) {
+            setAttendance(sessionId, em.id, 'present');
+          }
+          closeModal('modal-add-member');
+          const searchInput = document.getElementById('checkin-search');
+          if (searchInput) {
+            searchInput.value = em.name;
+            renderCheckinList();
+          }
+        }
+        return;
+      }
+
       const newMember = {
         id: 'm_' + Date.now(),
-        name: document.getElementById('quick-name').value.trim(),
-        phone: document.getElementById('quick-phone').value.trim(),
-        part: document.getElementById('quick-part').value,
-        zone: document.getElementById('quick-zone').value,
-        station: document.getElementById('quick-station').value.trim(),
+        name: name,
+        phone: phone,
+        part: part,
+        zone: zone,
+        station: station,
         gender: 'Not specified'
       };
 
@@ -3138,7 +3281,6 @@
 
       const session = REHEARSAL_SCHEDULE.find(s => s.id === sessionId);
       const isLocked = isSessionLocked(session);
-      const markPresent = document.getElementById('quick-mark-present').checked;
       if (markPresent && !isLocked) {
         state.attendance[`${sessionId}_${newMember.id}`] = 'present';
       }
