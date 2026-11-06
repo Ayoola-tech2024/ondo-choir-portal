@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Apostolic Faith Church (Ondo Area) — 2026 Concert Attendance & Registry</title>
+  <title>Apostolic Faith Church, WECA — Ondo Area Digital Music & Choir Portal</title>
   
   <!-- Church Official Favicon -->
   <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -13,6 +13,1506 @@
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f5ff',
+              100: '#e5edff',
+              500: '#1e40af',
+              600: '#1d3557',
+              700: '#002855', // Official WECA Navy Blue
+              800: '#081d38',
+              900: '#001833',
+              gold: '#c59b27',
+              goldLight: '#e5a93c',
+              goldDark: '#997300'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts: Outfit, Plus Jakarta Sans, and Roboto (Apostolic Faith Church WECA Typography) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    h1, h2, h3, h4, .font-heading {
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+    }
+    .font-church {
+      font-family: 'Cinzel', serif, Georgia;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col antialiased selection:bg-amber-100 selection:text-amber-900">
+
+  <!-- TOP HEADER -->
+  <header class="bg-gradient-to-r from-brand-900 via-brand-700 to-brand-800 text-white shadow-lg sticky top-0 z-30 border-b border-brand-gold/40">
+    <div class="max-w-5xl mx-auto px-4 py-2.5 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <!-- Official Apostolic Faith Church Logo Emblem -->
+        <div class="h-11 px-2.5 py-1 rounded-xl bg-white flex items-center justify-center shadow-md shrink-0">
+          <img src="church-logo.svg" alt="Apostolic Faith Church Logo" class="h-9 w-auto object-contain">
+        </div>
+        <div>
+          <span class="text-[10px] uppercase tracking-wider text-amber-300 font-bold block leading-tight font-church">Apostolic Faith Church • WECA • Ondo Area</span>
+          <div class="flex items-center gap-2 flex-wrap">
+            <h1 class="text-sm sm:text-base font-bold leading-tight font-heading">Digital Music & Choir Portal</h1>
+            <span id="insforge-status-pill" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-400/20 text-emerald-200 border border-emerald-400/30">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span id="insforge-status-text">InsForge Cloud Live</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Quick Action / Drive Link (Officers Only) -->
+      <button onclick="handleOfficerUploadDrive()" 
+         class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-400 text-brand-900 rounded-lg text-xs font-bold hover:bg-amber-300 transition shadow cursor-pointer">
+        <i class="fa-brands fa-google-drive"></i>
+        <span>Practice Video Upload</span>
+      </button>
+    </div>
+
+    <!-- NAVIGATION TABS -->
+    <div class="max-w-5xl mx-auto px-2 flex border-t border-white/10 text-xs sm:text-sm font-semibold overflow-x-auto custom-scroll">
+      <button onclick="switchTab('overview')" id="tab-btn-overview" class="tab-btn active-tab flex-1 py-3 px-2.5 text-center border-b-2 border-amber-400 text-amber-300 flex items-center justify-center gap-1.5 whitespace-nowrap">
+        <i class="fa-solid fa-church text-xs"></i>
+        <span>Overview</span>
+      </button>
+      <button onclick="switchTab('concert')" id="tab-btn-concert" class="tab-btn flex-1 py-3 px-2.5 text-center border-b-2 border-transparent text-slate-300 hover:text-white flex items-center justify-center gap-1.5 whitespace-nowrap">
+        <i class="fa-solid fa-clipboard-check text-xs"></i>
+        <span>2026 Concert & Check-In</span>
+      </button>
+      <button onclick="switchTab('registry')" id="tab-btn-registry" class="tab-btn flex-1 py-3 px-2.5 text-center border-b-2 border-transparent text-slate-300 hover:text-white flex items-center justify-center gap-1.5 whitespace-nowrap">
+        <i class="fa-solid fa-id-card text-xs"></i>
+        <span>Area Registry</span>
+      </button>
+      <button onclick="switchTab('academy')" id="tab-btn-academy" class="tab-btn flex-1 py-3 px-2.5 text-center border-b-2 border-transparent text-slate-300 hover:text-white flex items-center justify-center gap-1.5 whitespace-nowrap">
+        <i class="fa-solid fa-graduation-cap text-xs"></i>
+        <span>Music Academy</span>
+      </button>
+      <button onclick="switchTab('library')" id="tab-btn-library" class="tab-btn flex-1 py-3 px-2.5 text-center border-b-2 border-transparent text-slate-300 hover:text-white flex items-center justify-center gap-1.5 whitespace-nowrap">
+        <i class="fa-solid fa-book-open text-xs"></i>
+        <span>Library & Scores</span>
+      </button>
+      <button onclick="switchTab('admin')" id="tab-btn-admin" class="tab-btn flex-1 py-3 px-2.5 text-center border-b-2 border-transparent text-slate-300 hover:text-white flex items-center justify-center gap-1.5 whitespace-nowrap">
+        <i class="fa-solid fa-sliders text-xs"></i>
+        <span>Admin & Sync</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- DRIVE BANNER FOR MOBILE -->
+  <div class="sm:hidden bg-amber-500 text-brand-900 px-3 py-1.5 text-xs font-medium flex items-center justify-between">
+    <div class="flex items-center gap-1.5">
+      <i class="fa-brands fa-google-drive font-bold"></i>
+      <span>Practice Video Upload (Officers)</span>
+    </div>
+    <button onclick="handleOfficerUploadDrive()" class="font-bold underline text-[11px] cursor-pointer">Open Drive &rarr;</button>
+  </div>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-5xl w-full mx-auto p-4 sm:p-6 flex-1 space-y-6">
+
+    <!-- ========================================== -->
+    <!-- TAB 1: AREA PORTAL OVERVIEW (HOME)         -->
+    <!-- ========================================== -->
+    <section id="tab-overview" class="space-y-6">
+
+      <!-- Dignified Apostolic Church Hero Banner -->
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-900 via-brand-700 to-brand-800 text-white p-6 sm:p-8 shadow-xl border border-brand-gold/30">
+        <div class="absolute -right-10 -bottom-10 opacity-10 pointer-events-none text-brand-gold">
+          <i class="fa-solid fa-church text-9xl"></i>
+        </div>
+        
+        <div class="max-w-2xl relative z-10 space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 text-xs font-semibold uppercase tracking-wider">
+            <i class="fa-solid fa-music"></i>
+            <span>Apostolic Faith Church, WECA • Ondo Area</span>
+          </div>
+
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white font-heading leading-tight">
+            Nurturing Musical Excellence in the Beauty of Holiness
+          </h2>
+
+          <p class="text-sm text-slate-200 leading-relaxed">
+            The central digital home connecting choir members, music students, instrumentalists, tutors, and choir administrators across all branches and stations in Ondo Area.
+          </p>
+
+          <div class="pt-2 italic text-xs text-amber-200/90 font-church">
+            "Looking unto Jesus the Author and Finisher of our faith" — Hebrews 12:2
+          </div>
+        </div>
+      </div>
+
+      <!-- FEATURED MAJOR EVENT SPOTLIGHT: 2026 CHRISTMAS CONCERT -->
+      <div class="bg-gradient-to-r from-amber-50 via-white to-amber-50 p-5 sm:p-6 rounded-3xl border-2 border-amber-300 shadow-md">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="space-y-1">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="px-2.5 py-1 bg-amber-500 text-slate-950 font-extrabold text-xs rounded-full uppercase tracking-wider shadow-xs">
+                ★ FEATURED ACTIVE EVENT
+              </span>
+              <span class="text-xs font-bold text-brand-800 flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                In Progress (Rehearsal Season)
+              </span>
+            </div>
+            <h3 class="text-xl font-extrabold text-slate-900 font-heading">
+              2026 Christmas Concert: "Worship the King"
+            </h3>
+            <p class="text-xs text-slate-600">
+              Grand Area Concert on <b>Sunday, 27th Dec 2026</b> at Area Headquarters, Akure. Minimum <b>70% rehearsal attendance</b> required for concert stage clearance.
+            </p>
+          </div>
+
+          <!-- Quick Action Buttons -->
+          <div class="flex flex-wrap gap-2 shrink-0">
+            <button onclick="switchTab('concert')" class="px-4 py-2.5 bg-brand-700 hover:bg-brand-800 text-white font-bold text-xs rounded-xl transition shadow flex items-center gap-2 cursor-pointer">
+              <i class="fa-solid fa-clipboard-check text-amber-300"></i>
+              <span>Mark Attendance & Check In &rarr;</span>
+            </button>
+            <button onclick="switchTab('concert'); switchConcertSubTab('score');" class="px-3.5 py-2.5 bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 font-bold text-xs rounded-xl transition shadow-xs flex items-center gap-1.5 cursor-pointer">
+              <i class="fa-solid fa-chart-pie text-brand-600"></i>
+              <span>Check My Score</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Next Session Notice Bar -->
+        <div class="mt-4 pt-3 border-t border-amber-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-700">
+          <div class="flex items-center gap-2">
+            <i class="fa-regular fa-calendar-check text-amber-700 text-base"></i>
+            <span>Next Rehearsal: <b>Session 3 (Friday, 6th Nov, 5:00 PM – 7:00 PM)</b> • Station Practice</span>
+          </div>
+          <span class="text-[11px] font-semibold text-amber-900 bg-amber-100 px-2.5 py-1 rounded-lg border border-amber-200">
+            Attendance strictly opens: <b>5:30 PM – 7:30 PM WAT</b> (+30 min window)
+          </span>
+        </div>
+      </div>
+
+      <!-- AREA MUSIC STATISTICS (LIVE INSFORGE METRICS) -->
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+            <i class="fa-solid fa-chart-simple text-brand-700"></i>
+            <span>Area Music Committee Key Metrics</span>
+          </h3>
+          <span class="text-[11px] text-slate-400">Live synced with InsForge Postgres</span>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+            <div class="text-[11px] font-bold text-slate-500 uppercase">Registered Choristers</div>
+            <div class="text-2xl font-extrabold text-brand-900 mt-1 font-heading" id="ov-stat-total">134</div>
+            <div class="text-[10px] text-slate-400 mt-0.5">Across 8 official zones</div>
+          </div>
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+            <div class="text-[11px] font-bold text-slate-500 uppercase">Female Voice Parts</div>
+            <div class="text-2xl font-extrabold text-pink-600 mt-1 font-heading" id="ov-stat-female">Soprano / Alto</div>
+            <div class="text-[10px] text-slate-400 mt-0.5">Active singers</div>
+          </div>
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+            <div class="text-[11px] font-bold text-slate-500 uppercase">Male Voice Parts</div>
+            <div class="text-2xl font-extrabold text-blue-700 mt-1 font-heading" id="ov-stat-male">Tenor / Bass</div>
+            <div class="text-[10px] text-slate-400 mt-0.5">Active singers</div>
+          </div>
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+            <div class="text-[11px] font-bold text-slate-500 uppercase">Instrumentalists</div>
+            <div class="text-2xl font-extrabold text-amber-600 mt-1 font-heading">39+</div>
+            <div class="text-[10px] text-slate-400 mt-0.5">Accompanists & players</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- THE 4 FOUNDATION PILLARS GRID -->
+      <div>
+        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-3 flex items-center gap-2">
+          <i class="fa-solid fa-shapes text-brand-700"></i>
+          <span>Ondo Area Music System Pillars</span>
+        </h3>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Pillar 1 -->
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:border-brand-500 transition cursor-pointer" onclick="switchTab('concert')">
+            <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-800 flex items-center justify-center text-lg mb-3">
+              <i class="fa-solid fa-calendar-check"></i>
+            </div>
+            <h4 class="font-bold text-slate-900 text-sm font-heading">1. Rehearsal & Event Attendance</h4>
+            <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+              Real-time attendance marking with strict 30-minute time gates, automatic qualification scoring, and multi-device cloud persistence.
+            </p>
+            <div class="mt-3 text-xs font-bold text-brand-600 flex items-center gap-1">
+              <span>Open Attendance Engine</span> &rarr;
+            </div>
+          </div>
+
+          <!-- Pillar 2 -->
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:border-brand-500 transition cursor-pointer" onclick="switchTab('registry')">
+            <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-800 flex items-center justify-center text-lg mb-3">
+              <i class="fa-solid fa-users"></i>
+            </div>
+            <h4 class="font-bold text-slate-900 text-sm font-heading">2. Comprehensive Choir Registry</h4>
+            <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+              Universal database accommodating Junior and Senior choristers, beginners, instrumentalists, voice classifications, and auto-generated Member IDs.
+            </p>
+            <div class="mt-3 text-xs font-bold text-brand-600 flex items-center gap-1">
+              <span>Explore Membership Registry</span> &rarr;
+            </div>
+          </div>
+
+          <!-- Pillar 3 -->
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:border-brand-500 transition cursor-pointer" onclick="switchTab('academy')">
+            <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-lg mb-3">
+              <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <h4 class="font-bold text-slate-900 text-sm font-heading">3. Digital Music Academy</h4>
+            <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+              5-level progressive curriculum covering Music Rudiments, Tonic Solfa, Sight-Reading, Voice Training, and Orchestral Instruments.
+            </p>
+            <div class="mt-3 text-xs font-bold text-brand-600 flex items-center gap-1">
+              <span>View Curriculum Pathways</span> &rarr;
+            </div>
+          </div>
+
+          <!-- Pillar 4 -->
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:border-brand-500 transition cursor-pointer" onclick="switchTab('library')">
+            <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center text-lg mb-3">
+              <i class="fa-solid fa-music"></i>
+            </div>
+            <h4 class="font-bold text-slate-900 text-sm font-heading">4. Music Library & Media Archive</h4>
+            <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+              Centralized repository for SATB scores, hymnal tonic solfa, instrumental parts, and Google Drive rehearsal video evidence uploads.
+            </p>
+            <div class="mt-3 text-xs font-bold text-brand-600 flex items-center gap-1">
+              <span>Access Digital Library</span> &rarr;
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AREA LEADERSHIP FOOTER CARD -->
+      <div class="p-4 bg-slate-100 rounded-2xl border border-slate-200 text-xs text-slate-600 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-full bg-brand-700 text-amber-300 flex items-center justify-center font-bold">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div>
+            <span class="font-bold text-slate-800 block">Ondo Area Music Committee</span>
+            <span class="text-[11px] text-slate-500">Bro. Bamidele Raymond, Area Music Leader</span>
+          </div>
+        </div>
+        <div class="text-[11px] text-slate-500">
+          Covering 8 Zones: Akure • Ondo • Okitipupa • Oka • Ore • Ikare • Ondo Road • Owo
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 2: 2026 CONCERT & ATTENDANCE ENGINE    -->
+    <!-- ========================================== -->
+    <section id="tab-concert" class="hidden space-y-5">
+
+      <!-- SUB-NAVIGATION PILLS FOR CONCERT TAB -->
+      <div class="flex flex-wrap gap-2 p-1.5 bg-slate-200/70 rounded-2xl text-xs font-semibold">
+        <button onclick="switchConcertSubTab('checkin')" id="concert-btn-checkin" class="px-4 py-2 rounded-xl bg-brand-700 text-white shadow transition flex items-center gap-1.5 cursor-pointer">
+          <i class="fa-solid fa-clipboard-check"></i>
+          <span>Zonal & Station Check-In</span>
+        </button>
+        <button onclick="switchConcertSubTab('score')" id="concert-btn-score" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 hover:bg-white transition flex items-center gap-1.5 cursor-pointer">
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>Check My Score Card</span>
+        </button>
+        <button onclick="switchConcertSubTab('schedule')" id="concert-btn-schedule" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 hover:bg-white transition flex items-center gap-1.5 cursor-pointer">
+          <i class="fa-solid fa-calendar-days"></i>
+          <span>Rehearsal Schedule</span>
+        </button>
+      </div>
+
+      <!-- SUB-SECTION A: CHECK-IN ENGINE -->
+      <div id="concert-sub-checkin" class="space-y-5">
+        
+
+      <!-- Official Practice Evidence & Video Upload Card -->
+      <div class="bg-gradient-to-r from-amber-500/10 via-amber-50 to-amber-500/10 p-4 rounded-2xl border border-amber-300 shadow-sm">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center text-lg shrink-0 shadow-sm font-bold">
+              <i class="fa-solid fa-video"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="px-2 py-0.5 bg-amber-200 text-amber-950 rounded font-bold text-[10px] uppercase tracking-wider">Officers Guideline</span>
+                <span class="text-xs font-bold text-slate-900">Evidence of Practice Video Upload</span>
+              </div>
+              <p class="text-xs text-slate-600 mt-0.5">Attendance Officers: Submit compressed rehearsal videos to Google Drive after each session.</p>
+            </div>
+          </div>
+          <button onclick="handleOfficerUploadDrive()" 
+             class="px-3.5 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-xl transition shadow flex items-center justify-center gap-2 shrink-0 cursor-pointer">
+            <i class="fa-brands fa-google-drive"></i>
+            <span>Upload Practice Video &rarr;</span>
+          </button>
+        </div>
+
+        <!-- 3-Step Guideline Checklist -->
+        <div class="mt-3 pt-3 border-t border-amber-200/80 grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs text-slate-700">
+          <div class="bg-white/90 p-2.5 rounded-xl border border-amber-200/60 flex items-start gap-2 shadow-xs">
+            <span class="w-5 h-5 rounded-full bg-amber-400 text-slate-950 font-bold flex items-center justify-center text-[11px] shrink-0">1</span>
+            <div>
+              <strong class="font-bold text-slate-900 block">Record Practice:</strong>
+              <span class="text-[11px] text-slate-600">Capture video evidence of the choir during the rehearsal session.</span>
+            </div>
+          </div>
+          <div class="bg-white/90 p-2.5 rounded-xl border border-amber-200/60 flex items-start gap-2 shadow-xs">
+            <span class="w-5 h-5 rounded-full bg-amber-400 text-slate-950 font-bold flex items-center justify-center text-[11px] shrink-0">2</span>
+            <div>
+              <strong class="font-bold text-slate-900 block">Compress with Panda App:</strong>
+              <span class="text-[11px] text-slate-600">Open <b>Panda Video app</b> on your device, choose <b>MEDIUM</b> size to save mobile data.</span>
+            </div>
+          </div>
+          <div class="bg-white/90 p-2.5 rounded-xl border border-amber-200/60 flex items-start gap-2 shadow-xs">
+            <span class="w-5 h-5 rounded-full bg-amber-400 text-slate-950 font-bold flex items-center justify-center text-[11px] shrink-0">3</span>
+            <div>
+              <strong class="font-bold text-slate-900 block">Zone Folder & Song Name:</strong>
+              <span class="text-[11px] text-slate-600">Open your Zone's folder on Drive and upload files titled with the appropriate song name.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-2.5 text-[11px] text-amber-900 bg-amber-100/70 px-3 py-1.5 rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-1 border border-amber-200">
+          <span>🎯 <b>Concert Requirement:</b> A minimum of <b>70% attendance rate</b> is required for choristers to sing on the concert stage.</span>
+          <span class="font-medium text-slate-800">Ondo Zone Officer: <b>Bro. Bamidele Raymond</b></span>
+        </div>
+      </div>
+
+      <!-- Officer Lock & Access Banner -->
+      <div id="officer-lock-banner">
+        <!-- Rendered by renderOfficerLockBanner() -->
+      </div>
+
+      <!-- Session Selector Card -->
+      <div class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-slate-200">
+        <div class="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between mb-4">
+          <div>
+            <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              Zonal & Station Check-In
+            </h2>
+            <p class="text-xs text-slate-500">Select rehearsal date, zone, and tap names to mark attendance.</p>
+          </div>
+          <button onclick="promptAddMember()" class="self-start sm:self-auto px-3.5 py-2 bg-brand-600 text-white text-xs font-bold rounded-xl hover:bg-brand-700 transition flex items-center gap-1.5 shadow-sm">
+            <i class="fa-solid fa-plus"></i> Add New Chorister
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <!-- Session Select -->
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Rehearsal Session:</label>
+            <select id="checkin-session-select" onchange="renderCheckinList()" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-medium focus:ring-2 focus:ring-brand-500 focus:outline-none">
+              <!-- Populated by JS -->
+            </select>
+          </div>
+
+          <!-- Zone / Station Select -->
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Filter by Zone / Station:</label>
+            <select id="checkin-zone-select" onchange="renderCheckinList()" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-medium focus:ring-2 focus:ring-brand-500 focus:outline-none">
+              <option value="ALL">All Zones & Stations</option>
+              <!-- Populated by JS -->
+            </select>
+          </div>
+        </div>
+
+        <!-- Voice Part Filter Pills & Search -->
+        <div class="mt-4 pt-3 border-t border-slate-100 flex flex-col sm:flex-row gap-3 sm:items-center justify-between">
+          <div class="flex flex-wrap gap-1 text-[11px]" id="part-filter-container">
+            <button onclick="filterPart('ALL')" class="part-pill active-part px-2.5 py-1 rounded-lg border font-semibold bg-brand-700 text-white border-brand-700">All</button>
+            <button onclick="filterPart('Soprano')" class="part-pill px-2.5 py-1 rounded-lg border font-medium bg-slate-100 text-slate-700 border-slate-200">Soprano</button>
+            <button onclick="filterPart('Alto')" class="part-pill px-2.5 py-1 rounded-lg border font-medium bg-slate-100 text-slate-700 border-slate-200">Alto</button>
+            <button onclick="filterPart('Tenor')" class="part-pill px-2.5 py-1 rounded-lg border font-medium bg-slate-100 text-slate-700 border-slate-200">Tenor</button>
+            <button onclick="filterPart('Bass')" class="part-pill px-2.5 py-1 rounded-lg border font-medium bg-slate-100 text-slate-700 border-slate-200">Bass</button>
+            <button onclick="filterPart('Musician')" class="part-pill px-2.5 py-1 rounded-lg border font-medium bg-slate-100 text-slate-700 border-slate-200">Musician</button>
+          </div>
+          
+          <div class="relative">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+            <input type="text" id="checkin-search" oninput="renderCheckinList()" placeholder="Search name or phone..." class="w-full sm:w-56 pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-brand-500 focus:outline-none">
+          </div>
+        </div>
+      </div>
+
+      <!-- Guardrail Lock Notice Banner -->
+      <div id="session-lock-notice" class="hidden"></div>
+
+      <!-- Quick Session Stats Bar -->
+      <div class="bg-gradient-to-r from-brand-900 to-brand-700 text-white rounded-xl p-3 px-4 flex items-center justify-between text-xs shadow-sm">
+        <div class="flex items-center gap-4">
+          <div><span class="text-slate-300">Total in View:</span> <strong id="stat-total" class="text-white text-sm">0</strong></div>
+          <div><span class="text-emerald-300">Present:</span> <strong id="stat-present" class="text-emerald-300 text-sm">0</strong></div>
+          <div><span class="text-amber-300">Excused:</span> <strong id="stat-excused" class="text-amber-300 text-sm">0</strong></div>
+        </div>
+        <button onclick="saveSyncNotification()" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 rounded-lg text-[11px] font-semibold text-white flex items-center gap-1 transition">
+          <i class="fa-solid fa-cloud-arrow-up"></i> Auto-saved
+        </button>
+      </div>
+
+      <!-- Member Roster Checklist -->
+      <div id="checkin-list" class="space-y-2.5">
+        <!-- Roster Cards Rendered dynamically -->
+      </div>
+    
+      </div>
+
+      <!-- SUB-SECTION B: SCORE CARD -->
+      <div id="concert-sub-score" class="hidden space-y-5">
+        <section id="tab-score" class="hidden space-y-6">
+      <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200 text-center max-w-lg mx-auto">
+        <div class="w-14 h-14 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center text-2xl mx-auto mb-3 shadow-inner">
+          <i class="fa-solid fa-id-card-clip"></i>
+        </div>
+        <h2 class="text-lg font-bold text-slate-900 font-heading">Check Your Rehearsal Attendance</h2>
+        <p class="text-xs text-slate-500 mb-5">Enter your registered Phone Number or Name to see your total score, stage clearance, and practice status.</p>
+
+        <form onsubmit="handleMemberLookup(event)" class="space-y-3">
+          <div class="relative">
+            <i class="fa-solid fa-phone absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+            <input type="text" id="member-lookup-input" required placeholder="Enter Phone Number (e.g. 08012345678)" class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-brand-500 focus:outline-none">
+          </div>
+          <button type="submit" class="w-full py-3 bg-brand-700 hover:bg-brand-800 text-white text-sm font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-magnifying-glass"></i> View My Attendance Score
+          </button>
+        </form>
+      </div>
+
+      <!-- Result Card (Hidden until searched) -->
+      <div id="member-score-result" class="hidden max-w-lg mx-auto space-y-4">
+        <!-- Rendered by JS -->
+      </div>
+    
+      </div>
+
+      <!-- SUB-SECTION C: REHEARSAL SCHEDULE -->
+      <div id="concert-sub-schedule" class="hidden space-y-5">
+        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <h3 class="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
+            <i class="fa-regular fa-calendar-days text-brand-600"></i> Official 2026 Concert Rehearsal Schedule & Weighting
+          </h3>
+          <p class="text-xs text-slate-500 mb-4">
+            Attendance opens strictly <b>30 minutes after practice starts</b> and closes <b>30 minutes after practice ends</b>.
+          </p>
+          <div class="overflow-x-auto text-xs">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold">
+                  <th class="p-2">Date</th>
+                  <th class="p-2">Day</th>
+                  <th class="p-2">Rehearsal Level</th>
+                  <th class="p-2">Time</th>
+                  <th class="p-2">Official Window</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-2 font-bold">30th Oct 2026</td><td class="p-2">Friday</td><td class="p-2 font-semibold text-brand-700">State Practice</td><td class="p-2">7:00pm - 11:00pm</td><td class="p-2 text-slate-500">7:30pm – 11:30pm</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-2 font-bold">31st Oct 2026</td><td class="p-2">Saturday</td><td class="p-2 font-semibold text-brand-700">State Practice</td><td class="p-2">7:00am - 10:00am</td><td class="p-2 text-slate-500">7:30am – 10:30am</td></tr>
+                <tr class="hover:bg-amber-50/60 font-semibold bg-amber-50/30"><td class="p-2 font-bold text-amber-900">6th Nov 2026</td><td class="p-2">Friday</td><td class="p-2 font-semibold text-brand-700">Station Practice</td><td class="p-2">5:00pm - 7:00pm</td><td class="p-2 text-amber-800 font-bold">5:30pm – 7:30pm</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-2 font-bold">13th Nov 2026</td><td class="p-2">Friday</td><td class="p-2 font-semibold text-brand-700">Zonal Practice</td><td class="p-2">5:00pm - 7:00pm</td><td class="p-2 text-slate-500">5:30pm – 7:30pm</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-2 font-bold">20th Nov 2026</td><td class="p-2">Friday</td><td class="p-2 font-semibold text-brand-700">Station Practice</td><td class="p-2">5:00pm - 7:00pm</td><td class="p-2 text-slate-500">5:30pm – 7:30pm</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-2 font-bold">27th Nov 2026</td><td class="p-2">Friday</td><td class="p-2 font-semibold text-brand-700">State Rehearsal</td><td class="p-2">7:00pm - 11:00pm</td><td class="p-2 text-slate-500">7:30pm – 11:30pm</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-2 font-bold">28th Nov 2026</td><td class="p-2">Saturday</td><td class="p-2 font-semibold text-brand-700">Practice</td><td class="p-2">7:00am - 10:00am</td><td class="p-2 text-slate-500">7:30am – 10:30am</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-2 font-bold">4th Dec 2026</td><td class="p-2">Friday</td><td class="p-2 font-semibold text-brand-700">Station Practice</td><td class="p-2">5:00pm - 7:00pm</td><td class="p-2 text-slate-500">5:30pm – 7:30pm</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-2 font-bold">7th Dec 2026</td><td class="p-2">Monday</td><td class="p-2 font-semibold text-brand-700">Station Practice</td><td class="p-2">5:00pm - 7:00pm</td><td class="p-2 text-slate-500">5:30pm – 7:30pm</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-2 font-bold">23rd Dec 2026</td><td class="p-2">Wednesday</td><td class="p-2 font-semibold text-brand-700">State Rehearsal</td><td class="p-2">7:00pm - 12:00am</td><td class="p-2 text-slate-500">7:30pm – 12:30am</td></tr>
+                <tr class="hover:bg-emerald-50 font-semibold"><td class="p-2 font-bold text-emerald-800">27th Dec 2026</td><td class="p-2">Sunday</td><td class="p-2 font-bold text-emerald-800">Final Rehearsal & CONCERT</td><td class="p-2">12:00noon / 4:00pm</td><td class="p-2 text-emerald-700 font-bold">Grand Concert Stage</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 3: AREA MEMBERSHIP REGISTRY            -->
+    <!-- ========================================== -->
+    <section id="tab-registry" class="hidden space-y-6">
+      
+      <!-- Registry Header & Auto ID Info Card -->
+      <div class="bg-gradient-to-r from-brand-900 to-brand-800 text-white p-5 rounded-3xl shadow-sm border border-brand-gold/30">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 text-[11px] font-bold uppercase tracking-wider mb-1">
+              <i class="fa-solid fa-id-card"></i> Central Area Database
+            </div>
+            <h3 class="text-lg font-bold text-white font-heading">Comprehensive Choir & Music Registration</h3>
+            <p class="text-xs text-slate-300">Open to all choir members, beginners, instrumentalists, and music students across Ondo Area.</p>
+          </div>
+          <div class="bg-white/10 px-4 py-2.5 rounded-2xl border border-white/20 text-right shrink-0">
+            <span class="text-[10px] text-amber-300 font-semibold block uppercase">Generated Member ID Format</span>
+            <span class="text-sm font-mono font-extrabold text-white" id="member-id-preview">ONDO-2026-AKR-0135</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Registration Form Card -->
+      <div class="bg-white p-5 sm:p-6 rounded-3xl shadow-sm border border-slate-200">
+        <form id="public-reg-form" onsubmit="handlePublicRegistration(event)" class="space-y-4 text-xs">
+
+          <!-- Category Selection: Junior vs Senior -->
+          <div>
+            <label class="block font-bold text-slate-800 mb-1.5">Membership Category *</label>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <label class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-2 cursor-pointer hover:border-brand-500">
+                <input type="radio" name="member-cat" value="Senior Chorister" checked class="text-brand-700">
+                <div>
+                  <span class="font-bold text-slate-900 block text-xs">Senior Chorister</span>
+                  <span class="text-[10px] text-slate-500">Adult / Teen Singer</span>
+                </div>
+              </label>
+              <label class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-2 cursor-pointer hover:border-brand-500">
+                <input type="radio" name="member-cat" value="Junior Chorister" class="text-brand-700">
+                <div>
+                  <span class="font-bold text-slate-900 block text-xs">Junior Chorister</span>
+                  <span class="text-[10px] text-slate-500">Children Choir</span>
+                </div>
+              </label>
+              <label class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-2 cursor-pointer hover:border-brand-500">
+                <input type="radio" name="member-cat" value="Instrumentalist" class="text-brand-700">
+                <div>
+                  <span class="font-bold text-slate-900 block text-xs">Instrumentalist</span>
+                  <span class="text-[10px] text-slate-500">Plays Instrument</span>
+                </div>
+              </label>
+              <label class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-2 cursor-pointer hover:border-brand-500">
+                <input type="radio" name="member-cat" value="Music Student" class="text-brand-700">
+                <div>
+                  <span class="font-bold text-slate-900 block text-xs">Music Student</span>
+                  <span class="text-[10px] text-slate-500">Learning Theory / Sight</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Personal Information -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Full Name *</label>
+              <input type="text" id="reg-name" required placeholder="e.g. Samuel Olawale" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+            </div>
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Phone Number *</label>
+              <input type="tel" id="reg-phone" required placeholder="e.g. 08012345678" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Gender *</label>
+              <div class="flex gap-4 mt-2">
+                <label class="flex items-center gap-1.5 cursor-pointer">
+                  <input type="radio" name="gender" value="Female" checked class="text-pink-600"> Female
+                </label>
+                <label class="flex items-center gap-1.5 cursor-pointer">
+                  <input type="radio" name="gender" value="Male" class="text-blue-600"> Male
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Voice Part *</label>
+              <select id="reg-part" required class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-xs">
+                <option value="Soprano">Soprano</option>
+                <option value="Alto">Alto</option>
+                <option value="Tenor">Tenor</option>
+                <option value="Bass">Bass</option>
+                <option value="Musician">Musician / Orchestra Only</option>
+                <option value="Not yet classified">Not yet classified</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Musical Experience Level</label>
+              <select id="reg-experience" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-xs">
+                <option value="Beginner">Beginner (No formal knowledge)</option>
+                <option value="Rudiments Student">Learning Music Rudiments</option>
+                <option value="Sight-Reading Student">Learning Sight-Reading / Solfa</option>
+                <option value="Intermediate">Intermediate Musician</option>
+                <option value="Advanced">Advanced Musician</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Church Branch & Zone Hierarchy -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Area Zone *</label>
+              <select id="reg-zone" onchange="updateMemberIdPreview()" required class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-xs">
+                <!-- Populated by JS -->
+              </select>
+            </div>
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Branch Church / Station *</label>
+              <input type="text" id="reg-station" required placeholder="e.g. Ijoka, Central, Stadium Road" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-xs">
+            </div>
+          </div>
+
+          <!-- Instrumental Interests -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Instruments Currently Played (if any)</label>
+              <input type="text" id="reg-instrument" placeholder="e.g. Violin, Piano, Viola, Flute" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-xs">
+            </div>
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Instruments You Wish to Learn</label>
+              <input type="text" id="reg-learn-instrument" placeholder="e.g. Cello, Organ, Trumpet, Clarinet" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-xs">
+            </div>
+          </div>
+
+          <div class="pt-3">
+            <button type="submit" class="w-full py-3 bg-brand-700 hover:bg-brand-800 text-white font-bold rounded-xl text-sm transition shadow-md flex items-center justify-center gap-2 cursor-pointer">
+              <i class="fa-solid fa-user-check"></i>
+              <span>Register Member in Area Database</span>
+            </button>
+          </div>
+        </form>
+
+        <div id="reg-success-msg" class="hidden mt-4 p-4 bg-emerald-50 border border-emerald-300 text-emerald-800 rounded-2xl text-xs flex items-center gap-3">
+          <i class="fa-solid fa-circle-check text-xl text-emerald-600"></i>
+          <div>
+            <div class="font-bold text-sm">Registration Successful!</div>
+            <span>Member profile is securely stored in InsForge Cloud Postgres and synchronized across all Area officers.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 4: DIGITAL MUSIC ACADEMY               -->
+    <!-- ========================================== -->
+    <section id="tab-academy" class="hidden space-y-6">
+
+      <!-- Academy Header Banner -->
+      <div class="bg-gradient-to-r from-emerald-900 to-brand-900 text-white p-6 rounded-3xl shadow-sm border border-emerald-400/30">
+        <div class="max-w-2xl space-y-2">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-bold uppercase tracking-wider">
+            <i class="fa-solid fa-graduation-cap"></i> Ondo Area Digital Music Academy
+          </div>
+          <h3 class="text-2xl font-extrabold text-white font-heading">Progressive Music Education Pathways</h3>
+          <p class="text-xs text-slate-200 leading-relaxed">
+            From complete beginners to advanced sight-readers and orchestral instrumentalists. An organized pathway to identify, train, and develop every musical gift in the church.
+          </p>
+        </div>
+      </div>
+
+      <!-- 5 Progressive Levels Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <!-- Level 1 -->
+        <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-blue-100 text-blue-800">LEVEL 1</span>
+              <span class="text-xs font-semibold text-slate-400">Foundation</span>
+            </div>
+            <h4 class="text-base font-bold text-slate-900 font-heading">Music Rudiments & Theory</h4>
+            <p class="text-xs text-slate-600 mt-1">For complete beginners. Musical alphabet, staff, clefs, notes, note values, time signatures, rests, scales, and basic rhythm.</p>
+            <ul class="mt-3 text-[11px] text-slate-500 space-y-1 list-disc list-inside">
+              <li>Lines and spaces on Treble & Bass Clefs</li>
+              <li>Simple and compound time signatures</li>
+              <li>Major and minor scales and key signatures</li>
+            </ul>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-[11px] text-slate-500 font-medium">Format: Online & Group</span>
+            <button onclick="handleCourseEnroll('Music Rudiments', 'Level 1')" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition cursor-pointer">
+              Enroll / Inquire &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- Level 2 -->
+        <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-100 text-amber-800">LEVEL 2</span>
+              <span class="text-xs font-semibold text-slate-400">Vocal Pitch & Notation</span>
+            </div>
+            <h4 class="text-base font-bold text-slate-900 font-heading">Tonic Solfa Mastery</h4>
+            <p class="text-xs text-slate-600 mt-1">Introduction to Tonic Solfa notation (Do, Re, Mi, Fa, So, La, Ti). Scale relationships, movable Do, rhythm in solfa, and 2-part & 4-part solfa reading.</p>
+            <ul class="mt-3 text-[11px] text-slate-500 space-y-1 list-disc list-inside">
+              <li>Movable Do system & key transitions</li>
+              <li>Rhythm and pulse notation in solfa</li>
+              <li>Reading SATB hymn melodies in tonic solfa</li>
+            </ul>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-[11px] text-slate-500 font-medium">Format: Self-paced & Workshops</span>
+            <button onclick="handleCourseEnroll('Tonic Solfa Mastery', 'Level 2')" class="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-bold transition cursor-pointer">
+              Enroll / Inquire &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- Level 3 -->
+        <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-800">LEVEL 3</span>
+              <span class="text-xs font-semibold text-slate-400">Score Reading</span>
+            </div>
+            <h4 class="text-base font-bold text-slate-900 font-heading">Sight-Reading & Choral Interpretation</h4>
+            <p class="text-xs text-slate-600 mt-1">Reading musical notation directly off the staff at first sight. Fluency across clefs, interval recognition, dynamic interpretation, and SATB scores.</p>
+            <ul class="mt-3 text-[11px] text-slate-500 space-y-1 list-disc list-inside">
+              <li>Instant pitch and interval recognition</li>
+              <li>Dynamic expressions, tempo markings & phrasing</li>
+              <li>Practical sight-reading tests & choral drills</li>
+            </ul>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-[11px] text-slate-500 font-medium">Format: Tutor-Led Class</span>
+            <button onclick="handleCourseEnroll('Sight-Reading', 'Level 3')" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition cursor-pointer">
+              Enroll / Inquire &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- Level 4 -->
+        <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-purple-100 text-purple-800">LEVEL 4</span>
+              <span class="text-xs font-semibold text-slate-400">Vocal Mastery</span>
+            </div>
+            <h4 class="text-base font-bold text-slate-900 font-heading">Voice Development & Technique</h4>
+            <p class="text-xs text-slate-600 mt-1">Diaphragmatic breathing, vocal projection without strain, pitch accuracy, choral blend, harmony discipline, and soloist development.</p>
+            <ul class="mt-3 text-[11px] text-slate-500 space-y-1 list-disc list-inside">
+              <li>Breathing mechanics & posture alignment</li>
+              <li>Choral vowel matching and resonance</li>
+              <li>Vocal hygiene and preservation</li>
+            </ul>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-[11px] text-slate-500 font-medium">Format: Masterclass & Practical</span>
+            <button onclick="handleCourseEnroll('Voice Development', 'Level 4')" class="px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-bold transition cursor-pointer">
+              Enroll / Inquire &rarr;
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Level 5: Instrumental Training Banner -->
+      <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-xs space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-rose-100 text-rose-800">LEVEL 5</span>
+          <span class="text-xs font-semibold text-slate-400">Orchestral Musicianship</span>
+        </div>
+        <h4 class="text-base font-bold text-slate-900 font-heading">Instrumental Pathways & Orchestral Training</h4>
+        <p class="text-xs text-slate-600">
+          Dedicated learning pathways for Strings (Violin, Viola, Cello, Double Bass), Keyboards (Piano, Pipe Organ), Woodwinds (Flute, Clarinet), Brass (Trumpet, Trombone), and Percussion.
+        </p>
+        <div class="flex flex-wrap gap-2 pt-1 text-xs">
+          <span class="px-3 py-1 bg-slate-100 rounded-lg text-slate-700 font-medium">Violin Pathway</span>
+          <span class="px-3 py-1 bg-slate-100 rounded-lg text-slate-700 font-medium">Viola / Cello Pathway</span>
+          <span class="px-3 py-1 bg-slate-100 rounded-lg text-slate-700 font-medium">Pipe Organ & Piano</span>
+          <span class="px-3 py-1 bg-slate-100 rounded-lg text-slate-700 font-medium">Woodwinds & Brass</span>
+        </div>
+      </div>
+
+      <!-- Junior Programme Card -->
+      <div class="p-5 bg-gradient-to-r from-amber-500/10 via-amber-50 to-amber-500/10 rounded-3xl border border-amber-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <span class="px-2.5 py-0.5 bg-amber-200 text-amber-900 font-bold text-[10px] rounded-full uppercase">Dedicated Programme</span>
+          <h4 class="font-bold text-slate-900 text-sm mt-1">Junior Music Development Programme</h4>
+          <p class="text-xs text-slate-600">Tailored music theory, solfa, and string instrument lessons for children and young beginners with parental consent.</p>
+        </div>
+        <button onclick="handleCourseEnroll('Junior Music Development', 'Children')" class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-xl transition shadow shrink-0 cursor-pointer">
+          Register Junior Learner &rarr;
+        </button>
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 5: MUSIC LIBRARY & REPERTOIRE          -->
+    <!-- ========================================== -->
+    <section id="tab-library" class="hidden space-y-6">
+
+      <!-- Library Header -->
+      <div class="bg-gradient-to-r from-brand-900 to-brand-800 text-white p-6 rounded-3xl shadow-sm border border-brand-gold/30">
+        <div class="max-w-2xl space-y-2">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 text-xs font-bold uppercase tracking-wider">
+            <i class="fa-solid fa-book-open"></i> Central Music Repository
+          </div>
+          <h3 class="text-2xl font-extrabold text-white font-heading">Digital Sheet Music & Media Archive</h3>
+          <p class="text-xs text-slate-300">
+            Official SATB arrangements, hymn scores, tonic solfa charts, and rehearsal video evidence for choristers and officers across Ondo Area.
+          </p>
+        </div>
+      </div>
+
+      <!-- Practice Video Upload Guidelines (Panda App) -->
+      <div class="bg-amber-50 p-5 rounded-3xl border border-amber-300 space-y-3">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div class="flex items-center gap-2">
+            <span class="w-8 h-8 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center font-bold">
+              <i class="fa-solid fa-video"></i>
+            </span>
+            <div>
+              <h4 class="font-bold text-sm text-slate-900">Official Practice Video Upload Pipeline</h4>
+              <p class="text-[11px] text-slate-600">Attendance officers submit compressed practice videos to Google Drive.</p>
+            </div>
+          </div>
+          <button onclick="handleOfficerUploadDrive()" class="px-3.5 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-xl transition shadow flex items-center gap-1.5 cursor-pointer">
+            <i class="fa-brands fa-google-drive"></i> Open Area Drive Folder
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs text-slate-700 pt-1">
+          <div class="bg-white p-3 rounded-2xl border border-amber-200 flex items-start gap-2 shadow-xs">
+            <span class="w-5 h-5 rounded-full bg-amber-400 text-slate-950 font-bold flex items-center justify-center text-[11px] shrink-0">1</span>
+            <div>
+              <strong class="font-bold text-slate-900 block">Record Practice:</strong>
+              <span class="text-[11px] text-slate-600">Capture video evidence of the choir during rehearsal.</span>
+            </div>
+          </div>
+          <div class="bg-white p-3 rounded-2xl border border-amber-200 flex items-start gap-2 shadow-xs">
+            <span class="w-5 h-5 rounded-full bg-amber-400 text-slate-950 font-bold flex items-center justify-center text-[11px] shrink-0">2</span>
+            <div>
+              <strong class="font-bold text-slate-900 block">Compress (Panda App):</strong>
+              <span class="text-[11px] text-slate-600">Open Panda Video app, select <b>MEDIUM</b> size to save mobile data.</span>
+            </div>
+          </div>
+          <div class="bg-white p-3 rounded-2xl border border-amber-200 flex items-start gap-2 shadow-xs">
+            <span class="w-5 h-5 rounded-full bg-amber-400 text-slate-950 font-bold flex items-center justify-center text-[11px] shrink-0">3</span>
+            <div>
+              <strong class="font-bold text-slate-900 block">Zone Folder:</strong>
+              <span class="text-[11px] text-slate-600">Upload to your Zone's folder with the song name as title.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Curated Music Resources List -->
+      <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs space-y-3">
+        <h4 class="font-bold text-sm text-slate-900 uppercase tracking-wider flex items-center gap-2">
+          <i class="fa-solid fa-file-pdf text-rose-600"></i> Official Choral Repertoire & Scores
+        </h4>
+
+        <div class="divide-y divide-slate-100 text-xs">
+          <div class="py-3 flex items-center justify-between">
+            <div>
+              <span class="font-bold text-slate-900 block">2026 Concert Anthem: "Worship the King" (SATB)</span>
+              <span class="text-[11px] text-slate-500">Choral score with orchestral reduction • Key of G Major</span>
+            </div>
+            <button onclick="handleResourceDownload('Worship the King SATB')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-lg text-brand-700 font-bold transition flex items-center gap-1 cursor-pointer">
+              <i class="fa-solid fa-download"></i> Score
+            </button>
+          </div>
+
+          <div class="py-3 flex items-center justify-between">
+            <div>
+              <span class="font-bold text-slate-900 block">Official Apostolic Faith Church Hymnal — Tonic Solfa Edition</span>
+              <span class="text-[11px] text-slate-500">Standard hymnal solfa notation for all branches</span>
+            </div>
+            <button onclick="handleResourceDownload('Hymnal Tonic Solfa')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-lg text-brand-700 font-bold transition flex items-center gap-1 cursor-pointer">
+              <i class="fa-solid fa-download"></i> Solfa
+            </button>
+          </div>
+
+          <div class="py-3 flex items-center justify-between">
+            <div>
+              <span class="font-bold text-slate-900 block">Music Rudiments Level 1 Study Guide</span>
+              <span class="text-[11px] text-slate-500">Approved notes for beginners learning the musical staff and clefs</span>
+            </div>
+            <button onclick="handleResourceDownload('Rudiments Study Guide')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-lg text-brand-700 font-bold transition flex items-center gap-1 cursor-pointer">
+              <i class="fa-solid fa-download"></i> Guide
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 6: ADMIN, STATS & CLOUD SYNC           -->
+    <!-- ========================================== -->
+    <section id="tab-admin" class="hidden space-y-5">
+      <!-- Overview Cards -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <div class="text-[11px] font-bold text-slate-500 uppercase">Total Registered</div>
+          <div class="text-2xl font-extrabold text-brand-900 mt-1 font-heading" id="admin-total-reg">0</div>
+          <div class="text-[10px] text-slate-400 mt-0.5">Across all zones</div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <div class="text-[11px] font-bold text-slate-500 uppercase">Sopranos / Altos</div>
+          <div class="text-2xl font-extrabold text-pink-600 mt-1 font-heading" id="admin-soprano-alto">0 / 0</div>
+          <div class="text-[10px] text-slate-400 mt-0.5">Female voice parts</div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <div class="text-[11px] font-bold text-slate-500 uppercase">Tenors / Basses</div>
+          <div class="text-2xl font-extrabold text-blue-700 mt-1 font-heading" id="admin-tenor-bass">0 / 0</div>
+          <div class="text-[10px] text-slate-400 mt-0.5">Male voice parts</div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <div class="text-[11px] font-bold text-slate-500 uppercase">Stage Qualified (≥70%)</div>
+          <div class="text-2xl font-extrabold text-emerald-600 mt-1 font-heading" id="admin-qualified">0</div>
+          <div class="text-[10px] text-slate-400 mt-0.5">Eligible for Concert</div>
+        </div>
+      </div>
+
+      <!-- InsForge Cloud Database Card -->
+      <div class="bg-gradient-to-r from-slate-900 to-brand-950 text-white p-4 sm:p-5 rounded-2xl shadow-md border border-brand-gold/30">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center text-lg font-bold shadow shrink-0">
+              <i class="fa-solid fa-database"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h4 class="font-bold text-sm text-white">InsForge Cloud Postgres Backend</h4>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">LIVE</span>
+              </div>
+              <p class="text-[11px] text-slate-300">Project: <span class="font-mono text-amber-300">Ondo-Area-Choir-Portal</span> (ID: <span class="font-mono text-slate-400">aa9bd8ae</span>) • Region: US-East</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="syncWithInsForge(true)" id="btn-sync-insforge" class="px-3 py-2 bg-amber-400 hover:bg-amber-300 text-brand-950 text-xs font-bold rounded-xl flex items-center gap-1.5 transition shadow">
+              <i class="fa-solid fa-arrows-rotate" id="icon-sync-insforge"></i> Sync Cloud Now
+            </button>
+            <a href="https://insforge.dev/dashboard/project/aa9bd8ae-45a6-471e-b8cc-b1b9e249309c" target="_blank" class="px-3 py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-semibold rounded-xl flex items-center gap-1.5 transition">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> Dashboard
+            </a>
+          </div>
+        </div>
+        <div class="mt-3 pt-3 border-t border-white/10 text-[11px] text-slate-300 flex flex-wrap items-center justify-between gap-2">
+          <span>⚡ Real-time multi-device sync across all Ondo State rehearsals and check-ins.</span>
+          <span id="last-synced-time" class="text-slate-400">Last sync: Initialized</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons Row -->
+      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-wrap gap-2.5 items-center justify-between text-xs">
+        <div class="font-bold text-slate-700">Data Management:</div>
+        <div class="flex flex-wrap gap-2">
+          <button onclick="exportToCSV()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 font-bold rounded-lg border border-slate-300 text-slate-700 flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-file-excel text-emerald-600"></i> Export to Excel/CSV
+          </button>
+          <label class="px-3 py-2 bg-slate-100 hover:bg-slate-200 font-bold rounded-lg border border-slate-300 text-slate-700 flex items-center gap-1.5 transition cursor-pointer">
+            <i class="fa-solid fa-file-import text-blue-600"></i> Import Member CSV
+            <input type="file" id="csv-file-input" accept=".csv" class="hidden" onchange="importFromCSV(event)">
+          </label>
+          <button onclick="openModal('modal-sheets-sync')" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-700 font-bold rounded-lg text-white flex items-center gap-1.5 transition shadow-sm">
+            <i class="fa-brands fa-google"></i> Connect Google Sheet
+          </button>
+        </div>
+      </div>
+
+      <!-- Rehearsals Schedule Reference -->
+      <div class="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-sm">
+        <h3 class="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
+          <i class="fa-regular fa-calendar-days text-brand-600"></i> Official 2026 Rehearsal Schedule & Weighting
+        </h3>
+        <div class="overflow-x-auto text-xs">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold">
+                <th class="p-2">Date</th>
+                <th class="p-2">Day</th>
+                <th class="p-2">Rehearsal Level</th>
+                <th class="p-2">Time</th>
+                <th class="p-2">Status</th>
+              </tr>
+            </thead>
+            <tbody id="schedule-table-body" class="divide-y divide-slate-100 text-slate-700">
+              <!-- Rendered by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f5ff',
+              100: '#e5edff',
+              500: '#1e40af',
+              600: '#1d3557',
+              700: '#15253d',
+              800: '#0f172a',
+              900: '#080d1a',
+              gold: '#e0a926',
+              goldDark: '#b8860b'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts: Outfit, Plus Jakarta Sans, and Roboto (Apostolic Faith Church WECA Typography) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    h1, h2, h3, h4, .font-heading {
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col antialiased selection:bg-amber-100 selection:text-amber-900">
+
+  <!-- TOP HEADER -->
+  <header class="bg-gradient-to-r from-brand-900 via-brand-700 to-brand-800 text-white shadow-lg sticky top-0 z-30 border-b border-brand-gold/30">
+    <div class="max-w-4xl mx-auto px-4 py-2.5 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <!-- Official Apostolic Faith Church Logo Emblem -->
+        <div class="h-11 px-2.5 py-1 rounded-xl bg-white flex items-center justify-center shadow-md shrink-0">
+          <img src="church-logo.svg" alt="Apostolic Faith Church Logo" class="h-9 w-auto object-contain">
+        </div>
+        <div>
+          <span class="text-[10px] uppercase tracking-wider text-amber-300 font-bold block leading-tight">Apostolic Faith Church • Ondo Area</span>
+          <div class="flex items-center gap-2 flex-wrap">
+            <h1 class="text-sm sm:text-base font-bold leading-tight font-heading">2026 Concert Attendance Portal</h1>
+            <span id="insforge-status-pill" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-400/20 text-emerald-200 border border-emerald-400/30">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span id="insforge-status-text">InsForge Cloud Live</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Quick Action / Drive Link (Officers Only) -->
+      <button onclick="handleOfficerUploadDrive()" 
+         class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-400 text-brand-900 rounded-lg text-xs font-bold hover:bg-amber-300 transition shadow cursor-pointer">
+        <i class="fa-brands fa-google-drive"></i>
+        <span>Practice Video Upload</span>
+      </button>
+    </div>
+
+    <!-- NAVIGATION TABS -->
+    <div class="max-w-4xl mx-auto px-2 flex border-t border-white/10 text-xs sm:text-sm font-semibold overflow-x-auto custom-scroll">
+      <button onclick="switchTab('checkin')" id="tab-btn-checkin" class="tab-btn active-tab flex-1 py-3 px-3 text-center border-b-2 border-amber-400 text-amber-300 flex items-center justify-center gap-2 whitespace-nowrap">
+        <i class="fa-solid fa-clipboard-check"></i>
+        <span>Mark Attendance</span>
+      </button>
+      <button onclick="switchTab('score')" id="tab-btn-score" class="tab-btn flex-1 py-3 px-3 text-center border-b-2 border-transparent text-slate-300 hover:text-white flex items-center justify-center gap-2 whitespace-nowrap">
+        <i class="fa-solid fa-chart-pie"></i>
+        <span>Check My Score</span>
+      </button>
+      <button onclick="switchTab('register')" id="tab-btn-register" class="tab-btn flex-1 py-3 px-3 text-center border-b-2 border-transparent text-slate-300 hover:text-white flex items-center justify-center gap-2 whitespace-nowrap">
+        <i class="fa-solid fa-user-plus"></i>
+        <span>Register Member</span>
+      </button>
+      <button onclick="switchTab('admin')" id="tab-btn-admin" class="tab-btn flex-1 py-3 px-3 text-center border-b-2 border-transparent text-slate-300 hover:text-white flex items-center justify-center gap-2 whitespace-nowrap">
+        <i class="fa-solid fa-sliders"></i>
+        <span>Admin & Sync</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- DRIVE BANNER FOR MOBILE -->
+  <div class="sm:hidden bg-amber-500 text-brand-900 px-3 py-1.5 text-xs font-medium flex items-center justify-between">
+    <div class="flex items-center gap-1.5">
+      <i class="fa-brands fa-google-drive font-bold"></i>
+      <span>Evidence of Practice Upload</span>
+    </div>
+    <button onclick="handleOfficerUploadDrive()" class="font-bold underline text-[11px] cursor-pointer">Open Drive &rarr;</button>
+  </div>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-4xl w-full mx-auto p-4 sm:p-6 flex-1">
+
+    <!-- ========================================== -->
+    <!-- TAB 1: OFFICER CHECK-IN                   -->
+    <!-- ========================================== -->
+    <section id="tab-checkin" class="space-y-5">
+
+      <!-- Official Practice Evidence & Video Upload Card -->
+      <div class="bg-gradient-to-r from-amber-500/10 via-amber-50 to-amber-500/10 p-4 rounded-2xl border border-amber-300 shadow-sm">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center text-lg shrink-0 shadow-sm font-bold">
+              <i class="fa-solid fa-video"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="px-2 py-0.5 bg-amber-200 text-amber-950 rounded font-bold text-[10px] uppercase tracking-wider">Officers Guideline</span>
+                <span class="text-xs font-bold text-slate-900">Evidence of Practice Video Upload</span>
+              </div>
+              <p class="text-xs text-slate-600 mt-0.5">Attendance Officers: Submit compressed rehearsal videos to Google Drive after each session.</p>
+            </div>
+          </div>
+          <button onclick="handleOfficerUploadDrive()" 
+             class="px-3.5 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-xl transition shadow flex items-center justify-center gap-2 shrink-0 cursor-pointer">
+            <i class="fa-brands fa-google-drive"></i>
+            <span>Upload Practice Video &rarr;</span>
+          </button>
+        </div>
+
+        <!-- 3-Step Guideline Checklist -->
+        <div class="mt-3 pt-3 border-t border-amber-200/80 grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs text-slate-700">
+          <div class="bg-white/90 p-2.5 rounded-xl border border-amber-200/60 flex items-start gap-2 shadow-xs">
+            <span class="w-5 h-5 rounded-full bg-amber-400 text-slate-950 font-bold flex items-center justify-center text-[11px] shrink-0">1</span>
+            <div>
+              <strong class="font-bold text-slate-900 block">Record Practice:</strong>
+              <span class="text-[11px] text-slate-600">Capture video evidence of the choir during the rehearsal session.</span>
+            </div>
+          </div>
+          <div class="bg-white/90 p-2.5 rounded-xl border border-amber-200/60 flex items-start gap-2 shadow-xs">
+            <span class="w-5 h-5 rounded-full bg-amber-400 text-slate-950 font-bold flex items-center justify-center text-[11px] shrink-0">2</span>
+            <div>
+              <strong class="font-bold text-slate-900 block">Compress with Panda App:</strong>
+              <span class="text-[11px] text-slate-600">Open <b>Panda Video app</b> on your device, choose <b>MEDIUM</b> size to save mobile data.</span>
+            </div>
+          </div>
+          <div class="bg-white/90 p-2.5 rounded-xl border border-amber-200/60 flex items-start gap-2 shadow-xs">
+            <span class="w-5 h-5 rounded-full bg-amber-400 text-slate-950 font-bold flex items-center justify-center text-[11px] shrink-0">3</span>
+            <div>
+              <strong class="font-bold text-slate-900 block">Zone Folder & Song Name:</strong>
+              <span class="text-[11px] text-slate-600">Open your Zone's folder on Drive and upload files titled with the appropriate song name.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-2.5 text-[11px] text-amber-900 bg-amber-100/70 px-3 py-1.5 rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-1 border border-amber-200">
+          <span>🎯 <b>Concert Requirement:</b> A minimum of <b>70% attendance rate</b> is required for choristers to sing on the concert stage.</span>
+          <span class="font-medium text-slate-800">Ondo Zone Officer: <b>Bro. Bamidele Raymond</b></span>
+        </div>
+      </div>
+
+      <!-- Officer Lock & Access Banner -->
+      <div id="officer-lock-banner">
+        <!-- Rendered by renderOfficerLockBanner() -->
+      </div>
+
+      <!-- Session Selector Card -->
+      <div class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-slate-200">
+        <div class="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between mb-4">
+          <div>
+            <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              Zonal & Station Check-In
+            </h2>
+            <p class="text-xs text-slate-500">Select rehearsal date, zone, and tap names to mark attendance.</p>
+          </div>
+          <button onclick="promptAddMember()" class="self-start sm:self-auto px-3.5 py-2 bg-brand-600 text-white text-xs font-bold rounded-xl hover:bg-brand-700 transition flex items-center gap-1.5 shadow-sm">
+            <i class="fa-solid fa-plus"></i> Add New Chorister
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <!-- Session Select -->
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Rehearsal Session:</label>
+            <select id="checkin-session-select" onchange="renderCheckinList()" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-medium focus:ring-2 focus:ring-brand-500 focus:outline-none">
+              <!-- Populated by JS -->
+            </select>
+          </div>
+
+          <!-- Zone / Station Select -->
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Filter by Zone / Station:</label>
+            <select id="checkin-zone-select" onchange="renderCheckinList()" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-medium focus:ring-2 focus:ring-brand-500 focus:outline-none">
+              <option value="ALL">All Zones & Stations</option>
+              <!-- Populated by JS -->
+            </select>
+          </div>
+        </div>
+
+        <!-- Voice Part Filter Pills & Search -->
+        <div class="mt-4 pt-3 border-t border-slate-100 flex flex-col sm:flex-row gap-3 sm:items-center justify-between">
+          <div class="flex flex-wrap gap-1 text-[11px]" id="part-filter-container">
+            <button onclick="filterPart('ALL')" class="part-pill active-part px-2.5 py-1 rounded-lg border font-semibold bg-brand-700 text-white border-brand-700">All</button>
+            <button onclick="filterPart('Soprano')" class="part-pill px-2.5 py-1 rounded-lg border font-medium bg-slate-100 text-slate-700 border-slate-200">Soprano</button>
+            <button onclick="filterPart('Alto')" class="part-pill px-2.5 py-1 rounded-lg border font-medium bg-slate-100 text-slate-700 border-slate-200">Alto</button>
+            <button onclick="filterPart('Tenor')" class="part-pill px-2.5 py-1 rounded-lg border font-medium bg-slate-100 text-slate-700 border-slate-200">Tenor</button>
+            <button onclick="filterPart('Bass')" class="part-pill px-2.5 py-1 rounded-lg border font-medium bg-slate-100 text-slate-700 border-slate-200">Bass</button>
+            <button onclick="filterPart('Musician')" class="part-pill px-2.5 py-1 rounded-lg border font-medium bg-slate-100 text-slate-700 border-slate-200">Musician</button>
+          </div>
+          
+          <div class="relative">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+            <input type="text" id="checkin-search" oninput="renderCheckinList()" placeholder="Search name or phone..." class="w-full sm:w-56 pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-brand-500 focus:outline-none">
+          </div>
+        </div>
+      </div>
+
+      <!-- Guardrail Lock Notice Banner -->
+      <div id="session-lock-notice" class="hidden"></div>
+
+      <!-- Quick Session Stats Bar -->
+      <div class="bg-gradient-to-r from-brand-900 to-brand-700 text-white rounded-xl p-3 px-4 flex items-center justify-between text-xs shadow-sm">
+        <div class="flex items-center gap-4">
+          <div><span class="text-slate-300">Total in View:</span> <strong id="stat-total" class="text-white text-sm">0</strong></div>
+          <div><span class="text-emerald-300">Present:</span> <strong id="stat-present" class="text-emerald-300 text-sm">0</strong></div>
+          <div><span class="text-amber-300">Excused:</span> <strong id="stat-excused" class="text-amber-300 text-sm">0</strong></div>
+        </div>
+        <button onclick="saveSyncNotification()" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 rounded-lg text-[11px] font-semibold text-white flex items-center gap-1 transition">
+          <i class="fa-solid fa-cloud-arrow-up"></i> Auto-saved
+        </button>
+      </div>
+
+      <!-- Member Roster Checklist -->
+      <div id="checkin-list" class="space-y-2.5">
+        <!-- Roster Cards Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 2: MEMBER SELF-CHECK ("CHECK MY SCORE") -->
+    <!-- ========================================== -->
+    <section id="tab-score" class="hidden space-y-6">
+      <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200 text-center max-w-lg mx-auto">
+        <div class="w-14 h-14 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center text-2xl mx-auto mb-3 shadow-inner">
+          <i class="fa-solid fa-id-card-clip"></i>
+        </div>
+        <h2 class="text-lg font-bold text-slate-900 font-heading">Check Your Rehearsal Attendance</h2>
+        <p class="text-xs text-slate-500 mb-5">Enter your registered Phone Number or Name to see your total score, stage clearance, and practice status.</p>
+
+        <form onsubmit="handleMemberLookup(event)" class="space-y-3">
+          <div class="relative">
+            <i class="fa-solid fa-phone absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+            <input type="text" id="member-lookup-input" required placeholder="Enter Phone Number (e.g. 08012345678)" class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-brand-500 focus:outline-none">
+          </div>
+          <button type="submit" class="w-full py-3 bg-brand-700 hover:bg-brand-800 text-white text-sm font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-magnifying-glass"></i> View My Attendance Score
+          </button>
+        </form>
+      </div>
+
+      <!-- Result Card (Hidden until searched) -->
+      <div id="member-score-result" class="hidden max-w-lg mx-auto space-y-4">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 3: MEMBER REGISTRATION FORM            -->
+    <!-- ========================================== -->
+    <section id="tab-register" class="hidden max-w-lg mx-auto">
+      <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200">
+        <div class="flex items-center gap-3 mb-5 border-b pb-4 border-slate-100">
+          <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-700 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-user-pen"></i>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-slate-900 font-heading">Register for 2026 Concert</h2>
+            <p class="text-xs text-slate-500">Choristers & Musicians Registration of Interest</p>
+          </div>
+        </div>
+
+        <form id="public-reg-form" onsubmit="handlePublicRegistration(event)" class="space-y-4 text-xs">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Full Name (Surname First) *</label>
+            <input type="text" id="reg-name" required placeholder="e.g. Akinwumi Emmanuel Damilola" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Phone Number (WhatsApp) *</label>
+              <input type="tel" id="reg-phone" required placeholder="080XXXXXXXX" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+            </div>
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Voice Part / Role *</label>
+              <select id="reg-part" required class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+                <option value="Soprano">Soprano</option>
+                <option value="Alto">Alto</option>
+                <option value="Tenor">Tenor</option>
+                <option value="Bass">Bass</option>
+                <option value="Musician">Musician / Instrumentalist</option>
+                <option value="Technical">Technical / Media</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Zone *</label>
+              <select id="reg-zone" required class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+                <!-- populated by JS -->
+              </select>
+            </div>
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Station / Assembly *</label>
+              <input type="text" id="reg-station" required placeholder="e.g. Cathedral / Assembly" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Gender</label>
+            <div class="flex gap-4 pt-1">
+              <label class="flex items-center gap-1.5"><input type="radio" name="gender" value="Female" checked> Female</label>
+              <label class="flex items-center gap-1.5"><input type="radio" name="gender" value="Male"> Male</label>
+            </div>
+          </div>
+
+          <div class="pt-3">
+            <button type="submit" class="w-full py-3 bg-brand-700 hover:bg-brand-800 text-white font-bold rounded-xl shadow-md transition text-sm flex items-center justify-center gap-2">
+              <i class="fa-solid fa-check-circle"></i> Submit Registration
+            </button>
+          </div>
+        </form>
+
+        <div id="reg-success-msg" class="hidden mt-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-xs flex items-center gap-2">
+          <i class="fa-solid fa-circle-check text-base text-emerald-600"></i>
+          <div>Registration successful! You are now eligible to be marked for rehearsals.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 4: ADMIN, STATS & CLOUD SYNC           -->
+    <!-- ========================================== -->
+    <section id="tab-admin" class="hidden space-y-5">
+      <!-- Overview Cards -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <div class="text-[11px] font-bold text-slate-500 uppercase">Total Registered</div>
+          <div class="text-2xl font-extrabold text-brand-900 mt-1 font-heading" id="admin-total-reg">0</div>
+          <div class="text-[10px] text-slate-400 mt-0.5">Across all zones</div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <div class="text-[11px] font-bold text-slate-500 uppercase">Sopranos / Altos</div>
+          <div class="text-2xl font-extrabold text-pink-600 mt-1 font-heading" id="admin-soprano-alto">0 / 0</div>
+          <div class="text-[10px] text-slate-400 mt-0.5">Female voice parts</div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <div class="text-[11px] font-bold text-slate-500 uppercase">Tenors / Basses</div>
+          <div class="text-2xl font-extrabold text-blue-700 mt-1 font-heading" id="admin-tenor-bass">0 / 0</div>
+          <div class="text-[10px] text-slate-400 mt-0.5">Male voice parts</div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <div class="text-[11px] font-bold text-slate-500 uppercase">Stage Qualified (≥70%)</div>
+          <div class="text-2xl font-extrabold text-emerald-600 mt-1 font-heading" id="admin-qualified">0</div>
+          <div class="text-[10px] text-slate-400 mt-0.5">Eligible for Concert</div>
+        </div>
+      </div>
+
+      <!-- InsForge Cloud Database Card -->
+      <div class="bg-gradient-to-r from-slate-900 to-brand-950 text-white p-4 sm:p-5 rounded-2xl shadow-md border border-brand-gold/30">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center text-lg font-bold shadow shrink-0">
+              <i class="fa-solid fa-database"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h4 class="font-bold text-sm text-white">InsForge Cloud Postgres Backend</h4>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">LIVE</span>
+              </div>
+              <p class="text-[11px] text-slate-300">Project: <span class="font-mono text-amber-300">Ondo-Area-Choir-Portal</span> (ID: <span class="font-mono text-slate-400">aa9bd8ae</span>) • Region: US-East</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="syncWithInsForge(true)" id="btn-sync-insforge" class="px-3 py-2 bg-amber-400 hover:bg-amber-300 text-brand-950 text-xs font-bold rounded-xl flex items-center gap-1.5 transition shadow">
+              <i class="fa-solid fa-arrows-rotate" id="icon-sync-insforge"></i> Sync Cloud Now
+            </button>
+            <a href="https://insforge.dev/dashboard/project/aa9bd8ae-45a6-471e-b8cc-b1b9e249309c" target="_blank" class="px-3 py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-semibold rounded-xl flex items-center gap-1.5 transition">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> Dashboard
+            </a>
+          </div>
+        </div>
+        <div class="mt-3 pt-3 border-t border-white/10 text-[11px] text-slate-300 flex flex-wrap items-center justify-between gap-2">
+          <span>⚡ Real-time multi-device sync across all Ondo State rehearsals and check-ins.</span>
+          <span id="last-synced-time" class="text-slate-400">Last sync: Initialized</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons Row -->
+      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-wrap gap-2.5 items-center justify-between text-xs">
+        <div class="font-bold text-slate-700">Data Management:</div>
+        <div class="flex flex-wrap gap-2">
+          <button onclick="exportToCSV()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 font-bold rounded-lg border border-slate-300 text-slate-700 flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-file-excel text-emerald-600"></i> Export to Excel/CSV
+          </button>
+          <label class="px-3 py-2 bg-slate-100 hover:bg-slate-200 font-bold rounded-lg border border-slate-300 text-slate-700 flex items-center gap-1.5 transition cursor-pointer">
+            <i class="fa-solid fa-file-import text-blue-600"></i> Import Member CSV
+            <input type="file" id="csv-file-input" accept=".csv" class="hidden" onchange="importFromCSV(event)">
+          </label>
+          <button onclick="openModal('modal-sheets-sync')" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-700 font-bold rounded-lg text-white flex items-center gap-1.5 transition shadow-sm">
+            <i class="fa-brands fa-google"></i> Connect Google Sheet
+          </button>
+        </div>
+      </div>
+
+      <!-- Rehearsals Schedule Reference -->
+      <div class="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-sm">
+        <h3 class="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
+          <i class="fa-regular fa-calendar-days text-brand-600"></i> Official 2026 Rehearsal Schedule & Weighting
+        </h3>
+        <div class="overflow-x-auto text-xs">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold">
+                <th class="p-2">Date</th>
+                <th class="p-2">Day</th>
+                <th class="p-2">Rehearsal Level</th>
+                <th class="p-2">Time</th>
+                <th class="p-2">Status</th>
+              </tr>
+            </thead>
+            <tbody id="schedule-table-body" class="divide-y divide-slate-100 text-slate-700">
+              <!-- Rendered by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  
+
+  <!-- SCRIPT LOGIC -->
+  <script>
+    
     tailwind.config = {
       theme: {
         extend: {
@@ -2445,6 +3945,7 @@
       renderCheckinList();
       renderScheduleTable();
       updateAdminStats();
+      updateMemberIdPreview();
       syncWithInsForge(false);
     });
 
@@ -3047,6 +4548,12 @@
         document.getElementById('admin-tenor-bass').innerText = `${tenors} / ${basses}`;
         document.getElementById('admin-qualified').innerText = qualified;
       }
+
+      if (document.getElementById('ov-stat-total')) {
+        document.getElementById('ov-stat-total').innerText = total;
+        document.getElementById('ov-stat-female').innerText = `${sopranos} / ${altos}`;
+        document.getElementById('ov-stat-male').innerText = `${tenors} / ${basses}`;
+      }
     }
 
     // CSV EXPORT
@@ -3147,6 +4654,7 @@
     function closeModal(id) {
       document.getElementById(id).classList.add('hidden');
     }
+  
   </script>
 </body>
 </html>
