@@ -99,8 +99,8 @@
         <span>Register Member</span>
       </button>
       <button onclick="switchTab('admin')" id="tab-btn-admin" class="tab-btn flex-1 py-3 px-3 text-center border-b-2 border-transparent text-slate-300 hover:text-white flex items-center justify-center gap-2 whitespace-nowrap">
-        <i class="fa-solid fa-sliders"></i>
-        <span>Admin & Sync</span>
+        <i class="fa-solid fa-lock text-[11px] text-amber-300/80"></i>
+        <span>Admin & Stats</span>
       </button>
     </div>
   </header>
@@ -359,70 +359,227 @@
     <!-- TAB 4: ADMIN, STATS & CLOUD SYNC           -->
     <!-- ========================================== -->
     <section id="tab-admin" class="hidden space-y-5">
-      <!-- Overview Cards -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-          <div class="text-[11px] font-bold text-slate-500 uppercase">Total Registered</div>
-          <div class="text-2xl font-extrabold text-brand-900 mt-1 font-heading" id="admin-total-reg">0</div>
-          <div class="text-[10px] text-slate-400 mt-0.5">Across all zones</div>
+      <!-- Admin Locked Gate View (Shown if not yet authenticated with Ondo2026Concert) -->
+      <div id="admin-locked-view" class="bg-white rounded-3xl p-8 border border-slate-200 text-center max-w-md mx-auto my-8 shadow-sm">
+        <div class="w-16 h-16 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center text-3xl mx-auto mb-4 shadow-inner">
+          <i class="fa-solid fa-lock"></i>
         </div>
-        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-          <div class="text-[11px] font-bold text-slate-500 uppercase">Sopranos / Altos</div>
-          <div class="text-2xl font-extrabold text-pink-600 mt-1 font-heading" id="admin-soprano-alto">0 / 0</div>
-          <div class="text-[10px] text-slate-400 mt-0.5">Female voice parts</div>
-        </div>
-        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-          <div class="text-[11px] font-bold text-slate-500 uppercase">Tenors / Basses</div>
-          <div class="text-2xl font-extrabold text-blue-700 mt-1 font-heading" id="admin-tenor-bass">0 / 0</div>
-          <div class="text-[10px] text-slate-400 mt-0.5">Male voice parts</div>
-        </div>
-        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-          <div class="text-[11px] font-bold text-slate-500 uppercase">Stage Qualified (≥70%)</div>
-          <div class="text-2xl font-extrabold text-emerald-600 mt-1 font-heading" id="admin-qualified">0</div>
-          <div class="text-[10px] text-slate-400 mt-0.5">Eligible for Concert</div>
-        </div>
+        <h3 class="text-lg font-black text-slate-900 font-heading">Area Choir Administration Locked</h3>
+        <p class="text-xs text-slate-500 mt-2 mb-6">Please enter the administrative password to access live station attendance analytics, voice part distribution, and choir records.</p>
+        <button onclick="openOfficerLoginModal()" class="w-full py-3 bg-brand-700 hover:bg-brand-800 text-white font-bold rounded-xl text-xs transition shadow-md flex items-center justify-center gap-2">
+          <i class="fa-solid fa-key"></i> Unlock Admin Dashboard
+        </button>
       </div>
 
-      <!-- Action Buttons Row -->
-      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-wrap gap-2.5 items-center justify-between text-xs">
-        <div class="font-bold text-slate-700">Data Management:</div>
-        <div class="flex flex-wrap gap-2">
-          <button onclick="syncWithInsForge(true)" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 font-bold rounded-lg border border-slate-300 text-slate-700 flex items-center gap-1.5 transition">
-            <i class="fa-solid fa-arrows-rotate text-brand-600"></i> Refresh Live Data
-          </button>
-          <button onclick="exportToCSV()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 font-bold rounded-lg border border-slate-300 text-slate-700 flex items-center gap-1.5 transition">
-            <i class="fa-solid fa-file-excel text-emerald-600"></i> Export to Excel/CSV
-          </button>
-          <label class="px-3 py-2 bg-slate-100 hover:bg-slate-200 font-bold rounded-lg border border-slate-300 text-slate-700 flex items-center gap-1.5 transition cursor-pointer">
-            <i class="fa-solid fa-file-import text-blue-600"></i> Import Member CSV
-            <input type="file" id="csv-file-input" accept=".csv" class="hidden" onchange="importFromCSV(event)">
-          </label>
-          <button onclick="openModal('modal-sheets-sync')" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-700 font-bold rounded-lg text-white flex items-center gap-1.5 transition shadow-sm">
-            <i class="fa-brands fa-google"></i> Connect Google Sheet
-          </button>
+      <!-- Admin Unlocked Content -->
+      <div id="admin-unlocked-content" class="hidden space-y-5">
+        <!-- Admin Officer Header Banner -->
+        <div class="bg-gradient-to-r from-brand-950 via-brand-900 to-slate-900 text-white p-5 rounded-2xl shadow-md border border-brand-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Live Rehearsal Active
+              </span>
+              <span class="text-xs text-slate-300 font-medium">Session 3 • Friday Station Practice</span>
+            </div>
+            <h2 class="text-lg sm:text-xl font-extrabold font-heading mt-1 text-white">Area Choir Administration & Analytics</h2>
+            <p class="text-xs text-slate-300 mt-0.5">Realtime monitoring of attendance submissions across all Ondo Area stations.</p>
+          </div>
+          <div class="flex items-center gap-2 shrink-0 self-start sm:self-auto">
+            <button onclick="syncWithInsForge(true)" class="px-3.5 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl text-xs flex items-center gap-1.5 transition shadow-sm">
+              <i class="fa-solid fa-arrows-rotate" id="admin-refresh-icon"></i> Refresh Live Feed
+            </button>
+            <button onclick="lockOfficerMode()" title="Lock Admin Access" class="px-3.5 py-2 bg-white/10 hover:bg-white/20 text-rose-200 hover:text-white font-semibold rounded-xl text-xs border border-white/20 flex items-center gap-1.5 transition">
+              <i class="fa-solid fa-lock"></i> Lock Admin
+            </button>
+          </div>
         </div>
-      </div>
 
-      <!-- Rehearsals Schedule Reference -->
-      <div class="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-sm">
-        <h3 class="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
-          <i class="fa-regular fa-calendar-days text-brand-600"></i> Official 2026 Rehearsal Schedule & Weighting
-        </h3>
-        <div class="overflow-x-auto text-xs">
-          <table class="w-full text-left border-collapse">
-            <thead>
-              <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold">
-                <th class="p-2">Date</th>
-                <th class="p-2">Day</th>
-                <th class="p-2">Rehearsal Level</th>
-                <th class="p-2">Time</th>
-                <th class="p-2">Status</th>
-              </tr>
-            </thead>
-            <tbody id="schedule-table-body" class="divide-y divide-slate-100 text-slate-700">
-              <!-- Rendered by JS -->
-            </tbody>
-          </table>
+        <!-- Realtime Live Spotlight: Today's Session 3 Attendance -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 gap-2 mb-4">
+            <div>
+              <span class="text-[11px] font-bold text-brand-600 uppercase tracking-wider">Tonight's Active Practice</span>
+              <h3 class="text-base font-extrabold text-slate-900 font-heading flex items-center gap-2">
+                <i class="fa-solid fa-signal text-emerald-600"></i> Session 3 Attendance Live Monitor
+              </h3>
+            </div>
+            <div class="text-xs text-slate-500 flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+              <i class="fa-regular fa-clock text-slate-400"></i>
+              <span id="admin-live-timestamp">Auto-refreshed just now</span>
+            </div>
+          </div>
+
+          <!-- 4 Key Live Counters for Today -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200">
+              <div class="text-[11px] font-bold text-emerald-800 uppercase flex items-center justify-between">
+                <span>Present Today</span>
+                <i class="fa-solid fa-user-check text-emerald-600"></i>
+              </div>
+              <div class="text-3xl font-black text-emerald-700 mt-1 font-heading" id="live-present-count">0</div>
+              <div class="text-[11px] text-emerald-800/80 mt-0.5" id="live-present-percent">0% of total registered</div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-amber-50/70 border border-amber-200">
+              <div class="text-[11px] font-bold text-amber-800 uppercase flex items-center justify-between">
+                <span>Excused Today</span>
+                <i class="fa-solid fa-user-clock text-amber-600"></i>
+              </div>
+              <div class="text-3xl font-black text-amber-700 mt-1 font-heading" id="live-excused-count">0</div>
+              <div class="text-[11px] text-amber-800/80 mt-0.5">Approved with notice</div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-blue-50/70 border border-blue-200">
+              <div class="text-[11px] font-bold text-blue-800 uppercase flex items-center justify-between">
+                <span>Stations Active</span>
+                <i class="fa-solid fa-church text-blue-600"></i>
+              </div>
+              <div class="text-3xl font-black text-blue-700 mt-1 font-heading" id="live-active-stations-count">0</div>
+              <div class="text-[11px] text-blue-800/80 mt-0.5" id="live-total-stations-sub">Reporting attendance</div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-purple-50/70 border border-purple-200">
+              <div class="text-[11px] font-bold text-purple-800 uppercase flex items-center justify-between">
+                <span>Voices Present</span>
+                <i class="fa-solid fa-music text-purple-600"></i>
+              </div>
+              <div class="text-xs font-bold text-purple-900 mt-2 space-y-0.5" id="live-voice-parts-summary">
+                <div>S: <span id="live-s-count" class="font-extrabold text-pink-600">0</span> &bull; A: <span id="live-a-count" class="font-extrabold text-purple-700">0</span></div>
+                <div>T: <span id="live-t-count" class="font-extrabold text-blue-700">0</span> &bull; B: <span id="live-b-count" class="font-extrabold text-indigo-700">0</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Station by Station Breakdown Table -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 gap-2 mb-3">
+            <div>
+              <h3 class="text-sm font-bold text-slate-900 font-heading flex items-center gap-2">
+                <i class="fa-solid fa-location-dot text-brand-600"></i> Station & Branch Live Turnout Breakdown
+              </h3>
+              <p class="text-xs text-slate-500">Attendance submitted by Station Officers for tonight's rehearsal</p>
+            </div>
+            <span class="text-xs font-semibold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-lg self-start sm:self-auto" id="station-breakdown-count-badge">
+              0 Stations in Ondo Area
+            </span>
+          </div>
+
+          <div class="overflow-x-auto text-xs">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold uppercase text-[10px] tracking-wider">
+                  <th class="p-3">Station / Branch</th>
+                  <th class="p-3">Zone</th>
+                  <th class="p-3 text-center">Registered</th>
+                  <th class="p-3 text-center">Present (Today)</th>
+                  <th class="p-3">Turnout</th>
+                  <th class="p-3">Parts Present (S / A / T / B)</th>
+                  <th class="p-3 text-right">Status</th>
+                </tr>
+              </thead>
+              <tbody id="station-table-body" class="divide-y divide-slate-100 text-slate-700">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Two-Column Section: Voice Part Distribution & Live Feed of Recent Check-Ins -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <!-- Voice Part Distribution -->
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <h3 class="text-sm font-bold text-slate-900 font-heading flex items-center gap-2 mb-1">
+                <i class="fa-solid fa-chart-pie text-brand-600"></i> Voice Classification & Turnout
+              </h3>
+              <p class="text-xs text-slate-500 mb-4">Balance of parts present at tonight's station practice</p>
+
+              <div class="space-y-3" id="voice-part-bars-container">
+                <!-- Dynamically rendered -->
+              </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-500 flex justify-between">
+              <span>Classical 4-part choir balance</span>
+              <span class="font-bold text-slate-700" id="accompanist-count-badge">0 Accompanists Registered</span>
+            </div>
+          </div>
+
+          <!-- Live Stream of Recent Sign-Ins -->
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
+            <div class="flex items-center justify-between pb-2 border-b border-slate-100 mb-3">
+              <h3 class="text-sm font-bold text-slate-900 font-heading flex items-center gap-2">
+                <i class="fa-solid fa-list-check text-emerald-600"></i> Realtime Check-In Activity
+              </h3>
+              <span class="text-[11px] text-slate-400 font-medium">Latest submissions</span>
+            </div>
+
+            <div class="space-y-2 max-h-72 overflow-y-auto pr-1" id="recent-checkins-stream">
+              <!-- Dynamically rendered -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Season Overview & Concert Qualification (>=70%) -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 gap-2 mb-4">
+            <div>
+              <h3 class="text-sm font-bold text-slate-900 font-heading flex items-center gap-2">
+                <i class="fa-solid fa-award text-amber-500"></i> 2026 Concert Qualification (≥70% Requirement)
+              </h3>
+              <p class="text-xs text-slate-500">Cumulative attendance across completed rehearsals</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="exportToCSV()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 font-bold rounded-lg border border-slate-300 text-slate-700 text-xs flex items-center gap-1.5 transition">
+                <i class="fa-solid fa-file-excel text-emerald-600"></i> Export Excel/CSV
+              </button>
+              <button onclick="openModal('modal-sheets-sync')" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 font-bold rounded-lg text-white text-xs flex items-center gap-1.5 transition shadow-sm">
+                <i class="fa-brands fa-google"></i> Google Sheets
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+              <div class="text-[10px] font-bold text-slate-500 uppercase">Total Registered</div>
+              <div class="text-xl font-extrabold text-brand-900 mt-0.5 font-heading" id="admin-total-reg">0</div>
+            </div>
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+              <div class="text-[10px] font-bold text-slate-500 uppercase">Sopranos / Altos</div>
+              <div class="text-xl font-extrabold text-pink-600 mt-0.5 font-heading" id="admin-soprano-alto">0 / 0</div>
+            </div>
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+              <div class="text-[10px] font-bold text-slate-500 uppercase">Tenors / Basses</div>
+              <div class="text-xl font-extrabold text-blue-700 mt-0.5 font-heading" id="admin-tenor-bass">0 / 0</div>
+            </div>
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+              <div class="text-[10px] font-bold text-slate-500 uppercase">Stage Qualified (≥70%)</div>
+              <div class="text-xl font-extrabold text-emerald-600 mt-0.5 font-heading" id="admin-qualified">0</div>
+            </div>
+          </div>
+
+          <!-- Schedule Table -->
+          <h4 class="text-xs font-bold text-slate-700 mb-2 flex items-center gap-1.5">
+            <i class="fa-regular fa-calendar-days text-brand-600"></i> Official 2026 Rehearsal Schedule & Weights
+          </h4>
+          <div class="overflow-x-auto text-xs">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold">
+                  <th class="p-2">Date</th>
+                  <th class="p-2">Day</th>
+                  <th class="p-2">Rehearsal Level</th>
+                  <th class="p-2">Time</th>
+                  <th class="p-2">Status</th>
+                </tr>
+              </thead>
+              <tbody id="schedule-table-body" class="divide-y divide-slate-100 text-slate-700">
+                <!-- Rendered by JS -->
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>
@@ -501,8 +658,8 @@
       <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center text-2xl mx-auto mb-3 shadow-inner">
         <i class="fa-solid fa-shield-halved"></i>
       </div>
-      <h3 class="text-base font-bold text-slate-900 font-heading">Attendance Officer Access</h3>
-      <p class="text-xs text-slate-500 mt-1 mb-4">Enter the password shared on the Officers WhatsApp group to unlock attendance marking.</p>
+      <h3 class="text-base font-bold text-slate-900 font-heading">Choir Administration Access</h3>
+      <p class="text-xs text-slate-500 mt-1 mb-4">Enter the administrative password (Ondo2026Concert) to access live station analytics and attendance administration.</p>
       
       <form onsubmit="handleOfficerLogin(event)" class="space-y-3">
         <div class="relative text-left">
@@ -513,14 +670,14 @@
             <i class="fa-solid fa-eye" id="toggle-pw-icon"></i>
           </button>
         </div>
-        <p id="officer-login-error" class="text-[11px] text-rose-600 font-semibold hidden">Incorrect password. Please check the WhatsApp group.</p>
+        <p id="officer-login-error" class="text-[11px] text-rose-600 font-semibold hidden">Incorrect password. Please verify the administrative password.</p>
         
         <div class="pt-2 flex gap-2">
           <button type="button" onclick="closeModal('modal-officer-login')" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition">
             Cancel
           </button>
           <button type="submit" class="flex-1 py-2.5 bg-brand-700 hover:bg-brand-800 text-white font-bold rounded-xl text-xs shadow-md transition">
-            Unlock
+            Unlock Admin
           </button>
         </div>
       </form>
@@ -2200,6 +2357,7 @@
         }
 
         if (cloudAttendance && Array.isArray(cloudAttendance)) {
+          state.rawAttendanceLogs = cloudAttendance;
           const todayWat = getTodayWATString();
           cloudAttendance.forEach(log => {
             const key = `${log.session_id}_${log.member_id}`;
@@ -2246,7 +2404,8 @@
       attendance: {}, // { "sess_3_m1": "present" | "absent" | "excused" }
       activePartFilter: 'ALL',
       sheetWebhookUrl: DEFAULT_WEBHOOK_URL,
-      isOfficerUnlocked: true
+      isOfficerUnlocked: false,
+      rawAttendanceLogs: []
     };
 
     function loadState() {
@@ -2264,7 +2423,8 @@
       state.members = (savedMembers && JSON.parse(savedMembers).length > 0) ? JSON.parse(savedMembers) : DEFAULT_MEMBERS;
       state.attendance = savedAttendance ? JSON.parse(savedAttendance) : {};
       state.sheetWebhookUrl = savedWebhook || DEFAULT_WEBHOOK_URL;
-      state.isOfficerUnlocked = true;
+      const savedAuth = localStorage.getItem('ondo_officer_authenticated');
+      state.isOfficerUnlocked = (savedAuth === 'true');
       if (document.getElementById('sheet-webhook-url')) {
         document.getElementById('sheet-webhook-url').value = state.sheetWebhookUrl;
       }
@@ -2445,6 +2605,24 @@
     }
 
     // OFFICER AUTHENTICATION & LOCK CONTROLS
+    let adminPollInterval = null;
+    function startAdminPolling() {
+      if (adminPollInterval) clearInterval(adminPollInterval);
+      adminPollInterval = setInterval(() => {
+        const adminTab = document.getElementById('tab-admin');
+        if (adminTab && !adminTab.classList.contains('hidden') && state.isOfficerUnlocked) {
+          syncWithInsForge(false);
+        }
+      }, 15000);
+    }
+
+    function stopAdminPolling() {
+      if (adminPollInterval) {
+        clearInterval(adminPollInterval);
+        adminPollInterval = null;
+      }
+    }
+
     const DRIVE_UPLOAD_URL = 'https://drive.google.com/drive/folders/1pQFYas64laWmdm__zjuPAoYSbA_hp3FD';
 
     function handleOfficerUploadDrive() {
@@ -2477,7 +2655,11 @@
           const cb = pendingActionCallback;
           pendingActionCallback = null;
           cb();
+        } else {
+          switchTab('admin');
         }
+        updateAdminStats();
+        syncWithInsForge(false);
       } else {
         errorEl.classList.remove('hidden');
       }
@@ -2486,11 +2668,10 @@
     function lockOfficerMode() {
       state.isOfficerUnlocked = false;
       localStorage.removeItem('ondo_officer_authenticated');
+      stopAdminPolling();
       renderOfficerLockBanner();
       renderCheckinList();
-      if (document.getElementById('tab-admin') && !document.getElementById('tab-admin').classList.contains('hidden')) {
-        switchTab('checkin');
-      }
+      switchTab('checkin');
     }
 
     function togglePasswordVisibility(inputId) {
@@ -2517,6 +2698,11 @@
 
     // TAB SWITCHING
     function switchTab(tabId) {
+      if (tabId === 'admin' && !state.isOfficerUnlocked) {
+        openOfficerLoginModal(() => switchTab('admin'));
+        return;
+      }
+
       const tabs = ['checkin', 'score', 'register', 'admin'];
       tabs.forEach(t => {
         const section = document.getElementById(`tab-${t}`);
@@ -2535,7 +2721,12 @@
         renderOfficerLockBanner();
         renderCheckinList();
       }
-      if (tabId === 'admin') updateAdminStats();
+      if (tabId === 'admin') {
+        updateAdminStats();
+        startAdminPolling();
+      } else {
+        stopAdminPolling();
+      }
     }
 
     // VOICE PART FILTER
@@ -2716,6 +2907,16 @@
       state.attendance[key] = status;
       saveState();
       renderCheckinList();
+
+      if (!state.rawAttendanceLogs) state.rawAttendanceLogs = [];
+      const existingIdx = state.rawAttendanceLogs.findIndex(l => l.session_id === sessionId && l.member_id === memberId);
+      const newLog = { session_id: sessionId, member_id: memberId, status: status, marked_at: new Date().toISOString() };
+      if (existingIdx >= 0) {
+        state.rawAttendanceLogs[existingIdx] = newLog;
+      } else {
+        state.rawAttendanceLogs.push(newLog);
+      }
+      updateAdminStats();
 
       // Push to InsForge Cloud Postgres
       const member = state.members.find(m => m.id === memberId);
@@ -2977,8 +3178,263 @@
       `).join('');
     }
 
-    // ADMIN STATS
+    // TIME UTILITIES FOR ANALYTICS
+    function formatWATTime(isoStr) {
+      if (!isoStr) return '';
+      try {
+        const d = new Date(isoStr);
+        if (isNaN(d.getTime())) return '';
+        const watDate = new Date(d.getTime() + 3600000);
+        let hours = watDate.getUTCHours();
+        const minutes = String(watDate.getUTCMinutes()).padStart(2, '0');
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        return `${hours}:${minutes} ${ampm} WAT`;
+      } catch (e) {
+        return '';
+      }
+    }
+
+    function formatTimeAgo(isoStr) {
+      if (!isoStr) return '';
+      try {
+        const d = new Date(isoStr);
+        const diffMs = Date.now() - d.getTime();
+        const diffMins = Math.floor(diffMs / 60000);
+        if (diffMins < 1) return 'Just now';
+        if (diffMins === 1) return '1 min ago';
+        if (diffMins < 60) return `${diffMins} mins ago`;
+        const diffHours = Math.floor(diffMins / 60);
+        if (diffHours === 1) return '1 hr ago';
+        return `${diffHours} hrs ago`;
+      } catch (e) {
+        return '';
+      }
+    }
+
+    // STATION BREAKDOWN RENDERER
+    function renderStationBreakdown(activeSessionId, presentMemberIds, excusedMemberIds) {
+      const tableBody = document.getElementById('station-table-body');
+      if (!tableBody) return;
+
+      const members = state.members || [];
+      const stationMap = {};
+
+      members.forEach(m => {
+        let rawStation = (m.station || m.zone || 'Other Station').trim();
+        if (!rawStation) rawStation = 'Other Station';
+        let normStation = rawStation.charAt(0).toUpperCase() + rawStation.slice(1);
+        if (normStation.toLowerCase() === 'futa') normStation = 'FUTA';
+        if (normStation.toLowerCase() === 'oke aro') normStation = 'Oke Aro';
+        if (normStation.toLowerCase() === 'ondo road') normStation = 'Ondo Road';
+
+        const zone = m.zone || 'Ondo Area';
+
+        if (!stationMap[normStation]) {
+          stationMap[normStation] = {
+            name: normStation,
+            zone: zone,
+            registered: 0,
+            present: 0,
+            excused: 0,
+            parts: { soprano: 0, alto: 0, tenor: 0, bass: 0 }
+          };
+        }
+
+        stationMap[normStation].registered++;
+        const part = (m.part || '').toLowerCase();
+        if (presentMemberIds.has(m.id)) {
+          stationMap[normStation].present++;
+          if (stationMap[normStation].parts[part] !== undefined) {
+            stationMap[normStation].parts[part]++;
+          }
+        } else if (excusedMemberIds.has(m.id)) {
+          stationMap[normStation].excused++;
+        }
+      });
+
+      const sortedStations = Object.values(stationMap).sort((a, b) => {
+        if (b.present !== a.present) return b.present - a.present;
+        return b.registered - a.registered;
+      });
+
+      const badgeEl = document.getElementById('station-breakdown-count-badge');
+      if (badgeEl) badgeEl.innerText = `${sortedStations.length} Stations in Ondo Area`;
+
+      if (sortedStations.length === 0) {
+        tableBody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-400">No stations registered yet.</td></tr>`;
+        return;
+      }
+
+      tableBody.innerHTML = sortedStations.map(st => {
+        const pct = Math.round((st.present / (st.registered || 1)) * 100);
+        const hasPresent = st.present > 0;
+        const rowClass = hasPresent ? 'bg-emerald-50/20' : '';
+        const statusBadge = hasPresent
+          ? `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Active (${st.present})</span>`
+          : `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-500">Awaiting</span>`;
+
+        const barColor = pct >= 70 ? 'bg-emerald-500' : (pct >= 40 ? 'bg-blue-500' : (pct > 0 ? 'bg-amber-500' : 'bg-slate-200'));
+
+        return `
+          <tr class="hover:bg-slate-50/80 transition ${rowClass}">
+            <td class="p-3 font-bold text-slate-900 flex items-center gap-1.5">
+              <i class="fa-solid fa-church text-slate-400 text-xs"></i>
+              <span>${st.name}</span>
+            </td>
+            <td class="p-3 text-slate-600 font-medium">${st.zone}</td>
+            <td class="p-3 text-center font-bold text-slate-800">${st.registered}</td>
+            <td class="p-3 text-center font-black ${hasPresent ? 'text-emerald-700 text-sm' : 'text-slate-400'}">${st.present}</td>
+            <td class="p-3 min-w-[120px]">
+              <div class="flex items-center gap-2">
+                <div class="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden border border-slate-200">
+                  <div class="${barColor} h-2 rounded-full transition-all duration-500" style="width: ${pct}%"></div>
+                </div>
+                <span class="font-bold text-[11px] text-slate-700 w-8 text-right">${pct}%</span>
+              </div>
+            </td>
+            <td class="p-3 font-semibold text-[11px] text-slate-600 whitespace-nowrap">
+              <span class="text-pink-600 font-bold" title="Soprano">S:${st.parts.soprano}</span> &bull; 
+              <span class="text-purple-600 font-bold" title="Alto">A:${st.parts.alto}</span> &bull; 
+              <span class="text-blue-600 font-bold" title="Tenor">T:${st.parts.tenor}</span> &bull; 
+              <span class="text-indigo-600 font-bold" title="Bass">B:${st.parts.bass}</span>
+            </td>
+            <td class="p-3 text-right">${statusBadge}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // VOICE PART BARS RENDERER
+    function renderVoicePartBars(members, presentMemberIds) {
+      const container = document.getElementById('voice-part-bars-container');
+      if (!container) return;
+
+      const parts = [
+        { key: 'soprano', label: 'Soprano', color: 'bg-pink-500', textCol: 'text-pink-700', badgeCol: 'bg-pink-50 border-pink-200' },
+        { key: 'alto', label: 'Alto', color: 'bg-purple-600', textCol: 'text-purple-700', badgeCol: 'bg-purple-50 border-purple-200' },
+        { key: 'tenor', label: 'Tenor', color: 'bg-blue-600', textCol: 'text-blue-700', badgeCol: 'bg-blue-50 border-blue-200' },
+        { key: 'bass', label: 'Bass', color: 'bg-indigo-600', textCol: 'text-indigo-700', badgeCol: 'bg-indigo-50 border-indigo-200' }
+      ];
+
+      const partStats = {};
+      parts.forEach(p => partStats[p.key] = { total: 0, present: 0 });
+
+      let accompanists = 0;
+      members.forEach(m => {
+        const p = (m.part || '').toLowerCase();
+        if (partStats[p]) {
+          partStats[p].total++;
+          if (presentMemberIds.has(m.id)) partStats[p].present++;
+        }
+        if (m.accompanist === 'Yes' || m.accompanist === true) accompanists++;
+      });
+
+      const accBadge = document.getElementById('accompanist-count-badge');
+      if (accBadge) accBadge.innerText = `${accompanists} Accompanists Registered`;
+
+      container.innerHTML = parts.map(p => {
+        const stat = partStats[p.key];
+        const pct = Math.round((stat.present / (stat.total || 1)) * 100);
+        return `
+          <div class="p-2.5 rounded-xl border ${p.badgeCol}">
+            <div class="flex items-center justify-between text-xs font-bold mb-1.5">
+              <span class="${p.textCol} flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full ${p.color}"></span>
+                ${p.label}
+              </span>
+              <span class="text-slate-800">
+                <span class="font-extrabold text-sm ${p.textCol}">${stat.present}</span>
+                <span class="text-slate-400 font-normal"> / ${stat.total} registered</span>
+                <span class="ml-1 text-[11px] font-bold text-slate-600">(${pct}%)</span>
+              </span>
+            </div>
+            <div class="w-full bg-white/80 rounded-full h-2 overflow-hidden border border-slate-200/60">
+              <div class="${p.color} h-2 rounded-full transition-all duration-500" style="width: ${pct}%"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // RECENT CHECKINS STREAM RENDERER
+    function renderRecentCheckinsStream(members, activeSessionId) {
+      const container = document.getElementById('recent-checkins-stream');
+      if (!container) return;
+
+      const logs = (state.rawAttendanceLogs || []).filter(l => l.session_id === activeSessionId);
+      const memberMap = new Map();
+      members.forEach(m => memberMap.set(m.id, m));
+
+      const sortedLogs = [...logs].sort((a, b) => {
+        const timeA = a.marked_at ? new Date(a.marked_at).getTime() : 0;
+        const timeB = b.marked_at ? new Date(b.marked_at).getTime() : 0;
+        return timeB - timeA;
+      });
+
+      if (sortedLogs.length === 0) {
+        container.innerHTML = `
+          <div class="p-6 text-center text-slate-400 text-xs">
+            <i class="fa-regular fa-clock text-2xl mb-1 text-slate-300"></i>
+            <p>No check-ins recorded yet for this session.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = sortedLogs.slice(0, 20).map(log => {
+        const m = memberMap.get(log.member_id) || { name: log.member_id, part: 'Chorister', station: 'Ondo Area', zone: '' };
+        const timeWAT = formatWATTime(log.marked_at);
+        const timeAgo = formatTimeAgo(log.marked_at);
+        const isPresent = log.status === 'present';
+        const statusBadge = isPresent
+          ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">Present</span>`
+          : (log.status === 'excused'
+              ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">Excused</span>`
+              : `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600">${log.status}</span>`);
+
+        const partColor = getPartBadgeColor(m.part);
+
+        return `
+          <div class="p-2.5 rounded-xl border border-slate-100 bg-slate-50/50 hover:bg-slate-50 flex items-center justify-between text-xs transition">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg ${partColor} font-bold text-[11px] flex items-center justify-center shrink-0">
+                ${(m.part || 'C')[0]}
+              </span>
+              <div class="min-w-0">
+                <div class="font-bold text-slate-900 truncate">${m.name}</div>
+                <div class="text-[10px] text-slate-500 flex items-center gap-1.5 truncate">
+                  <span>${m.part || 'Voice'}</span> &bull; 
+                  <span>${m.station || m.zone || 'Ondo Area'}</span>
+                </div>
+              </div>
+            </div>
+            <div class="text-right shrink-0 ml-2">
+              ${statusBadge}
+              <div class="text-[9px] text-slate-400 mt-0.5" title="${timeWAT}">${timeAgo || timeWAT}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // MAIN ADMIN STATS CONTROLLER
     function updateAdminStats() {
+      // 1. Password lock gate check
+      const lockedView = document.getElementById('admin-locked-view');
+      const unlockedContent = document.getElementById('admin-unlocked-content');
+      if (lockedView && unlockedContent) {
+        if (!state.isOfficerUnlocked) {
+          lockedView.classList.remove('hidden');
+          unlockedContent.classList.add('hidden');
+          return;
+        } else {
+          lockedView.classList.add('hidden');
+          unlockedContent.classList.remove('hidden');
+        }
+      }
+
       const total = state.members.length;
       let sopranos = 0, altos = 0, tenors = 0, basses = 0;
 
@@ -3006,6 +3462,83 @@
         document.getElementById('admin-tenor-bass').innerText = `${tenors} / ${basses}`;
         document.getElementById('admin-qualified').innerText = qualified;
       }
+
+      // Active Rehearsal Live Session 3 Data
+      const activeSession = REHEARSAL_SCHEDULE.find(s => s.id === 'sess_3') || REHEARSAL_SCHEDULE[0];
+      const activeSessionId = activeSession.id;
+
+      const presentMemberIds = new Set();
+      const excusedMemberIds = new Set();
+      const logs = (state.rawAttendanceLogs || []).filter(l => l.session_id === activeSessionId);
+
+      state.members.forEach(m => {
+        const st = state.attendance[`${activeSessionId}_${m.id}`];
+        if (st === 'present') presentMemberIds.add(m.id);
+        else if (st === 'excused') excusedMemberIds.add(m.id);
+      });
+      logs.forEach(l => {
+        if (l.status === 'present') presentMemberIds.add(l.member_id);
+        else if (l.status === 'excused') excusedMemberIds.add(l.member_id);
+      });
+
+      const livePresentCount = presentMemberIds.size;
+      const liveExcusedCount = excusedMemberIds.size;
+      const livePresentPct = total > 0 ? Math.round((livePresentCount / total) * 100) : 0;
+
+      if (document.getElementById('live-present-count')) {
+        document.getElementById('live-present-count').innerText = livePresentCount;
+        document.getElementById('live-present-percent').innerText = `${livePresentPct}% of registered choristers`;
+        document.getElementById('live-excused-count').innerText = liveExcusedCount;
+      }
+
+      // Voice parts present count
+      let presS = 0, presA = 0, presT = 0, presB = 0;
+      state.members.forEach(m => {
+        if (presentMemberIds.has(m.id)) {
+          const p = (m.part || '').toLowerCase();
+          if (p === 'soprano') presS++;
+          else if (p === 'alto') presA++;
+          else if (p === 'tenor') presT++;
+          else if (p === 'bass') presB++;
+        }
+      });
+
+      if (document.getElementById('live-s-count')) {
+        document.getElementById('live-s-count').innerText = presS;
+        document.getElementById('live-a-count').innerText = presA;
+        document.getElementById('live-t-count').innerText = presT;
+        document.getElementById('live-b-count').innerText = presB;
+      }
+
+      // Active stations count
+      const activeStations = new Set();
+      const allStations = new Set();
+      state.members.forEach(m => {
+        const st = (m.station || m.zone || '').trim();
+        if (st) {
+          allStations.add(st.toLowerCase());
+          if (presentMemberIds.has(m.id)) activeStations.add(st.toLowerCase());
+        }
+      });
+      if (document.getElementById('live-active-stations-count')) {
+        document.getElementById('live-active-stations-count').innerText = activeStations.size;
+        document.getElementById('live-total-stations-sub').innerText = `of ${allStations.size} stations active`;
+      }
+
+      // Render station table, voice bars, and recent checkins stream
+      renderStationBreakdown(activeSessionId, presentMemberIds, excusedMemberIds);
+      renderVoicePartBars(state.members, presentMemberIds);
+      renderRecentCheckinsStream(state.members, activeSessionId);
+
+      // Timestamp update
+      const nowWat = getNowWAT();
+      let hours = nowWat.getUTCHours();
+      const minutes = String(nowWat.getUTCMinutes()).padStart(2, '0');
+      const seconds = String(nowWat.getUTCSeconds()).padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12 || 12;
+      const tsEl = document.getElementById('admin-live-timestamp');
+      if (tsEl) tsEl.innerText = `Updated ${hours}:${minutes}:${seconds} ${ampm} WAT`;
     }
 
     // CSV EXPORT
