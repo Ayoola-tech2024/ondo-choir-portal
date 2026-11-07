@@ -2594,12 +2594,37 @@
 
     /**
      * Exact Business Rule:
-     * Opens 30 minutes after rehearsal start time
-     * Closes 2 hours after rehearsal end time (grace period for officers & choristers to mark and register)
+     * - Session 3 (3rd Practice - Station Practice): Explicitly OPEN today for stations holding their postponed rehearsal.
+     * - First 2 sessions (sess_1 & sess_2): Strictly LOCKED / Closed.
+     * - Remaining sessions (sess_4 onwards): Strictly LOCKED / Upcoming.
      */
     function getSessionWindow(session) {
       if (!session || !session.date) return { isOpen: true, status: 'open' };
 
+      // Explicit Rule: Session 3 (3rd Practice - Station Practice) is kept actively OPEN today for stations
+      // that postponed their Friday Nov 6 practice till Saturday Nov 7!
+      if (session.id === 'sess_3') {
+        return {
+          isOpen: true,
+          status: 'active',
+          openTimeDisplay: 'Open Now',
+          closeTimeDisplay: 'Open Today',
+          message: "Live Rehearsal Check-In Active (Open today for stations holding their postponed 3rd practice)"
+        };
+      }
+
+      // Explicit Rule: The first two sessions (sess_1 & sess_2) are strictly locked / closed
+      if (session.id === 'sess_1' || session.id === 'sess_2') {
+        return {
+          isOpen: false,
+          status: 'closed',
+          openTimeDisplay: 'Closed',
+          closeTimeDisplay: 'Closed',
+          message: `Attendance window closed for ${session.displayDate} (Past Rehearsal)`
+        };
+      }
+
+      // Explicit Rule: Remaining sessions (sess_4 onwards) are strictly locked / upcoming
       const startTimeStr = session.startTime || '17:00';
       const endTimeStr = session.endTime || '19:00';
 
@@ -2655,7 +2680,7 @@
         status: 'active',
         openTimeDisplay: openDisplay,
         closeTimeDisplay: 'Open Tonight',
-        message: `Live Rehearsal Check-In Active (Open for tonight's practice)`
+        message: `Live Rehearsal Check-In Active`
       };
     }
 
@@ -2699,12 +2724,16 @@
       sessionSelect.innerHTML = REHEARSAL_SCHEDULE.map(s => {
         const isLocked = isSessionLocked(s);
         let badge = '';
-        if (s.date === todayWat) {
+        if (s.id === 'sess_3') {
+          badge = ' 🟢 LIVE TODAY (OPEN - Postponed Station Practice)';
+        } else if (s.id === 'sess_1' || s.id === 'sess_2') {
+          badge = ' 🔒 PAST (LOCKED)';
+        } else if (s.date === todayWat) {
           badge = isLocked ? ' ⏳ TODAY (Opens 5:30 PM)' : ' 🟢 LIVE TODAY (OPEN)';
         } else if (s.date < todayWat) {
-          badge = ' ✓ PAST';
+          badge = ' 🔒 PAST (LOCKED)';
         } else {
-          badge = ' 🔒 UPCOMING';
+          badge = ' 🔒 UPCOMING (LOCKED)';
         }
 
         return `<option value="${s.id}" ${s.id === defaultSessId ? 'selected' : ''}>
@@ -2904,7 +2933,7 @@
               <div class="flex-1">
                 <span class="font-bold text-emerald-950 block text-xs sm:text-sm">🟢 Live Rehearsal Check-In Active</span>
                 <span class="text-[11px] text-emerald-800">
-                  Attendance window is OPEN! Check-in and member registrations are active for tonight's practice.
+                  Attendance window is OPEN! Check-in, video evidence uploads, and chorister registrations are active for ${currentSession.id === 'sess_3' ? "today's postponed station practice (3rd Practice)" : "today's practice"}.
                 </span>
               </div>
             </div>
