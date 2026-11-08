@@ -2724,26 +2724,26 @@
 
     /**
      * Exact Business Rule:
-     * - Session 1 (1st Practice - 30th Oct 2026): Explicitly OPEN for paper attendance backlog entry & registration.
-     * - Session 2 & Session 3: Strictly LOCKED / Closed.
+     * - Session 2 (2nd Practice - 31st Oct 2026): Explicitly OPEN for paper attendance backlog entry & registration.
+     * - Session 1 & Session 3: Strictly LOCKED / Closed.
      * - Remaining sessions (sess_4 onwards): Strictly LOCKED / Upcoming.
      */
     function getSessionWindow(session) {
       if (!session || !session.date) return { isOpen: true, status: 'open' };
 
-      // Explicit Rule: Session 1 (1st Practice - 30th Oct 2026): Actively OPEN for paper attendance backlog entry & registration
-      if (session.id === 'sess_1') {
+      // Explicit Rule: Session 2 (2nd Practice - 31st Oct 2026): Actively OPEN for paper attendance backlog entry & registration
+      if (session.id === 'sess_2') {
         return {
           isOpen: true,
           status: 'active',
           openTimeDisplay: 'Open Now',
           closeTimeDisplay: 'Open for Paper Attendance Entry',
-          message: "First Rehearsal Attendance Open (Ticking paper attendance records & registering choristers)"
+          message: "Second Rehearsal Attendance Open (Ticking paper attendance records & registering choristers)"
         };
       }
 
-      // Explicit Rule: Session 2 & Session 3 are strictly locked / closed
-      if (session.id === 'sess_2' || session.id === 'sess_3') {
+      // Explicit Rule: Session 1 & Session 3 are strictly locked / closed
+      if (session.id === 'sess_1' || session.id === 'sess_3') {
         return {
           isOpen: false,
           status: 'closed',
@@ -2846,14 +2846,14 @@
       const todayWat = getTodayWATString();
       const sessionSelect = document.getElementById('checkin-session-select');
       
-      let defaultSessId = 'sess_1';
+      let defaultSessId = 'sess_2';
 
       sessionSelect.innerHTML = REHEARSAL_SCHEDULE.map(s => {
         const isLocked = isSessionLocked(s);
         let badge = '';
-        if (s.id === 'sess_1') {
+        if (s.id === 'sess_2') {
           badge = ' 🟢 OPEN (Paper Attendance Entry)';
-        } else if (s.id === 'sess_2' || s.id === 'sess_3') {
+        } else if (s.id === 'sess_1' || s.id === 'sess_3') {
           badge = ' 🔒 CLOSED (LOCKED)';
         } else if (s.date === todayWat) {
           badge = isLocked ? ' ⏳ TODAY (Opens 5:30 PM)' : ' 🟢 LIVE TODAY (OPEN)';
@@ -3123,7 +3123,7 @@
               <div class="flex-1">
                 <span class="font-bold text-emerald-950 block text-xs sm:text-sm">🟢 Rehearsal Check-In Active</span>
                 <span class="text-[11px] text-emerald-800">
-                  Attendance window is OPEN! ${currentSession.id === 'sess_1' ? "Entering paper attendance records and registering choristers for the 1st Practice (30th Oct)." : "Check-in and member registrations are active."}
+                  Attendance window is OPEN! ${currentSession.id === 'sess_2' ? "Entering paper attendance records and registering choristers for the 2nd Practice (31st Oct)." : "Check-in and member registrations are active."}
                 </span>
               </div>
             </div>
