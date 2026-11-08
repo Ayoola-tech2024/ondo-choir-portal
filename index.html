@@ -2724,26 +2724,14 @@
 
     /**
      * Exact Business Rule:
-     * - Session 2 (2nd Practice - 31st Oct 2026): Explicitly OPEN for paper attendance backlog entry & registration.
-     * - Session 1 & Session 3: Strictly LOCKED / Closed.
-     * - Remaining sessions (sess_4 onwards): Strictly LOCKED / Upcoming.
+     * - All completed practices (sess_1, sess_2, sess_3): Strictly LOCKED / Closed.
+     * - Next practice (sess_4 - 13th Nov 2026): Locked / Upcoming until scheduled time.
      */
     function getSessionWindow(session) {
-      if (!session || !session.date) return { isOpen: true, status: 'open' };
+      if (!session || !session.date) return { isOpen: false, status: 'closed' };
 
-      // Explicit Rule: Session 2 (2nd Practice - 31st Oct 2026): Actively OPEN for paper attendance backlog entry & registration
-      if (session.id === 'sess_2') {
-        return {
-          isOpen: true,
-          status: 'active',
-          openTimeDisplay: 'Open Now',
-          closeTimeDisplay: 'Open for Paper Attendance Entry',
-          message: "Second Rehearsal Attendance Open (Ticking paper attendance records & registering choristers)"
-        };
-      }
-
-      // Explicit Rule: Session 1 & Session 3 are strictly locked / closed
-      if (session.id === 'sess_1' || session.id === 'sess_3') {
+      // Explicit Rule: All past rehearsals (Session 1, 2, and 3) are strictly locked / closed
+      if (session.id === 'sess_1' || session.id === 'sess_2' || session.id === 'sess_3') {
         return {
           isOpen: false,
           status: 'closed',
@@ -2820,8 +2808,8 @@
 
     function getCompletedSessionsCount() {
       const todayWat = getTodayWATString();
-      const pastSessions = REHEARSAL_SCHEDULE.filter(s => s.date <= todayWat);
-      return Math.max(pastSessions.length, 1);
+      const pastSessions = REHEARSAL_SCHEDULE.filter(s => s.date <= todayWat || ['sess_1', 'sess_2', 'sess_3'].includes(s.id));
+      return Math.max(pastSessions.length, 3);
     }
 
     function saveState() {
@@ -2846,19 +2834,15 @@
       const todayWat = getTodayWATString();
       const sessionSelect = document.getElementById('checkin-session-select');
       
-      let defaultSessId = 'sess_2';
+      let defaultSessId = 'sess_4';
 
       sessionSelect.innerHTML = REHEARSAL_SCHEDULE.map(s => {
         const isLocked = isSessionLocked(s);
         let badge = '';
-        if (s.id === 'sess_2') {
-          badge = ' 🟢 OPEN (Paper Attendance Entry)';
-        } else if (s.id === 'sess_1' || s.id === 'sess_3') {
+        if (s.id === 'sess_1' || s.id === 'sess_2' || s.id === 'sess_3' || s.date < todayWat) {
           badge = ' 🔒 CLOSED (LOCKED)';
         } else if (s.date === todayWat) {
           badge = isLocked ? ' ⏳ TODAY (Opens 5:30 PM)' : ' 🟢 LIVE TODAY (OPEN)';
-        } else if (s.date < todayWat) {
-          badge = ' 🔒 PAST (LOCKED)';
         } else {
           badge = ' 🔒 UPCOMING (LOCKED)';
         }
@@ -3123,7 +3107,7 @@
               <div class="flex-1">
                 <span class="font-bold text-emerald-950 block text-xs sm:text-sm">🟢 Rehearsal Check-In Active</span>
                 <span class="text-[11px] text-emerald-800">
-                  Attendance window is OPEN! ${currentSession.id === 'sess_2' ? "Entering paper attendance records and registering choristers for the 2nd Practice (31st Oct)." : "Check-in and member registrations are active."}
+                  Attendance window is OPEN! Check-in and member registrations are active.
                 </span>
               </div>
             </div>
@@ -3468,7 +3452,7 @@
                 } else if (status === 'excused') {
                   icon = '<i class="fa-solid fa-clock text-amber-500"></i>';
                   label = '<span class="text-amber-700 font-medium">Excused</span>';
-                } else if (s.id === 'sess_1' || s.id === 'sess_2') {
+                } else if (s.id === 'sess_1' || s.id === 'sess_2' || s.id === 'sess_3' || s.date < getTodayWATString()) {
                   icon = '<i class="fa-solid fa-circle-xmark text-rose-400"></i>';
                   label = '<span class="text-rose-600 font-medium">Absent</span>';
                 }
