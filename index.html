@@ -333,7 +333,7 @@
               <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Live Rehearsal Active
               </span>
-              <span class="text-xs text-slate-300 font-medium">Session 3 • Friday Station Practice</span>
+              <span class="text-xs text-slate-300 font-medium" id="admin-active-session-title">Session 1 • 30th Oct 2026 (State Practice)</span>
             </div>
             <h2 class="text-lg sm:text-xl font-extrabold font-heading mt-1 text-white">Area Choir Administration & Analytics</h2>
             <p class="text-xs text-slate-300 mt-0.5">Realtime monitoring of attendance submissions across all Ondo Area stations.</p>
@@ -407,7 +407,7 @@
             <div>
               <span class="text-[11px] font-bold text-brand-600 uppercase tracking-wider">Tonight's Active Practice</span>
               <h3 class="text-base font-extrabold text-slate-900 font-heading flex items-center gap-2">
-                <i class="fa-solid fa-signal text-emerald-600"></i> Session 3 Attendance Live Monitor
+                <i class="fa-solid fa-signal text-emerald-600"></i> <span id="admin-spotlight-name">1st Practice Attendance Monitor</span>
               </h3>
             </div>
             <div class="text-xs text-slate-500 flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
@@ -2724,33 +2724,32 @@
 
     /**
      * Exact Business Rule:
-     * - Session 3 (3rd Practice - Station Practice): Explicitly OPEN today for stations holding their postponed rehearsal.
-     * - First 2 sessions (sess_1 & sess_2): Strictly LOCKED / Closed.
+     * - Session 1 (1st Practice - 30th Oct 2026): Explicitly OPEN for paper attendance backlog entry & registration.
+     * - Session 2 & Session 3: Strictly LOCKED / Closed.
      * - Remaining sessions (sess_4 onwards): Strictly LOCKED / Upcoming.
      */
     function getSessionWindow(session) {
       if (!session || !session.date) return { isOpen: true, status: 'open' };
 
-      // Explicit Rule: Session 3 (3rd Practice - Station Practice) is kept actively OPEN today for stations
-      // that postponed their Friday Nov 6 practice till Saturday Nov 7!
-      if (session.id === 'sess_3') {
+      // Explicit Rule: Session 1 (1st Practice - 30th Oct 2026): Actively OPEN for paper attendance backlog entry & registration
+      if (session.id === 'sess_1') {
         return {
           isOpen: true,
           status: 'active',
           openTimeDisplay: 'Open Now',
-          closeTimeDisplay: 'Open Today',
-          message: "Live Rehearsal Check-In Active (Open today for stations holding their postponed 3rd practice)"
+          closeTimeDisplay: 'Open for Paper Attendance Entry',
+          message: "First Rehearsal Attendance Open (Ticking paper attendance records & registering choristers)"
         };
       }
 
-      // Explicit Rule: The first two sessions (sess_1 & sess_2) are strictly locked / closed
-      if (session.id === 'sess_1' || session.id === 'sess_2') {
+      // Explicit Rule: Session 2 & Session 3 are strictly locked / closed
+      if (session.id === 'sess_2' || session.id === 'sess_3') {
         return {
           isOpen: false,
           status: 'closed',
           openTimeDisplay: 'Closed',
           closeTimeDisplay: 'Closed',
-          message: `Attendance window closed for ${session.displayDate} (Past Rehearsal)`
+          message: `Attendance window closed for ${session.displayDate} (Rehearsal Closed)`
         };
       }
 
@@ -2847,17 +2846,15 @@
       const todayWat = getTodayWATString();
       const sessionSelect = document.getElementById('checkin-session-select');
       
-      let defaultSessId = 'sess_3';
-      const todaySess = REHEARSAL_SCHEDULE.find(s => s.date === todayWat);
-      if (todaySess) defaultSessId = todaySess.id;
+      let defaultSessId = 'sess_1';
 
       sessionSelect.innerHTML = REHEARSAL_SCHEDULE.map(s => {
         const isLocked = isSessionLocked(s);
         let badge = '';
-        if (s.id === 'sess_3') {
-          badge = ' 🟢 LIVE TODAY (OPEN - Postponed Station Practice)';
-        } else if (s.id === 'sess_1' || s.id === 'sess_2') {
-          badge = ' 🔒 PAST (LOCKED)';
+        if (s.id === 'sess_1') {
+          badge = ' 🟢 OPEN (Paper Attendance Entry)';
+        } else if (s.id === 'sess_2' || s.id === 'sess_3') {
+          badge = ' 🔒 CLOSED (LOCKED)';
         } else if (s.date === todayWat) {
           badge = isLocked ? ' ⏳ TODAY (Opens 5:30 PM)' : ' 🟢 LIVE TODAY (OPEN)';
         } else if (s.date < todayWat) {
@@ -3124,9 +3121,9 @@
                 <i class="fa-solid fa-clipboard-check"></i>
               </div>
               <div class="flex-1">
-                <span class="font-bold text-emerald-950 block text-xs sm:text-sm">🟢 Live Rehearsal Check-In Active</span>
+                <span class="font-bold text-emerald-950 block text-xs sm:text-sm">🟢 Rehearsal Check-In Active</span>
                 <span class="text-[11px] text-emerald-800">
-                  Attendance window is OPEN! Check-in, video evidence uploads, and chorister registrations are active for ${currentSession.id === 'sess_3' ? "today's postponed station practice (3rd Practice)" : "today's practice"}.
+                  Attendance window is OPEN! ${currentSession.id === 'sess_1' ? "Entering paper attendance records and registering choristers for the 1st Practice (30th Oct)." : "Check-in and member registrations are active."}
                 </span>
               </div>
             </div>
@@ -4139,9 +4136,14 @@
         document.getElementById('admin-qualified').innerText = qualified;
       }
 
-      // Active Rehearsal Live Session 3 Data
-      const activeSession = REHEARSAL_SCHEDULE.find(s => s.id === 'sess_3') || REHEARSAL_SCHEDULE[0];
+      // Active Rehearsal Data (find open session or default to sess_1)
+      const activeSession = REHEARSAL_SCHEDULE.find(s => !isSessionLocked(s)) || REHEARSAL_SCHEDULE[0];
       const activeSessionId = activeSession.id;
+
+      const titleEl = document.getElementById('admin-active-session-title');
+      if (titleEl) titleEl.innerText = `${activeSession.displayDate} • ${activeSession.type}`;
+      const spotlightEl = document.getElementById('admin-spotlight-name');
+      if (spotlightEl) spotlightEl.innerText = `${activeSession.displayDate} (${activeSession.type}) Attendance Monitor`;
 
       const presentMemberIds = new Set();
       const excusedMemberIds = new Set();
