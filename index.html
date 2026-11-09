@@ -402,61 +402,171 @@
         </div>
 
         <!-- ======================================================== -->
-        <!-- SECTION 1: TURNOUT SUMMARY AT A GLANCE (3 PRACTICES)     -->
         <!-- ======================================================== -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+        <!-- SECTION 1: TURNOUT & STATIONS SUMMARY (3 PRACTICES)      -->
+        <!-- ======================================================== -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-5">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 gap-2">
             <div>
               <span class="text-[11px] font-bold text-brand-600 uppercase tracking-wider">At a Glance Summary</span>
               <h3 class="text-base font-extrabold text-slate-900 font-heading flex items-center gap-2">
-                <i class="fa-solid fa-chart-simple text-brand-600"></i> Turnouts for All 3 Practices Held
+                <i class="fa-solid fa-chart-simple text-brand-600"></i> Turnouts & Stations for All 3 Practices Held
               </h3>
-              <p class="text-xs text-slate-500">Realtime attendance across Practice 1, Practice 2, and Practice 3</p>
+              <p class="text-xs text-slate-500">First, Second, and Third attendance station-by-station counts and totals</p>
             </div>
-            <div class="flex items-center gap-2 text-xs">
+            <div class="flex items-center gap-2 text-xs flex-wrap">
               <span class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-900 font-bold border border-emerald-200 flex items-center gap-1.5 shadow-2xs">
-                <i class="fa-solid fa-users text-emerald-600"></i> 128 Unique Choristers Attended (70.7%)
+                <i class="fa-solid fa-users text-emerald-600"></i> 128 Unique Choristers (70.7%)
+              </span>
+              <span class="px-3 py-1 rounded-full bg-amber-50 text-amber-900 font-bold border border-amber-200 flex items-center gap-1.5 shadow-2xs">
+                <i class="fa-solid fa-crown text-amber-500"></i> 45 Core Pillar (All 3)
               </span>
               <span class="text-[11px] text-slate-400 font-medium" id="admin-live-timestamp">Updated just now</span>
             </div>
           </div>
 
-          <!-- 4 Direct Turnout Cards -->
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-2xs">
-              <div class="text-[10px] font-bold text-slate-500 uppercase flex items-center justify-between">
-                <span>1st Practice • 30 Oct</span>
-                <span class="px-1.5 py-0.2 rounded bg-slate-200 text-slate-700 text-[9px] font-bold">State</span>
-              </div>
-              <div class="text-2xl font-black text-brand-950 mt-1 font-heading" id="sum-d1-present">84</div>
-              <div class="text-[11px] text-slate-500 mt-0.5"><b>46.4%</b> turnout • 15 stations</div>
+          <!-- THE 3 PRACTICE CARDS WITH STATION NUMBERS INSIDE -->
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+                <i class="fa-solid fa-layer-group text-brand-600"></i> Attendance by Practice (1st, 2nd, and 3rd Rehearsals)
+              </h4>
+              <span class="text-[11px] text-slate-400 font-medium">Station attendance breakdown per rehearsal</span>
             </div>
 
-            <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-2xs">
-              <div class="text-[10px] font-bold text-slate-500 uppercase flex items-center justify-between">
-                <span>2nd Practice • 31 Oct</span>
-                <span class="px-1.5 py-0.2 rounded bg-slate-200 text-slate-700 text-[9px] font-bold">State</span>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <!-- Card 1: 1st Attendance (30 Oct) -->
+              <div class="p-4 rounded-2xl bg-gradient-to-b from-slate-50 to-white border border-slate-200/90 shadow-2xs flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between gap-1 pb-2 border-b border-slate-100 mb-2.5">
+                    <div class="flex items-center gap-1.5">
+                      <span class="px-2 py-0.5 rounded-md bg-brand-100 text-brand-900 font-extrabold text-[10px] uppercase">1st Attendance</span>
+                      <span class="text-[11px] text-slate-500 font-medium">30 Oct • State</span>
+                    </div>
+                    <span class="text-xs font-bold text-slate-400">Day 1</span>
+                  </div>
+
+                  <div class="flex items-baseline justify-between mb-2">
+                    <div class="flex items-baseline gap-2">
+                      <span class="text-3xl font-black text-brand-950 font-heading" id="sum-d1-present">84</span>
+                      <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">46.4% Turnout</span>
+                    </div>
+                    <span class="text-[11px] text-slate-500 font-semibold" id="d1-station-count">15 Stations</span>
+                  </div>
+
+                  <!-- Voice Pills -->
+                  <div class="grid grid-cols-4 gap-1 text-center text-[10px] py-1.5 px-2 bg-slate-100/70 rounded-xl mb-3">
+                    <div><span class="text-slate-400 text-[9px] block">S</span><b class="text-pink-700">29</b></div>
+                    <div><span class="text-slate-400 text-[9px] block">A</span><b class="text-purple-700">11</b></div>
+                    <div><span class="text-slate-400 text-[9px] block">T</span><b class="text-blue-700">19</b></div>
+                    <div><span class="text-slate-400 text-[9px] block">B</span><b class="text-indigo-700">25</b></div>
+                  </div>
+
+                  <!-- Stations List for 1st Practice -->
+                  <div class="text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5 flex justify-between">
+                    <span>Stations Present</span>
+                    <span class="text-slate-400 font-normal">Choristers</span>
+                  </div>
+                  <div class="space-y-1 max-h-60 overflow-y-auto custom-scroll pr-1 text-xs" id="d1-stations-list">
+                    <!-- Populated by JS -->
+                  </div>
+                </div>
               </div>
-              <div class="text-2xl font-black text-brand-950 mt-1 font-heading" id="sum-d2-present">88</div>
-              <div class="text-[11px] text-slate-500 mt-0.5"><b>48.6%</b> turnout • 16 stations</div>
+
+              <!-- Card 2: 2nd Attendance (31 Oct) -->
+              <div class="p-4 rounded-2xl bg-gradient-to-b from-slate-50 to-white border border-slate-200/90 shadow-2xs flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between gap-1 pb-2 border-b border-slate-100 mb-2.5">
+                    <div class="flex items-center gap-1.5">
+                      <span class="px-2 py-0.5 rounded-md bg-blue-100 text-blue-900 font-extrabold text-[10px] uppercase">2nd Attendance</span>
+                      <span class="text-[11px] text-slate-500 font-medium">31 Oct • State</span>
+                    </div>
+                    <span class="text-xs font-bold text-slate-400">Day 2</span>
+                  </div>
+
+                  <div class="flex items-baseline justify-between mb-2">
+                    <div class="flex items-baseline gap-2">
+                      <span class="text-3xl font-black text-brand-950 font-heading" id="sum-d2-present">88</span>
+                      <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">48.6% Turnout</span>
+                    </div>
+                    <span class="text-[11px] text-slate-500 font-semibold" id="d2-station-count">15 Stations</span>
+                  </div>
+
+                  <!-- Voice Pills -->
+                  <div class="grid grid-cols-4 gap-1 text-center text-[10px] py-1.5 px-2 bg-slate-100/70 rounded-xl mb-3">
+                    <div><span class="text-slate-400 text-[9px] block">S</span><b class="text-pink-700">31</b></div>
+                    <div><span class="text-slate-400 text-[9px] block">A</span><b class="text-purple-700">11</b></div>
+                    <div><span class="text-slate-400 text-[9px] block">T</span><b class="text-blue-700">20</b></div>
+                    <div><span class="text-slate-400 text-[9px] block">B</span><b class="text-indigo-700">26</b></div>
+                  </div>
+
+                  <!-- Stations List for 2nd Practice -->
+                  <div class="text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5 flex justify-between">
+                    <span>Stations Present</span>
+                    <span class="text-slate-400 font-normal">Choristers</span>
+                  </div>
+                  <div class="space-y-1 max-h-60 overflow-y-auto custom-scroll pr-1 text-xs" id="d2-stations-list">
+                    <!-- Populated by JS -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 3: 3rd Attendance (6 Nov) -->
+              <div class="p-4 rounded-2xl bg-gradient-to-b from-slate-50 to-white border border-slate-200/90 shadow-2xs flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between gap-1 pb-2 border-b border-slate-100 mb-2.5">
+                    <div class="flex items-center gap-1.5">
+                      <span class="px-2 py-0.5 rounded-md bg-purple-100 text-purple-900 font-extrabold text-[10px] uppercase">3rd Attendance</span>
+                      <span class="text-[11px] text-slate-500 font-medium">6 Nov • Station</span>
+                    </div>
+                    <span class="text-xs font-bold text-slate-400">Day 3</span>
+                  </div>
+
+                  <div class="flex items-baseline justify-between mb-2">
+                    <div class="flex items-baseline gap-2">
+                      <span class="text-3xl font-black text-brand-950 font-heading" id="sum-d3-present">85</span>
+                      <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">47.0% Turnout</span>
+                    </div>
+                    <span class="text-[11px] text-slate-500 font-semibold" id="d3-station-count">14 Stations</span>
+                  </div>
+
+                  <!-- Voice Pills -->
+                  <div class="grid grid-cols-4 gap-1 text-center text-[10px] py-1.5 px-2 bg-slate-100/70 rounded-xl mb-3">
+                    <div><span class="text-slate-400 text-[9px] block">S</span><b class="text-pink-700">30</b></div>
+                    <div><span class="text-slate-400 text-[9px] block">A</span><b class="text-purple-700">13</b></div>
+                    <div><span class="text-slate-400 text-[9px] block">T</span><b class="text-blue-700">16</b></div>
+                    <div><span class="text-slate-400 text-[9px] block">B</span><b class="text-indigo-700">26</b></div>
+                  </div>
+
+                  <!-- Stations List for 3rd Practice -->
+                  <div class="text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5 flex justify-between">
+                    <span>Stations Present</span>
+                    <span class="text-slate-400 font-normal">Choristers</span>
+                  </div>
+                  <div class="space-y-1 max-h-60 overflow-y-auto custom-scroll pr-1 text-xs" id="d3-stations-list">
+                    <!-- Populated by JS -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- INDIVIDUAL STATION CARDS: 1st, 2nd, and 3rd ATTENDANCE AT A GLANCE -->
+          <div class="pt-3 border-t border-slate-100">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-3">
+              <div>
+                <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                  <i class="fa-solid fa-church text-brand-600"></i> Every Station at a Glance (1st, 2nd & 3rd Attendance)
+                </h4>
+                <p class="text-[11px] text-slate-500">Quick attendance numbers per station across all rehearsals</p>
+              </div>
+              <span class="text-[11px] font-bold text-slate-600 bg-slate-100 px-2.5 py-0.5 rounded-md self-start sm:self-auto" id="station-cards-count-badge">
+                21 Stations
+              </span>
             </div>
 
-            <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-2xs">
-              <div class="text-[10px] font-bold text-slate-500 uppercase flex items-center justify-between">
-                <span>3rd Practice • 6 Nov</span>
-                <span class="px-1.5 py-0.2 rounded bg-slate-200 text-slate-700 text-[9px] font-bold">Station</span>
-              </div>
-              <div class="text-2xl font-black text-brand-950 mt-1 font-heading" id="sum-d3-present">85</div>
-              <div class="text-[11px] text-slate-500 mt-0.5"><b>47.0%</b> turnout • 12 stations</div>
-            </div>
-
-            <div class="p-3.5 rounded-2xl bg-emerald-50/80 border border-emerald-200 shadow-2xs">
-              <div class="text-[10px] font-bold text-emerald-800 uppercase flex items-center justify-between">
-                <span>3/3 Core Pillar</span>
-                <i class="fa-solid fa-crown text-amber-500"></i>
-              </div>
-              <div class="text-2xl font-black text-emerald-700 mt-1 font-heading" id="sum-all3-present">45</div>
-              <div class="text-[11px] text-emerald-800/80 mt-0.5"><b>100% of held sessions</b> (30% season)</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5" id="station-cards-grid">
+              <!-- Populated by JS -->
             </div>
           </div>
         </div>
@@ -4057,28 +4167,29 @@
     }
 
     // STATION BREAKDOWN RENDERER (ALL PRACTICES MATRIX OR SINGLE SESSION)
-    // STATION BREAKDOWN RENDERER (AT A GLANCE ACROSS ALL 3 PRACTICES)
-    function renderStationBreakdown() {
-      const tableBody = document.getElementById('station-table-body');
-      if (!tableBody) return;
+    // HELPER: Format & Normalize Station Name
+    function formatStationName(s, zone) {
+      let name = (s || zone || 'Other Station').trim();
+      if (name.toLowerCase() === 'futa') return 'FUTA';
+      if (name.toLowerCase() === 'oke aro') return 'Oke Aro';
+      if (name.toLowerCase() === 'ondo road') return 'Ondo Road';
+      if (name.toLowerCase() === 'akungba') return 'Akungba Akoko';
+      if (name.toLowerCase() === 'akure') return 'Akure Central';
+      if (name.toLowerCase() === 'ondo') return 'Ondo Central';
+      return name.replace(/\b\w/g, l => l.toUpperCase());
+    }
 
+    // MAIN STATION BREAKDOWN & CARDS CONTROLLER
+    function renderStationBreakdown() {
       const members = state.members || [];
       const stationMap = {};
 
       members.forEach(m => {
-        let rawStation = (m.station || m.zone || 'Other Station').trim();
-        if (!rawStation) rawStation = 'Other Station';
-        let normStation = rawStation.charAt(0).toUpperCase() + rawStation.slice(1);
-        if (normStation.toLowerCase() === 'futa') normStation = 'FUTA';
-        if (normStation.toLowerCase() === 'oke aro') normStation = 'Oke Aro';
-        if (normStation.toLowerCase() === 'ondo road') normStation = 'Ondo Road';
-
-        const zone = m.zone || 'Ondo Area';
-
-        if (!stationMap[normStation]) {
-          stationMap[normStation] = {
-            name: normStation,
-            zone: zone,
+        const stName = formatStationName(m.station, m.zone);
+        if (!stationMap[stName]) {
+          stationMap[stName] = {
+            name: stName,
+            zone: m.zone || 'Ondo Area',
             registered: 0,
             d1: 0,
             d2: 0,
@@ -4087,62 +4198,181 @@
           };
         }
 
-        stationMap[normStation].registered++;
+        stationMap[stName].registered++;
 
         // Calculate per completed session
         const st1 = state.attendance[`sess_1_${m.id}`];
         if (st1 === 'present') {
-          stationMap[normStation].d1++;
-          stationMap[normStation].attendedMemberIds.add(m.id);
+          stationMap[stName].d1++;
+          stationMap[stName].attendedMemberIds.add(m.id);
         }
 
         const st2 = state.attendance[`sess_2_${m.id}`];
         if (st2 === 'present') {
-          stationMap[normStation].d2++;
-          stationMap[normStation].attendedMemberIds.add(m.id);
+          stationMap[stName].d2++;
+          stationMap[stName].attendedMemberIds.add(m.id);
         }
 
         const st3 = state.attendance[`sess_3_${m.id}`];
         if (st3 === 'present') {
-          stationMap[normStation].d3++;
-          stationMap[normStation].attendedMemberIds.add(m.id);
+          stationMap[stName].d3++;
+          stationMap[stName].attendedMemberIds.add(m.id);
         }
       });
 
-      const sortedStations = Object.values(stationMap).sort((a, b) => {
+      const allStations = Object.values(stationMap).sort((a, b) => {
         if (b.attendedMemberIds.size !== a.attendedMemberIds.size) return b.attendedMemberIds.size - a.attendedMemberIds.size;
         return b.registered - a.registered;
       });
 
-      const badgeEl = document.getElementById('station-breakdown-count-badge');
-      if (badgeEl) badgeEl.innerText = `${sortedStations.length} Stations in Ondo Area`;
+      // 1. POPULATE 1ST PRACTICE STATIONS LIST (Inside 1st Practice Card)
+      const d1ListEl = document.getElementById('d1-stations-list');
+      if (d1ListEl) {
+        const d1Stations = Object.values(stationMap).filter(st => st.d1 > 0).sort((a, b) => b.d1 - a.d1);
+        const d1CntEl = document.getElementById('d1-station-count');
+        if (d1CntEl) d1CntEl.innerText = `${d1Stations.length} Stations`;
 
-      if (sortedStations.length === 0) {
-        tableBody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-slate-400">No stations registered yet.</td></tr>`;
-        return;
+        if (d1Stations.length === 0) {
+          d1ListEl.innerHTML = `<div class="p-3 text-center text-slate-400 text-xs">No station attendance recorded</div>`;
+        } else {
+          d1ListEl.innerHTML = d1Stations.map((st, i) => `
+            <div class="flex items-center justify-between p-1.5 rounded-lg bg-white border border-slate-100 hover:border-slate-300 transition">
+              <span class="font-bold text-slate-800 truncate flex items-center gap-1.5 min-w-0">
+                <span class="text-[9px] text-slate-400 w-3.5 shrink-0">${i + 1}.</span>
+                <span class="truncate">${st.name}</span>
+              </span>
+              <span class="px-2 py-0.5 rounded-md bg-brand-50 text-brand-900 font-black text-xs shrink-0 border border-brand-200/50">${st.d1}</span>
+            </div>
+          `).join('');
+        }
       }
 
-      tableBody.innerHTML = sortedStations.map(st => {
-        const uniquePresent = st.attendedMemberIds.size;
-        const pct = Math.round((uniquePresent / (st.registered || 1)) * 100);
-        const hasAny = uniquePresent > 0;
+      // 2. POPULATE 2ND PRACTICE STATIONS LIST (Inside 2nd Practice Card)
+      const d2ListEl = document.getElementById('d2-stations-list');
+      if (d2ListEl) {
+        const d2Stations = Object.values(stationMap).filter(st => st.d2 > 0).sort((a, b) => b.d2 - a.d2);
+        const d2CntEl = document.getElementById('d2-station-count');
+        if (d2CntEl) d2CntEl.innerText = `${d2Stations.length} Stations`;
 
-        return `
-          <tr class="hover:bg-slate-50/80 transition ${hasAny ? 'bg-white' : 'opacity-60'}">
-            <td class="p-2.5 font-bold text-slate-900 flex items-center gap-1.5 whitespace-nowrap">
-              <i class="fa-solid fa-church text-slate-400 text-xs"></i>
-              <span>${st.name}</span>
-            </td>
-            <td class="p-2.5 text-slate-600 font-medium whitespace-nowrap">${st.zone}</td>
-            <td class="p-2.5 text-center font-bold text-slate-800">${st.registered}</td>
-            <td class="p-2.5 text-center font-bold border-x border-slate-100 ${st.d1 > 0 ? 'text-brand-900 bg-brand-50/30' : 'text-slate-300'}">${st.d1}</td>
-            <td class="p-2.5 text-center font-bold border-r border-slate-100 ${st.d2 > 0 ? 'text-brand-900 bg-brand-50/30' : 'text-slate-300'}">${st.d2}</td>
-            <td class="p-2.5 text-center font-bold border-r border-slate-100 ${st.d3 > 0 ? 'text-brand-900 bg-brand-50/30' : 'text-slate-300'}">${st.d3}</td>
-            <td class="p-2.5 text-center font-black ${uniquePresent > 0 ? 'text-emerald-700 bg-emerald-50/20' : 'text-slate-400'}">${uniquePresent}</td>
-            <td class="p-2.5 text-right font-bold text-slate-700">${pct}%</td>
-          </tr>
-        `;
-      }).join('');
+        if (d2Stations.length === 0) {
+          d2ListEl.innerHTML = `<div class="p-3 text-center text-slate-400 text-xs">No station attendance recorded</div>`;
+        } else {
+          d2ListEl.innerHTML = d2Stations.map((st, i) => `
+            <div class="flex items-center justify-between p-1.5 rounded-lg bg-white border border-slate-100 hover:border-slate-300 transition">
+              <span class="font-bold text-slate-800 truncate flex items-center gap-1.5 min-w-0">
+                <span class="text-[9px] text-slate-400 w-3.5 shrink-0">${i + 1}.</span>
+                <span class="truncate">${st.name}</span>
+              </span>
+              <span class="px-2 py-0.5 rounded-md bg-blue-50 text-blue-900 font-black text-xs shrink-0 border border-blue-200/50">${st.d2}</span>
+            </div>
+          `).join('');
+        }
+      }
+
+      // 3. POPULATE 3RD PRACTICE STATIONS LIST (Inside 3rd Practice Card)
+      const d3ListEl = document.getElementById('d3-stations-list');
+      if (d3ListEl) {
+        const d3Stations = Object.values(stationMap).filter(st => st.d3 > 0).sort((a, b) => b.d3 - a.d3);
+        const d3CntEl = document.getElementById('d3-station-count');
+        if (d3CntEl) d3CntEl.innerText = `${d3Stations.length} Stations`;
+
+        if (d3Stations.length === 0) {
+          d3ListEl.innerHTML = `<div class="p-3 text-center text-slate-400 text-xs">No station attendance recorded</div>`;
+        } else {
+          d3ListEl.innerHTML = d3Stations.map((st, i) => `
+            <div class="flex items-center justify-between p-1.5 rounded-lg bg-white border border-slate-100 hover:border-slate-300 transition">
+              <span class="font-bold text-slate-800 truncate flex items-center gap-1.5 min-w-0">
+                <span class="text-[9px] text-slate-400 w-3.5 shrink-0">${i + 1}.</span>
+                <span class="truncate">${st.name}</span>
+              </span>
+              <span class="px-2 py-0.5 rounded-md bg-purple-50 text-purple-900 font-black text-xs shrink-0 border border-purple-200/50">${st.d3}</span>
+            </div>
+          `).join('');
+        }
+      }
+
+      // 4. POPULATE EVERY STATION CARD (With 1st, 2nd, and 3rd Attendance numbers)
+      const cardsGridEl = document.getElementById('station-cards-grid');
+      const countBadge = document.getElementById('station-cards-count-badge');
+      if (countBadge) countBadge.innerText = `${allStations.length} Stations in Ondo Area`;
+
+      if (cardsGridEl) {
+        if (allStations.length === 0) {
+          cardsGridEl.innerHTML = `<div class="col-span-full p-6 text-center text-slate-400 text-xs">No stations registered yet.</div>`;
+        } else {
+          cardsGridEl.innerHTML = allStations.map(st => {
+            const unique = st.attendedMemberIds.size;
+            const pct = Math.round((unique / (st.registered || 1)) * 100);
+
+            return `
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/90 hover:border-brand-400 hover:bg-white transition flex flex-col justify-between shadow-2xs">
+                <div>
+                  <div class="flex items-start justify-between gap-1 mb-1.5">
+                    <h5 class="font-extrabold text-slate-900 text-xs truncate" title="${st.name}">
+                      <i class="fa-solid fa-church text-slate-400 text-[10px] mr-1"></i>${st.name}
+                    </h5>
+                    <span class="text-[9px] font-bold text-slate-600 bg-slate-200/70 px-1.5 py-0.2 rounded shrink-0">${st.zone}</span>
+                  </div>
+
+                  <!-- 1st, 2nd, 3rd Attendance Numbers for this Station -->
+                  <div class="grid grid-cols-3 gap-1 text-center my-2">
+                    <div class="p-1 rounded-lg ${st.d1 > 0 ? 'bg-brand-50 border border-brand-200 text-brand-950 font-bold' : 'bg-slate-100 text-slate-400'}">
+                      <span class="text-[8px] font-bold uppercase block text-slate-500">1st</span>
+                      <b class="text-xs font-black">${st.d1}</b>
+                    </div>
+                    <div class="p-1 rounded-lg ${st.d2 > 0 ? 'bg-blue-50 border border-blue-200 text-blue-950 font-bold' : 'bg-slate-100 text-slate-400'}">
+                      <span class="text-[8px] font-bold uppercase block text-slate-500">2nd</span>
+                      <b class="text-xs font-black">${st.d2}</b>
+                    </div>
+                    <div class="p-1 rounded-lg ${st.d3 > 0 ? 'bg-purple-50 border border-purple-200 text-purple-950 font-bold' : 'bg-slate-100 text-slate-400'}">
+                      <span class="text-[8px] font-bold uppercase block text-slate-500">3rd</span>
+                      <b class="text-xs font-black">${st.d3}</b>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pt-2 border-t border-slate-200/60 flex items-center justify-between text-[10px]">
+                  <span class="text-slate-500 font-medium">Unique: <b>${unique}</b>/${st.registered}</span>
+                  <span class="font-black text-slate-700">${pct}%</span>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      }
+
+      // 5. POPULATE THE COMPARISON TABLE (Section 3)
+      const tableBody = document.getElementById('station-table-body');
+      if (tableBody) {
+        const badgeEl = document.getElementById('station-breakdown-count-badge');
+        if (badgeEl) badgeEl.innerText = `${allStations.length} Stations in Ondo Area`;
+
+        if (allStations.length === 0) {
+          tableBody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-slate-400">No stations registered yet.</td></tr>`;
+        } else {
+          tableBody.innerHTML = allStations.map(st => {
+            const uniquePresent = st.attendedMemberIds.size;
+            const pct = Math.round((uniquePresent / (st.registered || 1)) * 100);
+            const hasAny = uniquePresent > 0;
+
+            return `
+              <tr class="hover:bg-slate-50/80 transition ${hasAny ? 'bg-white' : 'opacity-60'}">
+                <td class="p-2.5 font-bold text-slate-900 flex items-center gap-1.5 whitespace-nowrap">
+                  <i class="fa-solid fa-church text-slate-400 text-xs"></i>
+                  <span>${st.name}</span>
+                </td>
+                <td class="p-2.5 text-slate-600 font-medium whitespace-nowrap">${st.zone}</td>
+                <td class="p-2.5 text-center font-bold text-slate-800">${st.registered}</td>
+                <td class="p-2.5 text-center font-bold border-x border-slate-100 ${st.d1 > 0 ? 'text-brand-900 bg-brand-50/30' : 'text-slate-300'}">${st.d1}</td>
+                <td class="p-2.5 text-center font-bold border-r border-slate-100 ${st.d2 > 0 ? 'text-brand-900 bg-brand-50/30' : 'text-slate-300'}">${st.d2}</td>
+                <td class="p-2.5 text-center font-bold border-r border-slate-100 ${st.d3 > 0 ? 'text-brand-900 bg-brand-50/30' : 'text-slate-300'}">${st.d3}</td>
+                <td class="p-2.5 text-center font-black ${uniquePresent > 0 ? 'text-emerald-700 bg-emerald-50/20' : 'text-slate-400'}">${uniquePresent}</td>
+                <td class="p-2.5 text-right font-bold text-slate-700">${pct}%</td>
+              </tr>
+            `;
+          }).join('');
+        }
+      }
     }
 
     // VOICES AT A GLANCE RENDERER
