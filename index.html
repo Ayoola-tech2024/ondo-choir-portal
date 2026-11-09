@@ -401,154 +401,147 @@
           </div>
         </div>
 
-        <!-- Admin Practice Scope Filter & Summary Bar -->
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3">
-          <div class="flex items-center gap-2 flex-wrap">
-            <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-              <i class="fa-solid fa-layer-group text-brand-600"></i> Practice Scope:
-            </span>
-            <select id="admin-session-scope" onchange="handleAdminScopeChange(this.value)" class="p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-bold text-xs text-brand-950 focus:ring-2 focus:ring-brand-500 focus:outline-none">
-              <option value="ALL" selected>📊 All Practices at a Glance (Comparative Matrix)</option>
-              <option value="sess_1">1st Practice • 30th Oct 2026 (State Practice)</option>
-              <option value="sess_2">2nd Practice • 31st Oct 2026 (State Practice)</option>
-              <option value="sess_3">3rd Practice • 6th Nov 2026 (Station Practice)</option>
-              <option value="sess_4">4th Practice • 13th Nov 2026 (Zonal Practice - Upcoming)</option>
-            </select>
-          </div>
-          <div class="flex items-center gap-2 text-xs flex-wrap">
-            <span id="admin-scope-summary-badge" class="px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-900 font-bold border border-emerald-200 flex items-center gap-1.5 shadow-xs">
-              <i class="fa-solid fa-users text-emerald-600"></i> <span id="admin-scope-summary-text">3 Completed Practices • 128 Unique Attendees</span>
-            </span>
-            <div class="text-[11px] text-slate-400 font-medium" id="admin-live-timestamp">Updated just now</div>
-          </div>
-        </div>
-
-        <!-- VIEW A: ALL PRACTICES AT A GLANCE (Comparative Grid & Metrics) -->
-        <div id="admin-all-practices-container" class="space-y-4">
-          <!-- 4 Cumulative Choir Performance Overview Cards -->
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <div class="p-4 rounded-2xl bg-gradient-to-br from-emerald-50 to-emerald-100/60 border border-emerald-200 shadow-xs">
-              <div class="text-[11px] font-bold text-emerald-800 uppercase flex items-center justify-between">
-                <span>Unique Attendees</span>
-                <i class="fa-solid fa-users-viewfinder text-emerald-600"></i>
-              </div>
-              <div class="text-3xl font-black text-emerald-700 mt-1 font-heading" id="all-unique-attendees">0</div>
-              <div class="text-[11px] text-emerald-800/80 mt-0.5" id="all-unique-pct">0% of total choir reached</div>
-            </div>
-
-            <div class="p-4 rounded-2xl bg-gradient-to-br from-amber-50 to-amber-100/60 border border-amber-200 shadow-xs">
-              <div class="text-[11px] font-bold text-amber-800 uppercase flex items-center justify-between">
-                <span>100% Core Pillar</span>
-                <i class="fa-solid fa-crown text-amber-600"></i>
-              </div>
-              <div class="text-3xl font-black text-amber-700 mt-1 font-heading" id="all-perfect-attendees">0</div>
-              <div class="text-[11px] text-amber-800/80 mt-0.5" id="all-perfect-pct">Attended all 3 practices</div>
-            </div>
-
-            <div class="p-4 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100/60 border border-blue-200 shadow-xs">
-              <div class="text-[11px] font-bold text-blue-800 uppercase flex items-center justify-between">
-                <span>2 of 3 Practices</span>
-                <i class="fa-solid fa-user-group text-blue-600"></i>
-              </div>
-              <div class="text-3xl font-black text-blue-700 mt-1 font-heading" id="all-two-sessions">0</div>
-              <div class="text-[11px] text-blue-800/80 mt-0.5" id="all-two-sessions-pct">Solid participants</div>
-            </div>
-
-            <div class="p-4 rounded-2xl bg-gradient-to-br from-purple-50 to-purple-100/60 border border-purple-200 shadow-xs">
-              <div class="text-[11px] font-bold text-purple-800 uppercase flex items-center justify-between">
-                <span>Average Per Practice</span>
-                <i class="fa-solid fa-chart-line text-purple-600"></i>
-              </div>
-              <div class="text-3xl font-black text-purple-700 mt-1 font-heading" id="all-avg-attendance">0</div>
-              <div class="text-[11px] text-purple-800/80 mt-0.5" id="all-avg-pct">~47.4% per session</div>
-            </div>
-          </div>
-
-          <!-- Side-by-Side Rehearsals Held to Date Grid -->
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 gap-2 mb-4">
-              <div>
-                <h3 class="text-sm font-extrabold text-slate-900 font-heading flex items-center gap-2">
-                  <i class="fa-solid fa-calendar-check text-brand-600"></i> All Rehearsals Held to Date at a Glance
-                </h3>
-                <p class="text-xs text-slate-500">Side-by-side comparative attendance turnout, active stations, and voice distribution</p>
-              </div>
-              <span class="text-xs font-bold text-brand-700 bg-brand-50 border border-brand-200 px-3 py-1 rounded-xl self-start sm:self-auto">
-                3 of 10 Rehearsals Completed
-              </span>
-            </div>
-
-            <!-- Responsive cards container for all sessions -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="practice-cards-grid">
-              <!-- Dynamically rendered -->
-            </div>
-          </div>
-        </div>
-
-        <!-- VIEW B: SINGLE PRACTICE SPOTLIGHT (Focus View) -->
-        <div id="admin-single-practice-container" class="hidden bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 gap-2 mb-4">
+        <!-- ======================================================== -->
+        <!-- SECTION 1: TURNOUT SUMMARY AT A GLANCE (3 PRACTICES)     -->
+        <!-- ======================================================== -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 gap-2">
             <div>
-              <span class="text-[11px] font-bold text-brand-600 uppercase tracking-wider">Practice Attendance Monitor</span>
+              <span class="text-[11px] font-bold text-brand-600 uppercase tracking-wider">At a Glance Summary</span>
               <h3 class="text-base font-extrabold text-slate-900 font-heading flex items-center gap-2">
-                <i class="fa-solid fa-signal text-emerald-600"></i> <span id="admin-spotlight-name">Rehearsal Attendance Monitor</span>
+                <i class="fa-solid fa-chart-simple text-brand-600"></i> Turnouts for All 3 Practices Held
               </h3>
+              <p class="text-xs text-slate-500">Realtime attendance across Practice 1, Practice 2, and Practice 3</p>
             </div>
-            <button onclick="handleAdminScopeChange('ALL')" class="text-xs font-bold text-brand-700 hover:text-brand-900 bg-brand-50 hover:bg-brand-100 border border-brand-200 px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 self-start sm:self-auto">
-              <i class="fa-solid fa-arrow-left"></i> Back to All Practices
-            </button>
+            <div class="flex items-center gap-2 text-xs">
+              <span class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-900 font-bold border border-emerald-200 flex items-center gap-1.5 shadow-2xs">
+                <i class="fa-solid fa-users text-emerald-600"></i> 128 Unique Choristers Attended (70.7%)
+              </span>
+              <span class="text-[11px] text-slate-400 font-medium" id="admin-live-timestamp">Updated just now</span>
+            </div>
           </div>
 
-          <!-- 4 Key Live Counters for Selected Session -->
+          <!-- 4 Direct Turnout Cards -->
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200">
-              <div class="text-[11px] font-bold text-emerald-800 uppercase flex items-center justify-between">
-                <span>Present</span>
-                <i class="fa-solid fa-user-check text-emerald-600"></i>
+            <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-2xs">
+              <div class="text-[10px] font-bold text-slate-500 uppercase flex items-center justify-between">
+                <span>1st Practice • 30 Oct</span>
+                <span class="px-1.5 py-0.2 rounded bg-slate-200 text-slate-700 text-[9px] font-bold">State</span>
               </div>
-              <div class="text-3xl font-black text-emerald-700 mt-1 font-heading" id="live-present-count">0</div>
-              <div class="text-[11px] text-emerald-800/80 mt-0.5" id="live-present-percent">0% of total registered</div>
+              <div class="text-2xl font-black text-brand-950 mt-1 font-heading" id="sum-d1-present">84</div>
+              <div class="text-[11px] text-slate-500 mt-0.5"><b>46.4%</b> turnout • 15 stations</div>
             </div>
 
-            <div class="p-4 rounded-xl bg-amber-50/70 border border-amber-200">
-              <div class="text-[11px] font-bold text-amber-800 uppercase flex items-center justify-between">
-                <span>Excused</span>
-                <i class="fa-solid fa-user-clock text-amber-600"></i>
+            <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-2xs">
+              <div class="text-[10px] font-bold text-slate-500 uppercase flex items-center justify-between">
+                <span>2nd Practice • 31 Oct</span>
+                <span class="px-1.5 py-0.2 rounded bg-slate-200 text-slate-700 text-[9px] font-bold">State</span>
               </div>
-              <div class="text-3xl font-black text-amber-700 mt-1 font-heading" id="live-excused-count">0</div>
-              <div class="text-[11px] text-amber-800/80 mt-0.5">Approved with notice</div>
+              <div class="text-2xl font-black text-brand-950 mt-1 font-heading" id="sum-d2-present">88</div>
+              <div class="text-[11px] text-slate-500 mt-0.5"><b>48.6%</b> turnout • 16 stations</div>
             </div>
 
-            <div class="p-4 rounded-xl bg-blue-50/70 border border-blue-200">
-              <div class="text-[11px] font-bold text-blue-800 uppercase flex items-center justify-between">
-                <span>Stations Active</span>
-                <i class="fa-solid fa-church text-blue-600"></i>
+            <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-2xs">
+              <div class="text-[10px] font-bold text-slate-500 uppercase flex items-center justify-between">
+                <span>3rd Practice • 6 Nov</span>
+                <span class="px-1.5 py-0.2 rounded bg-slate-200 text-slate-700 text-[9px] font-bold">Station</span>
               </div>
-              <div class="text-3xl font-black text-blue-700 mt-1 font-heading" id="live-active-stations-count">0</div>
-              <div class="text-[11px] text-blue-800/80 mt-0.5" id="live-total-stations-sub">Reporting attendance</div>
+              <div class="text-2xl font-black text-brand-950 mt-1 font-heading" id="sum-d3-present">85</div>
+              <div class="text-[11px] text-slate-500 mt-0.5"><b>47.0%</b> turnout • 12 stations</div>
             </div>
 
-            <div class="p-4 rounded-xl bg-purple-50/70 border border-purple-200">
-              <div class="text-[11px] font-bold text-purple-800 uppercase flex items-center justify-between">
-                <span>Voices Present</span>
-                <i class="fa-solid fa-music text-purple-600"></i>
+            <div class="p-3.5 rounded-2xl bg-emerald-50/80 border border-emerald-200 shadow-2xs">
+              <div class="text-[10px] font-bold text-emerald-800 uppercase flex items-center justify-between">
+                <span>3/3 Core Pillar</span>
+                <i class="fa-solid fa-crown text-amber-500"></i>
               </div>
-              <div class="text-xs font-bold text-purple-900 mt-2 space-y-0.5" id="live-voice-parts-summary">
-                <div>S: <span id="live-s-count" class="font-extrabold text-pink-600">0</span> &bull; A: <span id="live-a-count" class="font-extrabold text-purple-700">0</span></div>
-                <div>T: <span id="live-t-count" class="font-extrabold text-blue-700">0</span> &bull; B: <span id="live-b-count" class="font-extrabold text-indigo-700">0</span></div>
+              <div class="text-2xl font-black text-emerald-700 mt-1 font-heading" id="sum-all3-present">45</div>
+              <div class="text-[11px] text-emerald-800/80 mt-0.5"><b>100% of held sessions</b> (30% season)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ======================================================== -->
+        <!-- SECTION 2: VOICES & ZONES AT A GLANCE (3 PRACTICES)      -->
+        <!-- ======================================================== -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <!-- Voices at a Glance Table -->
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
+                <h3 class="text-sm font-bold text-slate-900 font-heading flex items-center gap-2">
+                  <i class="fa-solid fa-music text-pink-600"></i> Voices & Parts at a Glance
+                </h3>
+                <span class="text-[11px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md" id="accompanist-count-badge">
+                  4 Accompanists
+                </span>
+              </div>
+
+              <div class="overflow-x-auto text-xs">
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr class="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold uppercase text-[10px] tracking-wider">
+                      <th class="p-2.5">Voice Part</th>
+                      <th class="p-2.5 text-center">Reg</th>
+                      <th class="p-2.5 text-center bg-slate-100/60 font-bold text-slate-800">Day 1 (30th)</th>
+                      <th class="p-2.5 text-center bg-slate-100/60 font-bold text-slate-800">Day 2 (31st)</th>
+                      <th class="p-2.5 text-center bg-slate-100/60 font-bold text-slate-800">Day 3 (6th)</th>
+                      <th class="p-2.5 text-center font-black text-emerald-800 bg-emerald-50/40">Unique</th>
+                      <th class="p-2.5 text-right">Turnout</th>
+                    </tr>
+                  </thead>
+                  <tbody id="voice-table-body" class="divide-y divide-slate-100 text-slate-700">
+                    <!-- Populated by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Zones at a Glance Table -->
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
+                <h3 class="text-sm font-bold text-slate-900 font-heading flex items-center gap-2">
+                  <i class="fa-solid fa-map-location-dot text-brand-600"></i> Zones at a Glance
+                </h3>
+                <span class="text-[11px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">
+                  7 Zones in Ondo Area
+                </span>
+              </div>
+
+              <div class="overflow-x-auto text-xs">
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr class="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold uppercase text-[10px] tracking-wider">
+                      <th class="p-2.5">Zone</th>
+                      <th class="p-2.5 text-center">Reg</th>
+                      <th class="p-2.5 text-center bg-slate-100/60 font-bold text-slate-800">Day 1 (30th)</th>
+                      <th class="p-2.5 text-center bg-slate-100/60 font-bold text-slate-800">Day 2 (31st)</th>
+                      <th class="p-2.5 text-center bg-slate-100/60 font-bold text-slate-800">Day 3 (6th)</th>
+                      <th class="p-2.5 text-center font-black text-emerald-800 bg-emerald-50/40">Unique</th>
+                      <th class="p-2.5 text-right">Turnout</th>
+                    </tr>
+                  </thead>
+                  <tbody id="zone-table-body" class="divide-y divide-slate-100 text-slate-700">
+                    <!-- Populated by JS -->
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Station by Station Breakdown Table -->
+        <!-- ======================================================== -->
+        <!-- SECTION 3: STATIONS & BRANCHES AT A GLANCE (3 PRACTICES) -->
+        <!-- ======================================================== -->
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 gap-2 mb-3">
             <div>
               <h3 class="text-sm font-bold text-slate-900 font-heading flex items-center gap-2">
-                <i class="fa-solid fa-location-dot text-brand-600"></i> <span id="station-breakdown-title">Station & Branch Multi-Practice Turnout Breakdown</span>
+                <i class="fa-solid fa-church text-brand-600"></i> Stations & Branches at a Glance
               </h3>
-              <p class="text-xs text-slate-500" id="station-breakdown-subtitle">Attendance performance across all rehearsals held to date</p>
+              <p class="text-xs text-slate-500">Turnout by station across Practice 1 (30 Oct), Practice 2 (31 Oct), and Practice 3 (6 Nov)</p>
             </div>
             <span class="text-xs font-semibold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-lg self-start sm:self-auto" id="station-breakdown-count-badge">
               0 Stations in Ondo Area
@@ -557,8 +550,17 @@
 
           <div class="overflow-x-auto text-xs">
             <table class="w-full text-left border-collapse" id="station-table-main">
-              <thead id="station-table-head">
-                <!-- Dynamically populated based on scope -->
+              <thead>
+                <tr class="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold uppercase text-[10px] tracking-wider">
+                  <th class="p-2.5">Station / Branch</th>
+                  <th class="p-2.5">Zone</th>
+                  <th class="p-2.5 text-center">Reg</th>
+                  <th class="p-2.5 text-center bg-slate-100/70 font-bold text-slate-900 border-x border-slate-200">Day 1<br><span class="text-[9px] font-normal text-slate-500">30 Oct</span></th>
+                  <th class="p-2.5 text-center bg-slate-100/70 font-bold text-slate-900 border-r border-slate-200">Day 2<br><span class="text-[9px] font-normal text-slate-500">31 Oct</span></th>
+                  <th class="p-2.5 text-center bg-slate-100/70 font-bold text-slate-900 border-r border-slate-200">Day 3<br><span class="text-[9px] font-normal text-slate-500">6 Nov</span></th>
+                  <th class="p-2.5 text-center font-black text-emerald-800 bg-emerald-50/40">Unique<br><span class="text-[9px] font-normal text-slate-500">Present</span></th>
+                  <th class="p-2.5 text-right">Turnout %</th>
+                </tr>
               </thead>
               <tbody id="station-table-body" class="divide-y divide-slate-100 text-slate-700">
                 <!-- Dynamically populated -->
@@ -567,50 +569,30 @@
           </div>
         </div>
 
-        <!-- Two-Column Section: Voice Part Distribution & Live Feed of Recent Check-Ins -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          <!-- Voice Part Distribution -->
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
-            <div>
-              <h3 class="text-sm font-bold text-slate-900 font-heading flex items-center gap-2 mb-1">
-                <i class="fa-solid fa-chart-pie text-brand-600"></i> Voice Classification & Turnout
-              </h3>
-              <p class="text-xs text-slate-500 mb-4">Balance of parts present at tonight's station practice</p>
-
-              <div class="space-y-3" id="voice-part-bars-container">
-                <!-- Dynamically rendered -->
-              </div>
-            </div>
-
-            <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-500 flex justify-between">
-              <span>Classical 4-part choir balance</span>
-              <span class="font-bold text-slate-700" id="accompanist-count-badge">0 Accompanists Registered</span>
-            </div>
+        <!-- Live Stream of Recent Sign-Ins -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-100 mb-3">
+            <h3 class="text-sm font-bold text-slate-900 font-heading flex items-center gap-2">
+              <i class="fa-solid fa-list-check text-emerald-600"></i> Realtime Check-In Activity Stream
+            </h3>
+            <span class="text-[11px] text-slate-400 font-medium">Recent submissions</span>
           </div>
 
-          <!-- Live Stream of Recent Sign-Ins -->
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
-            <div class="flex items-center justify-between pb-2 border-b border-slate-100 mb-3">
-              <h3 class="text-sm font-bold text-slate-900 font-heading flex items-center gap-2">
-                <i class="fa-solid fa-list-check text-emerald-600"></i> Realtime Check-In Activity
-              </h3>
-              <span class="text-[11px] text-slate-400 font-medium">Latest submissions</span>
-            </div>
-
-            <div class="space-y-2 max-h-72 overflow-y-auto pr-1" id="recent-checkins-stream">
-              <!-- Dynamically rendered -->
-            </div>
+          <div class="space-y-2 max-h-60 overflow-y-auto pr-1" id="recent-checkins-stream">
+            <!-- Dynamically rendered -->
           </div>
         </div>
 
-        <!-- Season Overview & Concert Qualification (>=70%) -->
+        <!-- ======================================================== -->
+        <!-- SECTION 4: SEASON SCORING & CONCERT QUALIFICATION (10 SESS) -->
+        <!-- ======================================================== -->
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 gap-2 mb-4">
             <div>
               <h3 class="text-sm font-bold text-slate-900 font-heading flex items-center gap-2">
-                <i class="fa-solid fa-award text-amber-500"></i> 2026 Concert Qualification (≥70% Requirement)
+                <i class="fa-solid fa-award text-amber-500"></i> 2026 Concert Qualification & Candidate Scoring
               </h3>
-              <p class="text-xs text-slate-500">Cumulative attendance across completed rehearsals</p>
+              <p class="text-xs text-slate-500">Scoring is distributed across all 10 scheduled practices (10% per practice)</p>
             </div>
             <div class="flex items-center gap-2">
               <button onclick="exportToCSV()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 font-bold rounded-lg border border-slate-300 text-slate-700 text-xs flex items-center gap-1.5 transition">
@@ -622,22 +604,35 @@
             </div>
           </div>
 
+          <!-- Candidate Scoring Rule Explainer Banner -->
+          <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-950 mb-4 flex items-start gap-2.5">
+            <i class="fa-solid fa-circle-info text-amber-600 text-sm mt-0.5 shrink-0"></i>
+            <div>
+              <strong class="font-bold block">Candidate 100% Score Rule:</strong>
+              <span>The 100% score is divided evenly across all <b>10 scheduled practices (10% each)</b>. Therefore, 100% is <b>not attainable until the 10th and final rehearsal</b>. Currently, 3 practices have taken place, so the maximum attainable score so far is <b>30%</b>. The minimum qualification threshold to sing on the concert stage is <b>70% (7 of 10 practices)</b>.</span>
+            </div>
+          </div>
+
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
             <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
               <div class="text-[10px] font-bold text-slate-500 uppercase">Total Registered</div>
               <div class="text-xl font-extrabold text-brand-900 mt-0.5 font-heading" id="admin-total-reg">0</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">Choir members</div>
             </div>
             <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
-              <div class="text-[10px] font-bold text-slate-500 uppercase">Sopranos / Altos</div>
-              <div class="text-xl font-extrabold text-pink-600 mt-0.5 font-heading" id="admin-soprano-alto">0 / 0</div>
+              <div class="text-[10px] font-bold text-slate-500 uppercase">Season Progress</div>
+              <div class="text-xl font-extrabold text-blue-700 mt-0.5 font-heading">3 / 10</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">Practices held to date</div>
             </div>
             <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
-              <div class="text-[10px] font-bold text-slate-500 uppercase">Tenors / Basses</div>
-              <div class="text-xl font-extrabold text-blue-700 mt-0.5 font-heading" id="admin-tenor-bass">0 / 0</div>
+              <div class="text-[10px] font-bold text-slate-500 uppercase">Max Score to Date</div>
+              <div class="text-xl font-extrabold text-purple-700 mt-0.5 font-heading">30%</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">100% at final practice</div>
             </div>
             <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
-              <div class="text-[10px] font-bold text-slate-500 uppercase">Stage Qualified (≥70%)</div>
+              <div class="text-[10px] font-bold text-slate-500 uppercase">On Track (30%)</div>
               <div class="text-xl font-extrabold text-emerald-600 mt-0.5 font-heading" id="admin-qualified">0</div>
+              <div class="text-[10px] text-emerald-700 font-medium mt-0.5">Attended all 3 so far</div>
             </div>
           </div>
 
@@ -3430,9 +3425,9 @@
         return;
       }
 
-      // Calculate Attendance Percentage based on completed sessions up to now
-      // Let's count sessions up to Nov 6 (session 3) as active, or all completed sessions
-      const totalSessionsSoFar = getCompletedSessionsCount(); // Oct 30, Oct 31, Nov 6
+      // Calculate Attendance Score based on all 10 scheduled practices (10% per practice)
+      // 100% is only attainable at the 10th and final practice.
+      const totalSeasonSessions = REHEARSAL_SCHEDULE.length || 10;
       let attendedCount = 0;
       
       REHEARSAL_SCHEDULE.forEach(s => {
@@ -3442,17 +3437,23 @@
         }
       });
 
-      const percentage = Math.round((attendedCount / totalSessionsSoFar) * 100);
-      const isQualified = percentage >= 70;
-      const isBorderline = percentage >= 50 && percentage < 70;
+      const percentage = Math.round((attendedCount / totalSeasonSessions) * 100);
+      const isQualified = attendedCount >= 7; // 70% reached
+      const onTrack = attendedCount === 3; // Attended all 3 practices so far
+      const goodProgress = attendedCount === 2; // Attended 2 practices
+      const needsCatchup = attendedCount === 1; // Attended 1 practice
 
       let statusBadge = '';
       if (isQualified) {
-        statusBadge = `<span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-full font-bold text-xs border border-emerald-300">🟢 ON TRACK FOR CONCERT STAGE</span>`;
-      } else if (isBorderline) {
-        statusBadge = `<span class="px-2.5 py-1 bg-amber-100 text-amber-800 rounded-full font-bold text-xs border border-amber-300">🟡 BORDERLINE (NEEDS ATTENDANCE)</span>`;
+        statusBadge = `<span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-full font-bold text-xs border border-emerald-300">🟢 STAGE QUALIFIED (${percentage}% • ${attendedCount}/10 Practices)</span>`;
+      } else if (onTrack) {
+        statusBadge = `<span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-full font-bold text-xs border border-emerald-300">🟢 ON TRACK (30% Season • Attended 3/3 Held • Need 4 More)</span>`;
+      } else if (goodProgress) {
+        statusBadge = `<span class="px-2.5 py-1 bg-blue-100 text-blue-800 rounded-full font-bold text-xs border border-blue-300">🔵 GOOD PROGRESS (20% Season • Attended 2/3 Held • Need 5 More)</span>`;
+      } else if (needsCatchup) {
+        statusBadge = `<span class="px-2.5 py-1 bg-amber-100 text-amber-800 rounded-full font-bold text-xs border border-amber-300">🟡 NEEDS CATCH-UP (10% Season • Attended 1/3 Held • Need 6 More)</span>`;
       } else {
-        statusBadge = `<span class="px-2.5 py-1 bg-rose-100 text-rose-800 rounded-full font-bold text-xs border border-rose-300">🔴 AT RISK OF DISQUALIFICATION</span>`;
+        statusBadge = `<span class="px-2.5 py-1 bg-rose-100 text-rose-800 rounded-full font-bold text-xs border border-rose-300">🔴 ATTENDANCE URGENT (0% Season • Missed 3 Held • Must Attend All 7 Remaining)</span>`;
       }
 
       resultBox.innerHTML = `
@@ -3490,10 +3491,11 @@
               `}
             </div>
             <div class="text-right">
-              <div class="text-2xl font-black font-heading ${isQualified ? 'text-emerald-600' : isBorderline ? 'text-amber-600' : 'text-rose-600'}">
+              <div class="text-2xl font-black font-heading ${onTrack || isQualified ? 'text-emerald-600' : goodProgress ? 'text-blue-600' : needsCatchup ? 'text-amber-600' : 'text-rose-600'}">
                 ${percentage}%
               </div>
-              <div class="text-[10px] text-slate-400 font-medium">${attendedCount} of ${totalSessionsSoFar} attended</div>
+              <div class="text-[10px] text-slate-400 font-medium">${attendedCount} of ${totalSeasonSessions} season practices</div>
+              <div class="text-[9px] text-slate-500 font-semibold">(Max to date: 30%)</div>
             </div>
           </div>
 
@@ -3501,14 +3503,28 @@
             ${statusBadge}
           </div>
 
-          <!-- Progress Bar -->
+          <!-- Season Scoring Policy Explainer Note -->
+          <div class="p-2.5 rounded-xl bg-amber-50/80 border border-amber-200/80 text-[11px] text-amber-950 flex items-start gap-2">
+            <i class="fa-solid fa-circle-info text-amber-600 mt-0.5 shrink-0"></i>
+            <div>
+              <span class="font-bold">Season Scoring Policy:</span>
+              <span>100% score is divided evenly across all 10 scheduled practices (10% each). 100% is only attainable at the final practice. Minimum 70% (7 of 10 practices) is required for stage qualification.</span>
+            </div>
+          </div>
+
+          <!-- Progress Bar with 70% Threshold Marker -->
           <div>
             <div class="flex justify-between text-[11px] font-bold mb-1 text-slate-600">
-              <span>Stage Qualification Target</span>
-              <span>70% Required</span>
+              <span>Season Progress (${attendedCount}/10 Practices)</span>
+              <span>Stage Threshold: 70% (7 Practices)</span>
             </div>
-            <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
-              <div class="h-full ${isQualified ? 'bg-emerald-500' : isBorderline ? 'bg-amber-500' : 'bg-rose-500'} rounded-full transition-all duration-500" style="width: ${Math.min(percentage, 100)}%"></div>
+            <div class="relative w-full bg-slate-100 h-3 rounded-full overflow-hidden border border-slate-200">
+              <div class="h-full ${onTrack || isQualified ? 'bg-emerald-500' : goodProgress ? 'bg-blue-500' : needsCatchup ? 'bg-amber-500' : 'bg-rose-500'} rounded-full transition-all duration-500" style="width: ${percentage}%"></div>
+              <div class="absolute top-0 bottom-0 left-[70%] border-r-2 border-dashed border-slate-700 pointer-events-none" title="70% Qualification Threshold"></div>
+            </div>
+            <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+              <span>Current Score: <b>${percentage}%</b> (10% per practice)</span>
+              <span>Need <b>${Math.max(0, 7 - attendedCount)}</b> more for concert stage</span>
             </div>
           </div>
 
@@ -4041,11 +4057,9 @@
     }
 
     // STATION BREAKDOWN RENDERER (ALL PRACTICES MATRIX OR SINGLE SESSION)
-    function renderStationBreakdown(scope, sessionStats, completedSessions, activeSessionId, presentMemberIds, excusedMemberIds) {
-      const tableHead = document.getElementById('station-table-head');
+    // STATION BREAKDOWN RENDERER (AT A GLANCE ACROSS ALL 3 PRACTICES)
+    function renderStationBreakdown() {
       const tableBody = document.getElementById('station-table-body');
-      const titleEl = document.getElementById('station-breakdown-title');
-      const subtitleEl = document.getElementById('station-breakdown-subtitle');
       if (!tableBody) return;
 
       const members = state.members || [];
@@ -4066,203 +4080,168 @@
             name: normStation,
             zone: zone,
             registered: 0,
-            present: 0,
-            excused: 0,
             d1: 0,
             d2: 0,
             d3: 0,
-            uniquePresent: 0,
-            memberIds: new Set(),
-            attendedMemberIds: new Set(),
-            parts: { soprano: 0, alto: 0, tenor: 0, bass: 0 }
+            attendedMemberIds: new Set()
           };
         }
 
         stationMap[normStation].registered++;
-        stationMap[normStation].memberIds.add(m.id);
-
-        const part = (m.part || '').toLowerCase();
 
         // Calculate per completed session
         const st1 = state.attendance[`sess_1_${m.id}`];
-        if (st1 === 'present') stationMap[normStation].d1++;
+        if (st1 === 'present') {
+          stationMap[normStation].d1++;
+          stationMap[normStation].attendedMemberIds.add(m.id);
+        }
 
         const st2 = state.attendance[`sess_2_${m.id}`];
-        if (st2 === 'present') stationMap[normStation].d2++;
+        if (st2 === 'present') {
+          stationMap[normStation].d2++;
+          stationMap[normStation].attendedMemberIds.add(m.id);
+        }
 
         const st3 = state.attendance[`sess_3_${m.id}`];
-        if (st3 === 'present') stationMap[normStation].d3++;
-
-        // Any attended
-        if (st1 === 'present' || st2 === 'present' || st3 === 'present') {
+        if (st3 === 'present') {
+          stationMap[normStation].d3++;
           stationMap[normStation].attendedMemberIds.add(m.id);
-          if (stationMap[normStation].parts[part] !== undefined) {
-            stationMap[normStation].parts[part]++;
-          }
         }
-
-        // Single session tracking
-        if (presentMemberIds && presentMemberIds.has(m.id)) {
-          stationMap[normStation].present++;
-        } else if (excusedMemberIds && excusedMemberIds.has(m.id)) {
-          stationMap[normStation].excused++;
-        }
-      });
-
-      Object.values(stationMap).forEach(st => {
-        st.uniquePresent = st.attendedMemberIds.size;
       });
 
       const sortedStations = Object.values(stationMap).sort((a, b) => {
-        if (scope === 'ALL') {
-          if (b.uniquePresent !== a.uniquePresent) return b.uniquePresent - a.uniquePresent;
-          return b.registered - a.registered;
-        } else {
-          if (b.present !== a.present) return b.present - a.present;
-          return b.registered - a.registered;
-        }
+        if (b.attendedMemberIds.size !== a.attendedMemberIds.size) return b.attendedMemberIds.size - a.attendedMemberIds.size;
+        return b.registered - a.registered;
       });
 
       const badgeEl = document.getElementById('station-breakdown-count-badge');
       if (badgeEl) badgeEl.innerText = `${sortedStations.length} Stations in Ondo Area`;
 
       if (sortedStations.length === 0) {
-        if (tableHead) tableHead.innerHTML = '';
-        tableBody.innerHTML = `<tr><td colspan="10" class="p-6 text-center text-slate-400">No stations registered yet.</td></tr>`;
+        tableBody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-slate-400">No stations registered yet.</td></tr>`;
         return;
       }
 
-      if (scope === 'ALL') {
-        if (titleEl) titleEl.innerText = 'Station & Branch Multi-Practice Turnout Breakdown';
-        if (subtitleEl) subtitleEl.innerText = 'Comparative attendance across Day 1 (30 Oct), Day 2 (31 Oct), and Day 3 (6 Nov)';
+      tableBody.innerHTML = sortedStations.map(st => {
+        const uniquePresent = st.attendedMemberIds.size;
+        const pct = Math.round((uniquePresent / (st.registered || 1)) * 100);
+        const hasAny = uniquePresent > 0;
 
-        if (tableHead) {
-          tableHead.innerHTML = `
-            <tr class="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold uppercase text-[10px] tracking-wider">
-              <th class="p-3">Station / Branch</th>
-              <th class="p-3">Zone</th>
-              <th class="p-3 text-center">Reg</th>
-              <th class="p-3 text-center bg-brand-50/50 text-brand-900 border-x border-slate-200">Day 1<br><span class="text-[9px] font-normal text-slate-500">30 Oct</span></th>
-              <th class="p-3 text-center bg-brand-50/50 text-brand-900 border-r border-slate-200">Day 2<br><span class="text-[9px] font-normal text-slate-500">31 Oct</span></th>
-              <th class="p-3 text-center bg-brand-50/50 text-brand-900 border-r border-slate-200">Day 3<br><span class="text-[9px] font-normal text-slate-500">6 Nov</span></th>
-              <th class="p-3 text-center text-emerald-900 font-extrabold bg-emerald-50/40">Unique<br><span class="text-[9px] font-normal text-slate-500">Present</span></th>
-              <th class="p-3">Turnout Rate</th>
-              <th class="p-3">Voice Balance (S/A/T/B)</th>
-              <th class="p-3 text-right">Consistency</th>
-            </tr>
-          `;
+        return `
+          <tr class="hover:bg-slate-50/80 transition ${hasAny ? 'bg-white' : 'opacity-60'}">
+            <td class="p-2.5 font-bold text-slate-900 flex items-center gap-1.5 whitespace-nowrap">
+              <i class="fa-solid fa-church text-slate-400 text-xs"></i>
+              <span>${st.name}</span>
+            </td>
+            <td class="p-2.5 text-slate-600 font-medium whitespace-nowrap">${st.zone}</td>
+            <td class="p-2.5 text-center font-bold text-slate-800">${st.registered}</td>
+            <td class="p-2.5 text-center font-bold border-x border-slate-100 ${st.d1 > 0 ? 'text-brand-900 bg-brand-50/30' : 'text-slate-300'}">${st.d1}</td>
+            <td class="p-2.5 text-center font-bold border-r border-slate-100 ${st.d2 > 0 ? 'text-brand-900 bg-brand-50/30' : 'text-slate-300'}">${st.d2}</td>
+            <td class="p-2.5 text-center font-bold border-r border-slate-100 ${st.d3 > 0 ? 'text-brand-900 bg-brand-50/30' : 'text-slate-300'}">${st.d3}</td>
+            <td class="p-2.5 text-center font-black ${uniquePresent > 0 ? 'text-emerald-700 bg-emerald-50/20' : 'text-slate-400'}">${uniquePresent}</td>
+            <td class="p-2.5 text-right font-bold text-slate-700">${pct}%</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // VOICES AT A GLANCE RENDERER
+    function renderVoiceBreakdown(members) {
+      const tbody = document.getElementById('voice-table-body');
+      if (!tbody) return;
+
+      const parts = [
+        { key: 'soprano', label: 'Soprano', dot: 'bg-pink-500', text: 'text-pink-700' },
+        { key: 'alto', label: 'Alto', dot: 'bg-purple-600', text: 'text-purple-700' },
+        { key: 'tenor', label: 'Tenor', dot: 'bg-blue-600', text: 'text-blue-700' },
+        { key: 'bass', label: 'Bass', dot: 'bg-indigo-600', text: 'text-indigo-700' }
+      ];
+
+      const stats = {};
+      parts.forEach(p => stats[p.key] = { reg: 0, d1: 0, d2: 0, d3: 0, unique: 0 });
+
+      let accompanists = 0;
+      members.forEach(m => {
+        const p = (m.part || '').toLowerCase();
+        if (stats[p]) {
+          stats[p].reg++;
+          const s1 = state.attendance[`sess_1_${m.id}`] === 'present';
+          const s2 = state.attendance[`sess_2_${m.id}`] === 'present';
+          const s3 = state.attendance[`sess_3_${m.id}`] === 'present';
+          if (s1) stats[p].d1++;
+          if (s2) stats[p].d2++;
+          if (s3) stats[p].d3++;
+          if (s1 || s2 || s3) stats[p].unique++;
         }
+        if (m.accompanist === 'Yes' || m.accompanist === true) accompanists++;
+      });
 
-        tableBody.innerHTML = sortedStations.map(st => {
-          const pct = Math.round((st.uniquePresent / (st.registered || 1)) * 100);
-          const hasAny = st.uniquePresent > 0;
-          const barColor = pct >= 70 ? 'bg-emerald-500' : (pct >= 40 ? 'bg-blue-500' : (pct > 0 ? 'bg-amber-500' : 'bg-slate-200'));
+      const accBadge = document.getElementById('accompanist-count-badge');
+      if (accBadge) accBadge.innerText = `${accompanists} Accompanists`;
 
-          let daysActive = 0;
-          if (st.d1 > 0) daysActive++;
-          if (st.d2 > 0) daysActive++;
-          if (st.d3 > 0) daysActive++;
+      tbody.innerHTML = parts.map(p => {
+        const s = stats[p.key];
+        const pct = s.reg > 0 ? Math.round((s.unique / s.reg) * 100) : 0;
+        return `
+          <tr class="hover:bg-slate-50 transition">
+            <td class="p-2.5 font-bold ${p.text} flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full ${p.dot}"></span>
+              ${p.label}
+            </td>
+            <td class="p-2.5 text-center font-bold text-slate-800">${s.reg}</td>
+            <td class="p-2.5 text-center font-semibold text-slate-900 bg-slate-50/60">${s.d1}</td>
+            <td class="p-2.5 text-center font-semibold text-slate-900 bg-slate-50/60">${s.d2}</td>
+            <td class="p-2.5 text-center font-semibold text-slate-900 bg-slate-50/60">${s.d3}</td>
+            <td class="p-2.5 text-center font-black text-emerald-800 bg-emerald-50/40">${s.unique}</td>
+            <td class="p-2.5 text-right font-bold text-slate-700">${pct}%</td>
+          </tr>
+        `;
+      }).join('');
+    }
 
-          let statusBadge = '';
-          if (daysActive === 3) {
-            statusBadge = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200"><i class="fa-solid fa-check-double text-[9px]"></i> Active All 3</span>`;
-          } else if (daysActive === 2) {
-            statusBadge = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800 border border-blue-200">Active 2 Days</span>`;
-          } else if (daysActive === 1) {
-            statusBadge = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-200">Active 1 Day</span>`;
-          } else {
-            statusBadge = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-400">Awaiting</span>`;
-          }
+    // ZONES AT A GLANCE RENDERER
+    function renderZoneBreakdown(members) {
+      const tbody = document.getElementById('zone-table-body');
+      if (!tbody) return;
 
-          return `
-            <tr class="hover:bg-slate-50/80 transition ${hasAny ? 'bg-white' : 'opacity-70'}">
-              <td class="p-3 font-bold text-slate-900 flex items-center gap-1.5 whitespace-nowrap">
-                <i class="fa-solid fa-church text-slate-400 text-xs"></i>
-                <span>${st.name}</span>
-              </td>
-              <td class="p-3 text-slate-600 font-medium whitespace-nowrap">${st.zone}</td>
-              <td class="p-3 text-center font-bold text-slate-800">${st.registered}</td>
-              <td class="p-3 text-center font-black border-x border-slate-100 ${st.d1 > 0 ? 'text-brand-900 bg-brand-50/30' : 'text-slate-300'}">${st.d1}</td>
-              <td class="p-3 text-center font-black border-r border-slate-100 ${st.d2 > 0 ? 'text-brand-900 bg-brand-50/30' : 'text-slate-300'}">${st.d2}</td>
-              <td class="p-3 text-center font-black border-r border-slate-100 ${st.d3 > 0 ? 'text-brand-900 bg-brand-50/30' : 'text-slate-300'}">${st.d3}</td>
-              <td class="p-3 text-center font-black ${st.uniquePresent > 0 ? 'text-emerald-700 text-sm bg-emerald-50/20' : 'text-slate-400'}">${st.uniquePresent}</td>
-              <td class="p-3 min-w-[120px]">
-                <div class="flex items-center gap-2">
-                  <div class="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden border border-slate-200">
-                    <div class="${barColor} h-2 rounded-full transition-all duration-500" style="width: ${pct}%"></div>
-                  </div>
-                  <span class="font-bold text-[11px] text-slate-700 w-8 text-right">${pct}%</span>
-                </div>
-              </td>
-              <td class="p-3 font-semibold text-[11px] text-slate-600 whitespace-nowrap">
-                <span class="text-pink-600 font-bold" title="Soprano">S:${st.parts.soprano}</span> &bull; 
-                <span class="text-purple-600 font-bold" title="Alto">A:${st.parts.alto}</span> &bull; 
-                <span class="text-blue-600 font-bold" title="Tenor">T:${st.parts.tenor}</span> &bull; 
-                <span class="text-indigo-600 font-bold" title="Bass">B:${st.parts.bass}</span>
-              </td>
-              <td class="p-3 text-right whitespace-nowrap">${statusBadge}</td>
-            </tr>
-          `;
-        }).join('');
-      } else {
-        const currentSession = REHEARSAL_SCHEDULE.find(s => s.id === scope) || REHEARSAL_SCHEDULE[0];
-        if (titleEl) titleEl.innerText = `${currentSession.displayDate} (${currentSession.type}) Turnout Breakdown`;
-        if (subtitleEl) subtitleEl.innerText = `Attendance records submitted specifically for ${currentSession.displayDate}`;
+      const zones = ['Akure', 'Ondo', 'Okitipupa', 'Oka', 'Owo', 'Ore', 'Ikare'];
+      const stats = {};
+      zones.forEach(z => stats[z.toLowerCase()] = { name: z, reg: 0, d1: 0, d2: 0, d3: 0, unique: 0 });
 
-        if (tableHead) {
-          tableHead.innerHTML = `
-            <tr class="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold uppercase text-[10px] tracking-wider">
-              <th class="p-3">Station / Branch</th>
-              <th class="p-3">Zone</th>
-              <th class="p-3 text-center">Registered</th>
-              <th class="p-3 text-center font-extrabold text-emerald-800">Present (${currentSession.displayDate})</th>
-              <th class="p-3 text-center">Excused</th>
-              <th class="p-3">Turnout</th>
-              <th class="p-3">Parts Present (S / A / T / B)</th>
-              <th class="p-3 text-right">Status</th>
-            </tr>
-          `;
-        }
+      members.forEach(m => {
+        const rawZ = (m.zone || '').trim().toLowerCase();
+        let matchedKey = zones.map(z => z.toLowerCase()).find(z => rawZ.includes(z));
+        if (!matchedKey) matchedKey = 'akure'; // default
 
-        tableBody.innerHTML = sortedStations.map(st => {
-          const pct = Math.round((st.present / (st.registered || 1)) * 100);
-          const hasPresent = st.present > 0;
-          const rowClass = hasPresent ? 'bg-emerald-50/20' : '';
-          const statusBadge = hasPresent
-            ? `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Active (${st.present})</span>`
-            : `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-500">Awaiting</span>`;
+        stats[matchedKey].reg++;
+        const s1 = state.attendance[`sess_1_${m.id}`] === 'present';
+        const s2 = state.attendance[`sess_2_${m.id}`] === 'present';
+        const s3 = state.attendance[`sess_3_${m.id}`] === 'present';
+        if (s1) stats[matchedKey].d1++;
+        if (s2) stats[matchedKey].d2++;
+        if (s3) stats[matchedKey].d3++;
+        if (s1 || s2 || s3) stats[matchedKey].unique++;
+      });
 
-          const barColor = pct >= 70 ? 'bg-emerald-500' : (pct >= 40 ? 'bg-blue-500' : (pct > 0 ? 'bg-amber-500' : 'bg-slate-200'));
+      const sortedZones = Object.values(stats).sort((a, b) => b.reg - a.reg);
 
-          return `
-            <tr class="hover:bg-slate-50/80 transition ${rowClass}">
-              <td class="p-3 font-bold text-slate-900 flex items-center gap-1.5">
-                <i class="fa-solid fa-church text-slate-400 text-xs"></i>
-                <span>${st.name}</span>
-              </td>
-              <td class="p-3 text-slate-600 font-medium">${st.zone}</td>
-              <td class="p-3 text-center font-bold text-slate-800">${st.registered}</td>
-              <td class="p-3 text-center font-black ${hasPresent ? 'text-emerald-700 text-sm' : 'text-slate-400'}">${st.present}</td>
-              <td class="p-3 text-center font-bold text-amber-700">${st.excused}</td>
-              <td class="p-3 min-w-[120px]">
-                <div class="flex items-center gap-2">
-                  <div class="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden border border-slate-200">
-                    <div class="${barColor} h-2 rounded-full transition-all duration-500" style="width: ${pct}%"></div>
-                  </div>
-                  <span class="font-bold text-[11px] text-slate-700 w-8 text-right">${pct}%</span>
-                </div>
-              </td>
-              <td class="p-3 font-semibold text-[11px] text-slate-600 whitespace-nowrap">
-                <span class="text-pink-600 font-bold" title="Soprano">S:${st.parts.soprano}</span> &bull; 
-                <span class="text-purple-600 font-bold" title="Alto">A:${st.parts.alto}</span> &bull; 
-                <span class="text-blue-600 font-bold" title="Tenor">T:${st.parts.tenor}</span> &bull; 
-                <span class="text-indigo-600 font-bold" title="Bass">B:${st.parts.bass}</span>
-              </td>
-              <td class="p-3 text-right">${statusBadge}</td>
-            </tr>
-          `;
-        }).join('');
-      }
+      tbody.innerHTML = sortedZones.map(z => {
+        const pct = z.reg > 0 ? Math.round((z.unique / z.reg) * 100) : 0;
+        return `
+          <tr class="hover:bg-slate-50 transition">
+            <td class="p-2.5 font-bold text-slate-900 flex items-center gap-2">
+              <i class="fa-solid fa-location-dot text-brand-600 text-xs"></i>
+              ${z.name}
+            </td>
+            <td class="p-2.5 text-center font-bold text-slate-800">${z.reg}</td>
+            <td class="p-2.5 text-center font-semibold text-slate-900 bg-slate-50/60">${z.d1}</td>
+            <td class="p-2.5 text-center font-semibold text-slate-900 bg-slate-50/60">${z.d2}</td>
+            <td class="p-2.5 text-center font-semibold text-slate-900 bg-slate-50/60">${z.d3}</td>
+            <td class="p-2.5 text-center font-black text-emerald-800 bg-emerald-50/40">${z.unique}</td>
+            <td class="p-2.5 text-right font-bold text-slate-700">${pct}%</td>
+          </tr>
+        `;
+      }).join('');
     }
 
     // VOICE PART BARS RENDERER (ALL PRACTICES OR SINGLE SESSION)
@@ -4557,6 +4536,17 @@
       const avgPct = total > 0 ? Math.round((avgAttendance / total) * 100) : 0;
       const uniquePct = total > 0 ? Math.round((uniqueAttendees.size / total) * 100) : 0;
 
+      // Update Top At-a-Glance Turnout Cards (Day 1, Day 2, Day 3, Core Pillar)
+      const d1Present = sessionStats['sess_1'] ? sessionStats['sess_1'].presentCount : 0;
+      const d2Present = sessionStats['sess_2'] ? sessionStats['sess_2'].presentCount : 0;
+      const d3Present = sessionStats['sess_3'] ? sessionStats['sess_3'].presentCount : 0;
+
+      if (document.getElementById('sum-d1-present')) document.getElementById('sum-d1-present').innerText = d1Present;
+      if (document.getElementById('sum-d2-present')) document.getElementById('sum-d2-present').innerText = d2Present;
+      if (document.getElementById('sum-d3-present')) document.getElementById('sum-d3-present').innerText = d3Present;
+      if (document.getElementById('sum-all3-present')) document.getElementById('sum-all3-present').innerText = perfectAttendees;
+      if (document.getElementById('admin-qualified')) document.getElementById('admin-qualified').innerText = perfectAttendees;
+
       // Update Top Cumulative Summary Cards
       if (document.getElementById('all-unique-attendees')) {
         document.getElementById('all-unique-attendees').innerText = uniqueAttendees.size;
@@ -4611,7 +4601,11 @@
       }
 
       const activeStat = sessionStats[targetSessionId] || { presentMemberIds: new Set(), excusedMemberIds: new Set() };
-      renderStationBreakdown(scope, sessionStats, completedSessions, targetSessionId, activeStat.presentMemberIds, activeStat.excusedMemberIds);
+      
+      // Render At-a-Glance Tables
+      renderVoiceBreakdown(state.members);
+      renderZoneBreakdown(state.members);
+      renderStationBreakdown();
       renderVoicePartBars(state.members, scope, sessionStats, completedSessions, activeStat.presentMemberIds);
       renderRecentCheckinsStream(state.members, scope);
 
@@ -4626,19 +4620,25 @@
       if (tsEl) tsEl.innerText = `Updated ${hours}:${minutes}:${seconds} ${ampm} WAT`;
     }
 
-    // CSV EXPORT
+    // CSV EXPORT (Scoring split across 10 season practices, 10% each)
     function exportToCSV() {
-      let csv = 'ID,Full Name,Phone Number,Voice Part,Zone,Station,Attendance Count,Percentage,Cleared for Concert\n';
-      const totalSessionsSoFar = getCompletedSessionsCount();
+      let csv = 'ID,Full Name,Phone Number,Voice Part,Zone,Station,Attended Practices,Season Score %,Concert Stage Status\n';
+      const totalSeasonSessions = REHEARSAL_SCHEDULE.length || 10;
 
       state.members.forEach(m => {
         let attended = 0;
         REHEARSAL_SCHEDULE.forEach(s => {
           if (state.attendance[`${s.id}_${m.id}`] === 'present') attended++;
         });
-        const pct = Math.round((attended / totalSessionsSoFar) * 100);
-        const cleared = pct >= 70 ? 'YES' : 'NO';
-        csv += `"${m.id}","${m.name}","${m.phone}","${m.part}","${m.zone}","${m.station}","${attended}","${pct}%","${cleared}"\n`;
+        const pct = Math.round((attended / totalSeasonSessions) * 100);
+        let status = 'In Progress';
+        if (attended >= 7) status = 'QUALIFIED FOR STAGE';
+        else if (attended === 3) status = 'On Track (100% so far, 30% season)';
+        else if (attended === 2) status = 'Good Progress (20% season)';
+        else if (attended === 1) status = 'Needs Attendance (10% season)';
+        else status = 'At Risk (0% season)';
+
+        csv += `"${m.id}","${m.name}","${m.phone || ''}","${m.part}","${m.zone}","${m.station || ''}","${attended} of ${totalSeasonSessions}","${pct}%","${status}"\n`;
       });
 
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
