@@ -401,26 +401,109 @@
           </div>
         </div>
 
-        <!-- Realtime Live Spotlight: Today's Session 3 Attendance -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 gap-2 mb-4">
-            <div>
-              <span class="text-[11px] font-bold text-brand-600 uppercase tracking-wider">Tonight's Active Practice</span>
-              <h3 class="text-base font-extrabold text-slate-900 font-heading flex items-center gap-2">
-                <i class="fa-solid fa-signal text-emerald-600"></i> <span id="admin-spotlight-name">1st Practice Attendance Monitor</span>
-              </h3>
+        <!-- Admin Practice Scope Filter & Summary Bar -->
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+              <i class="fa-solid fa-layer-group text-brand-600"></i> Practice Scope:
+            </span>
+            <select id="admin-session-scope" onchange="handleAdminScopeChange(this.value)" class="p-2.5 bg-slate-50 border border-slate-300 rounded-xl font-bold text-xs text-brand-950 focus:ring-2 focus:ring-brand-500 focus:outline-none">
+              <option value="ALL" selected>📊 All Practices at a Glance (Comparative Matrix)</option>
+              <option value="sess_1">1st Practice • 30th Oct 2026 (State Practice)</option>
+              <option value="sess_2">2nd Practice • 31st Oct 2026 (State Practice)</option>
+              <option value="sess_3">3rd Practice • 6th Nov 2026 (Station Practice)</option>
+              <option value="sess_4">4th Practice • 13th Nov 2026 (Zonal Practice - Upcoming)</option>
+            </select>
+          </div>
+          <div class="flex items-center gap-2 text-xs flex-wrap">
+            <span id="admin-scope-summary-badge" class="px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-900 font-bold border border-emerald-200 flex items-center gap-1.5 shadow-xs">
+              <i class="fa-solid fa-users text-emerald-600"></i> <span id="admin-scope-summary-text">3 Completed Practices • 128 Unique Attendees</span>
+            </span>
+            <div class="text-[11px] text-slate-400 font-medium" id="admin-live-timestamp">Updated just now</div>
+          </div>
+        </div>
+
+        <!-- VIEW A: ALL PRACTICES AT A GLANCE (Comparative Grid & Metrics) -->
+        <div id="admin-all-practices-container" class="space-y-4">
+          <!-- 4 Cumulative Choir Performance Overview Cards -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="p-4 rounded-2xl bg-gradient-to-br from-emerald-50 to-emerald-100/60 border border-emerald-200 shadow-xs">
+              <div class="text-[11px] font-bold text-emerald-800 uppercase flex items-center justify-between">
+                <span>Unique Attendees</span>
+                <i class="fa-solid fa-users-viewfinder text-emerald-600"></i>
+              </div>
+              <div class="text-3xl font-black text-emerald-700 mt-1 font-heading" id="all-unique-attendees">0</div>
+              <div class="text-[11px] text-emerald-800/80 mt-0.5" id="all-unique-pct">0% of total choir reached</div>
             </div>
-            <div class="text-xs text-slate-500 flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
-              <i class="fa-regular fa-clock text-slate-400"></i>
-              <span id="admin-live-timestamp">Auto-refreshed just now</span>
+
+            <div class="p-4 rounded-2xl bg-gradient-to-br from-amber-50 to-amber-100/60 border border-amber-200 shadow-xs">
+              <div class="text-[11px] font-bold text-amber-800 uppercase flex items-center justify-between">
+                <span>100% Core Pillar</span>
+                <i class="fa-solid fa-crown text-amber-600"></i>
+              </div>
+              <div class="text-3xl font-black text-amber-700 mt-1 font-heading" id="all-perfect-attendees">0</div>
+              <div class="text-[11px] text-amber-800/80 mt-0.5" id="all-perfect-pct">Attended all 3 practices</div>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100/60 border border-blue-200 shadow-xs">
+              <div class="text-[11px] font-bold text-blue-800 uppercase flex items-center justify-between">
+                <span>2 of 3 Practices</span>
+                <i class="fa-solid fa-user-group text-blue-600"></i>
+              </div>
+              <div class="text-3xl font-black text-blue-700 mt-1 font-heading" id="all-two-sessions">0</div>
+              <div class="text-[11px] text-blue-800/80 mt-0.5" id="all-two-sessions-pct">Solid participants</div>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-gradient-to-br from-purple-50 to-purple-100/60 border border-purple-200 shadow-xs">
+              <div class="text-[11px] font-bold text-purple-800 uppercase flex items-center justify-between">
+                <span>Average Per Practice</span>
+                <i class="fa-solid fa-chart-line text-purple-600"></i>
+              </div>
+              <div class="text-3xl font-black text-purple-700 mt-1 font-heading" id="all-avg-attendance">0</div>
+              <div class="text-[11px] text-purple-800/80 mt-0.5" id="all-avg-pct">~47.4% per session</div>
             </div>
           </div>
 
-          <!-- 4 Key Live Counters for Today -->
+          <!-- Side-by-Side Rehearsals Held to Date Grid -->
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 gap-2 mb-4">
+              <div>
+                <h3 class="text-sm font-extrabold text-slate-900 font-heading flex items-center gap-2">
+                  <i class="fa-solid fa-calendar-check text-brand-600"></i> All Rehearsals Held to Date at a Glance
+                </h3>
+                <p class="text-xs text-slate-500">Side-by-side comparative attendance turnout, active stations, and voice distribution</p>
+              </div>
+              <span class="text-xs font-bold text-brand-700 bg-brand-50 border border-brand-200 px-3 py-1 rounded-xl self-start sm:self-auto">
+                3 of 10 Rehearsals Completed
+              </span>
+            </div>
+
+            <!-- Responsive cards container for all sessions -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="practice-cards-grid">
+              <!-- Dynamically rendered -->
+            </div>
+          </div>
+        </div>
+
+        <!-- VIEW B: SINGLE PRACTICE SPOTLIGHT (Focus View) -->
+        <div id="admin-single-practice-container" class="hidden bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 gap-2 mb-4">
+            <div>
+              <span class="text-[11px] font-bold text-brand-600 uppercase tracking-wider">Practice Attendance Monitor</span>
+              <h3 class="text-base font-extrabold text-slate-900 font-heading flex items-center gap-2">
+                <i class="fa-solid fa-signal text-emerald-600"></i> <span id="admin-spotlight-name">Rehearsal Attendance Monitor</span>
+              </h3>
+            </div>
+            <button onclick="handleAdminScopeChange('ALL')" class="text-xs font-bold text-brand-700 hover:text-brand-900 bg-brand-50 hover:bg-brand-100 border border-brand-200 px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 self-start sm:self-auto">
+              <i class="fa-solid fa-arrow-left"></i> Back to All Practices
+            </button>
+          </div>
+
+          <!-- 4 Key Live Counters for Selected Session -->
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200">
               <div class="text-[11px] font-bold text-emerald-800 uppercase flex items-center justify-between">
-                <span>Present Today</span>
+                <span>Present</span>
                 <i class="fa-solid fa-user-check text-emerald-600"></i>
               </div>
               <div class="text-3xl font-black text-emerald-700 mt-1 font-heading" id="live-present-count">0</div>
@@ -429,7 +512,7 @@
 
             <div class="p-4 rounded-xl bg-amber-50/70 border border-amber-200">
               <div class="text-[11px] font-bold text-amber-800 uppercase flex items-center justify-between">
-                <span>Excused Today</span>
+                <span>Excused</span>
                 <i class="fa-solid fa-user-clock text-amber-600"></i>
               </div>
               <div class="text-3xl font-black text-amber-700 mt-1 font-heading" id="live-excused-count">0</div>
@@ -463,9 +546,9 @@
           <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 gap-2 mb-3">
             <div>
               <h3 class="text-sm font-bold text-slate-900 font-heading flex items-center gap-2">
-                <i class="fa-solid fa-location-dot text-brand-600"></i> Station & Branch Live Turnout Breakdown
+                <i class="fa-solid fa-location-dot text-brand-600"></i> <span id="station-breakdown-title">Station & Branch Multi-Practice Turnout Breakdown</span>
               </h3>
-              <p class="text-xs text-slate-500">Attendance submitted by Station Officers for tonight's rehearsal</p>
+              <p class="text-xs text-slate-500" id="station-breakdown-subtitle">Attendance performance across all rehearsals held to date</p>
             </div>
             <span class="text-xs font-semibold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-lg self-start sm:self-auto" id="station-breakdown-count-badge">
               0 Stations in Ondo Area
@@ -473,17 +556,9 @@
           </div>
 
           <div class="overflow-x-auto text-xs">
-            <table class="w-full text-left border-collapse">
-              <thead>
-                <tr class="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold uppercase text-[10px] tracking-wider">
-                  <th class="p-3">Station / Branch</th>
-                  <th class="p-3">Zone</th>
-                  <th class="p-3 text-center">Registered</th>
-                  <th class="p-3 text-center">Present (Today)</th>
-                  <th class="p-3">Turnout</th>
-                  <th class="p-3">Parts Present (S / A / T / B)</th>
-                  <th class="p-3 text-right">Status</th>
-                </tr>
+            <table class="w-full text-left border-collapse" id="station-table-main">
+              <thead id="station-table-head">
+                <!-- Dynamically populated based on scope -->
               </thead>
               <tbody id="station-table-body" class="divide-y divide-slate-100 text-slate-700">
                 <!-- Dynamically populated -->
@@ -2584,7 +2659,8 @@
       activePartFilter: 'ALL',
       sheetWebhookUrl: DEFAULT_WEBHOOK_URL,
       isOfficerUnlocked: false,
-      rawAttendanceLogs: []
+      rawAttendanceLogs: [],
+      adminSelectedScope: 'ALL'
     };
 
     // DUPLICATE DETECTION & DATA CLEANING UTILITIES
@@ -3870,9 +3946,106 @@
       }
     }
 
-    // STATION BREAKDOWN RENDERER
-    function renderStationBreakdown(activeSessionId, presentMemberIds, excusedMemberIds) {
+    // ADMIN SCOPE TOGGLE
+    function handleAdminScopeChange(scope) {
+      state.adminSelectedScope = scope || 'ALL';
+      updateAdminStats();
+    }
+
+    // ALL PRACTICES CARDS GRID RENDERER
+    function renderPracticeCardsGrid(sessionStats, completedSessions) {
+      const container = document.getElementById('practice-cards-grid');
+      if (!container) return;
+
+      const sessionsToRender = [...completedSessions];
+      const nextUpcoming = REHEARSAL_SCHEDULE.find(s => !completedSessions.some(cs => cs.id === s.id));
+      if (nextUpcoming) sessionsToRender.push(nextUpcoming);
+
+      container.innerHTML = sessionsToRender.map((s, idx) => {
+        const isCompleted = completedSessions.some(cs => cs.id === s.id);
+        const stat = sessionStats[s.id] || { presentCount: 0, presentPct: 0, excusedCount: 0, absentCount: 0, activeStationsCount: 0, parts: { soprano: 0, alto: 0, tenor: 0, bass: 0 } };
+
+        if (!isCompleted) {
+          return `
+            <div class="p-4 rounded-2xl border border-dashed border-slate-300 bg-slate-50 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-2">
+                  <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-200 uppercase">
+                    Upcoming • Session ${idx + 1}
+                  </span>
+                  <span class="text-[11px] text-slate-500 font-medium">${s.time}</span>
+                </div>
+                <h4 class="font-extrabold text-slate-900 text-sm">${s.displayDate}</h4>
+                <div class="text-xs font-semibold text-slate-600 mt-0.5">${s.type}</div>
+                <p class="text-[11px] text-slate-500 mt-2.5">Scheduled next in Ondo Area. Check-in opens 30 minutes after rehearsal starts.</p>
+              </div>
+              <div class="mt-4 pt-3 border-t border-slate-200/80 flex items-center justify-between text-xs text-slate-500">
+                <span>Status: <b class="text-amber-800">Scheduled</b></span>
+                <span class="font-bold text-slate-600">${s.day}</span>
+              </div>
+            </div>
+          `;
+        }
+
+        return `
+          <div class="p-4 rounded-2xl border border-slate-200 bg-gradient-to-b from-white to-slate-50/70 shadow-xs flex flex-col justify-between hover:border-brand-400 transition">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-900 border border-emerald-200 flex items-center gap-1">
+                  <i class="fa-solid fa-circle-check text-emerald-600"></i> Completed
+                </span>
+                <span class="text-[11px] text-slate-500 font-medium">${s.time}</span>
+              </div>
+              <h4 class="font-extrabold text-slate-900 text-base">${s.displayDate}</h4>
+              <div class="text-xs font-semibold text-brand-700">${s.type}</div>
+
+              <!-- Main Attendance Numbers -->
+              <div class="mt-3 grid grid-cols-2 gap-2 text-center">
+                <div class="p-2.5 bg-emerald-50/80 rounded-xl border border-emerald-200/70 shadow-2xs">
+                  <span class="text-[10px] text-emerald-800 font-bold block uppercase tracking-wider">Present</span>
+                  <span class="text-2xl font-black text-emerald-700 font-heading">${stat.presentCount}</span>
+                  <span class="text-[10px] text-emerald-800/80 block font-semibold">${stat.presentPct}% turnout</span>
+                </div>
+                <div class="p-2.5 bg-slate-100/80 rounded-xl border border-slate-200/70 shadow-2xs">
+                  <span class="text-[10px] text-slate-600 font-bold block uppercase tracking-wider">Stations Active</span>
+                  <span class="text-2xl font-black text-slate-800 font-heading">${stat.activeStationsCount}</span>
+                  <span class="text-[10px] text-slate-500 block font-medium">Reporting</span>
+                </div>
+              </div>
+
+              <!-- Voice Parts Breakdown -->
+              <div class="mt-3 pt-2.5 border-t border-slate-100">
+                <div class="text-[10px] font-bold text-slate-500 uppercase mb-1.5 flex justify-between">
+                  <span>Voice Turnout</span>
+                  ${stat.excusedCount > 0 ? `<span class="text-amber-700 font-semibold">${stat.excusedCount} Excused</span>` : ''}
+                </div>
+                <div class="grid grid-cols-4 gap-1 text-center text-[11px]">
+                  <div class="bg-pink-50 py-1 rounded border border-pink-100"><span class="text-slate-500 text-[9px] block">S</span><b class="text-pink-700">${stat.parts.soprano}</b></div>
+                  <div class="bg-purple-50 py-1 rounded border border-purple-100"><span class="text-slate-500 text-[9px] block">A</span><b class="text-purple-700">${stat.parts.alto}</b></div>
+                  <div class="bg-blue-50 py-1 rounded border border-blue-100"><span class="text-slate-500 text-[9px] block">T</span><b class="text-blue-700">${stat.parts.tenor}</b></div>
+                  <div class="bg-indigo-50 py-1 rounded border border-indigo-100"><span class="text-slate-500 text-[9px] block">B</span><b class="text-indigo-700">${stat.parts.bass}</b></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Footer Action -->
+            <div class="mt-4 pt-3 border-t border-slate-200/60 flex items-center justify-between">
+              <span class="text-[10px] text-slate-400 font-medium">Session ${idx + 1}</span>
+              <button onclick="handleAdminScopeChange('${s.id}')" class="text-xs font-bold text-brand-700 hover:text-brand-900 bg-brand-50 hover:bg-brand-100 border border-brand-200 px-2.5 py-1 rounded-lg transition flex items-center gap-1 shadow-2xs">
+                <span>Drilldown</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // STATION BREAKDOWN RENDERER (ALL PRACTICES MATRIX OR SINGLE SESSION)
+    function renderStationBreakdown(scope, sessionStats, completedSessions, activeSessionId, presentMemberIds, excusedMemberIds) {
+      const tableHead = document.getElementById('station-table-head');
       const tableBody = document.getElementById('station-table-body');
+      const titleEl = document.getElementById('station-breakdown-title');
+      const subtitleEl = document.getElementById('station-breakdown-subtitle');
       if (!tableBody) return;
 
       const members = state.members || [];
@@ -3895,95 +4068,232 @@
             registered: 0,
             present: 0,
             excused: 0,
+            d1: 0,
+            d2: 0,
+            d3: 0,
+            uniquePresent: 0,
+            memberIds: new Set(),
+            attendedMemberIds: new Set(),
             parts: { soprano: 0, alto: 0, tenor: 0, bass: 0 }
           };
         }
 
         stationMap[normStation].registered++;
+        stationMap[normStation].memberIds.add(m.id);
+
         const part = (m.part || '').toLowerCase();
-        if (presentMemberIds.has(m.id)) {
-          stationMap[normStation].present++;
+
+        // Calculate per completed session
+        const st1 = state.attendance[`sess_1_${m.id}`];
+        if (st1 === 'present') stationMap[normStation].d1++;
+
+        const st2 = state.attendance[`sess_2_${m.id}`];
+        if (st2 === 'present') stationMap[normStation].d2++;
+
+        const st3 = state.attendance[`sess_3_${m.id}`];
+        if (st3 === 'present') stationMap[normStation].d3++;
+
+        // Any attended
+        if (st1 === 'present' || st2 === 'present' || st3 === 'present') {
+          stationMap[normStation].attendedMemberIds.add(m.id);
           if (stationMap[normStation].parts[part] !== undefined) {
             stationMap[normStation].parts[part]++;
           }
-        } else if (excusedMemberIds.has(m.id)) {
+        }
+
+        // Single session tracking
+        if (presentMemberIds && presentMemberIds.has(m.id)) {
+          stationMap[normStation].present++;
+        } else if (excusedMemberIds && excusedMemberIds.has(m.id)) {
           stationMap[normStation].excused++;
         }
       });
 
+      Object.values(stationMap).forEach(st => {
+        st.uniquePresent = st.attendedMemberIds.size;
+      });
+
       const sortedStations = Object.values(stationMap).sort((a, b) => {
-        if (b.present !== a.present) return b.present - a.present;
-        return b.registered - a.registered;
+        if (scope === 'ALL') {
+          if (b.uniquePresent !== a.uniquePresent) return b.uniquePresent - a.uniquePresent;
+          return b.registered - a.registered;
+        } else {
+          if (b.present !== a.present) return b.present - a.present;
+          return b.registered - a.registered;
+        }
       });
 
       const badgeEl = document.getElementById('station-breakdown-count-badge');
       if (badgeEl) badgeEl.innerText = `${sortedStations.length} Stations in Ondo Area`;
 
       if (sortedStations.length === 0) {
-        tableBody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-400">No stations registered yet.</td></tr>`;
+        if (tableHead) tableHead.innerHTML = '';
+        tableBody.innerHTML = `<tr><td colspan="10" class="p-6 text-center text-slate-400">No stations registered yet.</td></tr>`;
         return;
       }
 
-      tableBody.innerHTML = sortedStations.map(st => {
-        const pct = Math.round((st.present / (st.registered || 1)) * 100);
-        const hasPresent = st.present > 0;
-        const rowClass = hasPresent ? 'bg-emerald-50/20' : '';
-        const statusBadge = hasPresent
-          ? `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Active (${st.present})</span>`
-          : `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-500">Awaiting</span>`;
+      if (scope === 'ALL') {
+        if (titleEl) titleEl.innerText = 'Station & Branch Multi-Practice Turnout Breakdown';
+        if (subtitleEl) subtitleEl.innerText = 'Comparative attendance across Day 1 (30 Oct), Day 2 (31 Oct), and Day 3 (6 Nov)';
 
-        const barColor = pct >= 70 ? 'bg-emerald-500' : (pct >= 40 ? 'bg-blue-500' : (pct > 0 ? 'bg-amber-500' : 'bg-slate-200'));
+        if (tableHead) {
+          tableHead.innerHTML = `
+            <tr class="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold uppercase text-[10px] tracking-wider">
+              <th class="p-3">Station / Branch</th>
+              <th class="p-3">Zone</th>
+              <th class="p-3 text-center">Reg</th>
+              <th class="p-3 text-center bg-brand-50/50 text-brand-900 border-x border-slate-200">Day 1<br><span class="text-[9px] font-normal text-slate-500">30 Oct</span></th>
+              <th class="p-3 text-center bg-brand-50/50 text-brand-900 border-r border-slate-200">Day 2<br><span class="text-[9px] font-normal text-slate-500">31 Oct</span></th>
+              <th class="p-3 text-center bg-brand-50/50 text-brand-900 border-r border-slate-200">Day 3<br><span class="text-[9px] font-normal text-slate-500">6 Nov</span></th>
+              <th class="p-3 text-center text-emerald-900 font-extrabold bg-emerald-50/40">Unique<br><span class="text-[9px] font-normal text-slate-500">Present</span></th>
+              <th class="p-3">Turnout Rate</th>
+              <th class="p-3">Voice Balance (S/A/T/B)</th>
+              <th class="p-3 text-right">Consistency</th>
+            </tr>
+          `;
+        }
 
-        return `
-          <tr class="hover:bg-slate-50/80 transition ${rowClass}">
-            <td class="p-3 font-bold text-slate-900 flex items-center gap-1.5">
-              <i class="fa-solid fa-church text-slate-400 text-xs"></i>
-              <span>${st.name}</span>
-            </td>
-            <td class="p-3 text-slate-600 font-medium">${st.zone}</td>
-            <td class="p-3 text-center font-bold text-slate-800">${st.registered}</td>
-            <td class="p-3 text-center font-black ${hasPresent ? 'text-emerald-700 text-sm' : 'text-slate-400'}">${st.present}</td>
-            <td class="p-3 min-w-[120px]">
-              <div class="flex items-center gap-2">
-                <div class="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden border border-slate-200">
-                  <div class="${barColor} h-2 rounded-full transition-all duration-500" style="width: ${pct}%"></div>
+        tableBody.innerHTML = sortedStations.map(st => {
+          const pct = Math.round((st.uniquePresent / (st.registered || 1)) * 100);
+          const hasAny = st.uniquePresent > 0;
+          const barColor = pct >= 70 ? 'bg-emerald-500' : (pct >= 40 ? 'bg-blue-500' : (pct > 0 ? 'bg-amber-500' : 'bg-slate-200'));
+
+          let daysActive = 0;
+          if (st.d1 > 0) daysActive++;
+          if (st.d2 > 0) daysActive++;
+          if (st.d3 > 0) daysActive++;
+
+          let statusBadge = '';
+          if (daysActive === 3) {
+            statusBadge = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200"><i class="fa-solid fa-check-double text-[9px]"></i> Active All 3</span>`;
+          } else if (daysActive === 2) {
+            statusBadge = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800 border border-blue-200">Active 2 Days</span>`;
+          } else if (daysActive === 1) {
+            statusBadge = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-200">Active 1 Day</span>`;
+          } else {
+            statusBadge = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-400">Awaiting</span>`;
+          }
+
+          return `
+            <tr class="hover:bg-slate-50/80 transition ${hasAny ? 'bg-white' : 'opacity-70'}">
+              <td class="p-3 font-bold text-slate-900 flex items-center gap-1.5 whitespace-nowrap">
+                <i class="fa-solid fa-church text-slate-400 text-xs"></i>
+                <span>${st.name}</span>
+              </td>
+              <td class="p-3 text-slate-600 font-medium whitespace-nowrap">${st.zone}</td>
+              <td class="p-3 text-center font-bold text-slate-800">${st.registered}</td>
+              <td class="p-3 text-center font-black border-x border-slate-100 ${st.d1 > 0 ? 'text-brand-900 bg-brand-50/30' : 'text-slate-300'}">${st.d1}</td>
+              <td class="p-3 text-center font-black border-r border-slate-100 ${st.d2 > 0 ? 'text-brand-900 bg-brand-50/30' : 'text-slate-300'}">${st.d2}</td>
+              <td class="p-3 text-center font-black border-r border-slate-100 ${st.d3 > 0 ? 'text-brand-900 bg-brand-50/30' : 'text-slate-300'}">${st.d3}</td>
+              <td class="p-3 text-center font-black ${st.uniquePresent > 0 ? 'text-emerald-700 text-sm bg-emerald-50/20' : 'text-slate-400'}">${st.uniquePresent}</td>
+              <td class="p-3 min-w-[120px]">
+                <div class="flex items-center gap-2">
+                  <div class="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden border border-slate-200">
+                    <div class="${barColor} h-2 rounded-full transition-all duration-500" style="width: ${pct}%"></div>
+                  </div>
+                  <span class="font-bold text-[11px] text-slate-700 w-8 text-right">${pct}%</span>
                 </div>
-                <span class="font-bold text-[11px] text-slate-700 w-8 text-right">${pct}%</span>
-              </div>
-            </td>
-            <td class="p-3 font-semibold text-[11px] text-slate-600 whitespace-nowrap">
-              <span class="text-pink-600 font-bold" title="Soprano">S:${st.parts.soprano}</span> &bull; 
-              <span class="text-purple-600 font-bold" title="Alto">A:${st.parts.alto}</span> &bull; 
-              <span class="text-blue-600 font-bold" title="Tenor">T:${st.parts.tenor}</span> &bull; 
-              <span class="text-indigo-600 font-bold" title="Bass">B:${st.parts.bass}</span>
-            </td>
-            <td class="p-3 text-right">${statusBadge}</td>
-          </tr>
-        `;
-      }).join('');
+              </td>
+              <td class="p-3 font-semibold text-[11px] text-slate-600 whitespace-nowrap">
+                <span class="text-pink-600 font-bold" title="Soprano">S:${st.parts.soprano}</span> &bull; 
+                <span class="text-purple-600 font-bold" title="Alto">A:${st.parts.alto}</span> &bull; 
+                <span class="text-blue-600 font-bold" title="Tenor">T:${st.parts.tenor}</span> &bull; 
+                <span class="text-indigo-600 font-bold" title="Bass">B:${st.parts.bass}</span>
+              </td>
+              <td class="p-3 text-right whitespace-nowrap">${statusBadge}</td>
+            </tr>
+          `;
+        }).join('');
+      } else {
+        const currentSession = REHEARSAL_SCHEDULE.find(s => s.id === scope) || REHEARSAL_SCHEDULE[0];
+        if (titleEl) titleEl.innerText = `${currentSession.displayDate} (${currentSession.type}) Turnout Breakdown`;
+        if (subtitleEl) subtitleEl.innerText = `Attendance records submitted specifically for ${currentSession.displayDate}`;
+
+        if (tableHead) {
+          tableHead.innerHTML = `
+            <tr class="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold uppercase text-[10px] tracking-wider">
+              <th class="p-3">Station / Branch</th>
+              <th class="p-3">Zone</th>
+              <th class="p-3 text-center">Registered</th>
+              <th class="p-3 text-center font-extrabold text-emerald-800">Present (${currentSession.displayDate})</th>
+              <th class="p-3 text-center">Excused</th>
+              <th class="p-3">Turnout</th>
+              <th class="p-3">Parts Present (S / A / T / B)</th>
+              <th class="p-3 text-right">Status</th>
+            </tr>
+          `;
+        }
+
+        tableBody.innerHTML = sortedStations.map(st => {
+          const pct = Math.round((st.present / (st.registered || 1)) * 100);
+          const hasPresent = st.present > 0;
+          const rowClass = hasPresent ? 'bg-emerald-50/20' : '';
+          const statusBadge = hasPresent
+            ? `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Active (${st.present})</span>`
+            : `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-500">Awaiting</span>`;
+
+          const barColor = pct >= 70 ? 'bg-emerald-500' : (pct >= 40 ? 'bg-blue-500' : (pct > 0 ? 'bg-amber-500' : 'bg-slate-200'));
+
+          return `
+            <tr class="hover:bg-slate-50/80 transition ${rowClass}">
+              <td class="p-3 font-bold text-slate-900 flex items-center gap-1.5">
+                <i class="fa-solid fa-church text-slate-400 text-xs"></i>
+                <span>${st.name}</span>
+              </td>
+              <td class="p-3 text-slate-600 font-medium">${st.zone}</td>
+              <td class="p-3 text-center font-bold text-slate-800">${st.registered}</td>
+              <td class="p-3 text-center font-black ${hasPresent ? 'text-emerald-700 text-sm' : 'text-slate-400'}">${st.present}</td>
+              <td class="p-3 text-center font-bold text-amber-700">${st.excused}</td>
+              <td class="p-3 min-w-[120px]">
+                <div class="flex items-center gap-2">
+                  <div class="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden border border-slate-200">
+                    <div class="${barColor} h-2 rounded-full transition-all duration-500" style="width: ${pct}%"></div>
+                  </div>
+                  <span class="font-bold text-[11px] text-slate-700 w-8 text-right">${pct}%</span>
+                </div>
+              </td>
+              <td class="p-3 font-semibold text-[11px] text-slate-600 whitespace-nowrap">
+                <span class="text-pink-600 font-bold" title="Soprano">S:${st.parts.soprano}</span> &bull; 
+                <span class="text-purple-600 font-bold" title="Alto">A:${st.parts.alto}</span> &bull; 
+                <span class="text-blue-600 font-bold" title="Tenor">T:${st.parts.tenor}</span> &bull; 
+                <span class="text-indigo-600 font-bold" title="Bass">B:${st.parts.bass}</span>
+              </td>
+              <td class="p-3 text-right">${statusBadge}</td>
+            </tr>
+          `;
+        }).join('');
+      }
     }
 
-    // VOICE PART BARS RENDERER
-    function renderVoicePartBars(members, presentMemberIds) {
+    // VOICE PART BARS RENDERER (ALL PRACTICES OR SINGLE SESSION)
+    function renderVoicePartBars(members, scope, sessionStats, completedSessions, presentMemberIds) {
       const container = document.getElementById('voice-part-bars-container');
       if (!container) return;
 
       const parts = [
-        { key: 'soprano', label: 'Soprano', color: 'bg-pink-500', textCol: 'text-pink-700', badgeCol: 'bg-pink-50 border-pink-200' },
-        { key: 'alto', label: 'Alto', color: 'bg-purple-600', textCol: 'text-purple-700', badgeCol: 'bg-purple-50 border-purple-200' },
-        { key: 'tenor', label: 'Tenor', color: 'bg-blue-600', textCol: 'text-blue-700', badgeCol: 'bg-blue-50 border-blue-200' },
-        { key: 'bass', label: 'Bass', color: 'bg-indigo-600', textCol: 'text-indigo-700', badgeCol: 'bg-indigo-50 border-indigo-200' }
+        { key: 'soprano', label: 'Soprano', color: 'bg-pink-500', textCol: 'text-pink-700', badgeCol: 'bg-pink-50/60 border-pink-200' },
+        { key: 'alto', label: 'Alto', color: 'bg-purple-600', textCol: 'text-purple-700', badgeCol: 'bg-purple-50/60 border-purple-200' },
+        { key: 'tenor', label: 'Tenor', color: 'bg-blue-600', textCol: 'text-blue-700', badgeCol: 'bg-blue-50/60 border-blue-200' },
+        { key: 'bass', label: 'Bass', color: 'bg-indigo-600', textCol: 'text-indigo-700', badgeCol: 'bg-indigo-50/60 border-indigo-200' }
       ];
 
       const partStats = {};
-      parts.forEach(p => partStats[p.key] = { total: 0, present: 0 });
+      parts.forEach(p => partStats[p.key] = { total: 0, present: 0, d1: 0, d2: 0, d3: 0, unique: 0 });
 
       let accompanists = 0;
       members.forEach(m => {
         const p = (m.part || '').toLowerCase();
         if (partStats[p]) {
           partStats[p].total++;
-          if (presentMemberIds.has(m.id)) partStats[p].present++;
+          const st1 = state.attendance[`sess_1_${m.id}`] === 'present';
+          const st2 = state.attendance[`sess_2_${m.id}`] === 'present';
+          const st3 = state.attendance[`sess_3_${m.id}`] === 'present';
+          if (st1) partStats[p].d1++;
+          if (st2) partStats[p].d2++;
+          if (st3) partStats[p].d3++;
+          if (st1 || st2 || st3) partStats[p].unique++;
+
+          if (presentMemberIds && presentMemberIds.has(m.id)) partStats[p].present++;
         }
         if (m.accompanist === 'Yes' || m.accompanist === true) accompanists++;
       });
@@ -3991,36 +4301,83 @@
       const accBadge = document.getElementById('accompanist-count-badge');
       if (accBadge) accBadge.innerText = `${accompanists} Accompanists Registered`;
 
-      container.innerHTML = parts.map(p => {
-        const stat = partStats[p.key];
-        const pct = Math.round((stat.present / (stat.total || 1)) * 100);
-        return `
-          <div class="p-2.5 rounded-xl border ${p.badgeCol}">
-            <div class="flex items-center justify-between text-xs font-bold mb-1.5">
-              <span class="${p.textCol} flex items-center gap-1.5">
-                <span class="w-2.5 h-2.5 rounded-full ${p.color}"></span>
-                ${p.label}
-              </span>
-              <span class="text-slate-800">
-                <span class="font-extrabold text-sm ${p.textCol}">${stat.present}</span>
-                <span class="text-slate-400 font-normal"> / ${stat.total} registered</span>
-                <span class="ml-1 text-[11px] font-bold text-slate-600">(${pct}%)</span>
-              </span>
+      if (scope === 'ALL') {
+        container.innerHTML = parts.map(p => {
+          const stat = partStats[p.key];
+          const totalReg = stat.total || 1;
+          const p1Pct = Math.round((stat.d1 / totalReg) * 100);
+          const p2Pct = Math.round((stat.d2 / totalReg) * 100);
+          const p3Pct = Math.round((stat.d3 / totalReg) * 100);
+          const uniquePct = Math.round((stat.unique / totalReg) * 100);
+
+          return `
+            <div class="p-3 rounded-2xl border ${p.badgeCol}">
+              <div class="flex items-center justify-between text-xs font-bold mb-2">
+                <span class="${p.textCol} flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full ${p.color}"></span>
+                  ${p.label}
+                </span>
+                <span class="text-slate-800 text-[11px]">
+                  <span class="font-extrabold ${p.textCol}">${stat.unique}</span> / ${stat.total} unique reached <span class="font-bold text-slate-500">(${uniquePct}%)</span>
+                </span>
+              </div>
+              <!-- 3-Day Turnout Grid -->
+              <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                <div class="bg-white/90 p-1.5 rounded-xl border border-slate-100 shadow-2xs">
+                  <span class="text-[10px] text-slate-400 block font-semibold">Day 1 (30th)</span>
+                  <span class="font-extrabold ${p.textCol}">${stat.d1}</span>
+                  <span class="text-[9px] text-slate-400 font-medium">(${p1Pct}%)</span>
+                </div>
+                <div class="bg-white/90 p-1.5 rounded-xl border border-slate-100 shadow-2xs">
+                  <span class="text-[10px] text-slate-400 block font-semibold">Day 2 (31st)</span>
+                  <span class="font-extrabold ${p.textCol}">${stat.d2}</span>
+                  <span class="text-[9px] text-slate-400 font-medium">(${p2Pct}%)</span>
+                </div>
+                <div class="bg-white/90 p-1.5 rounded-xl border border-slate-100 shadow-2xs">
+                  <span class="text-[10px] text-slate-400 block font-semibold">Day 3 (6th)</span>
+                  <span class="font-extrabold ${p.textCol}">${stat.d3}</span>
+                  <span class="text-[9px] text-slate-400 font-medium">(${p3Pct}%)</span>
+                </div>
+              </div>
             </div>
-            <div class="w-full bg-white/80 rounded-full h-2 overflow-hidden border border-slate-200/60">
-              <div class="${p.color} h-2 rounded-full transition-all duration-500" style="width: ${pct}%"></div>
+          `;
+        }).join('');
+      } else {
+        container.innerHTML = parts.map(p => {
+          const stat = partStats[p.key];
+          const pct = Math.round((stat.present / (stat.total || 1)) * 100);
+          return `
+            <div class="p-2.5 rounded-xl border ${p.badgeCol}">
+              <div class="flex items-center justify-between text-xs font-bold mb-1.5">
+                <span class="${p.textCol} flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full ${p.color}"></span>
+                  ${p.label}
+                </span>
+                <span class="text-slate-800">
+                  <span class="font-extrabold text-sm ${p.textCol}">${stat.present}</span>
+                  <span class="text-slate-400 font-normal"> / ${stat.total} registered</span>
+                  <span class="ml-1 text-[11px] font-bold text-slate-600">(${pct}%)</span>
+                </span>
+              </div>
+              <div class="w-full bg-white/80 rounded-full h-2 overflow-hidden border border-slate-200/60">
+                <div class="${p.color} h-2 rounded-full transition-all duration-500" style="width: ${pct}%"></div>
+              </div>
             </div>
-          </div>
-        `;
-      }).join('');
+          `;
+        }).join('');
+      }
     }
 
     // RECENT CHECKINS STREAM RENDERER
-    function renderRecentCheckinsStream(members, activeSessionId) {
+    function renderRecentCheckinsStream(members, scope) {
       const container = document.getElementById('recent-checkins-stream');
       if (!container) return;
 
-      const logs = (state.rawAttendanceLogs || []).filter(l => l.session_id === activeSessionId);
+      let logs = state.rawAttendanceLogs || [];
+      if (scope !== 'ALL') {
+        logs = logs.filter(l => l.session_id === scope);
+      }
+
       const memberMap = new Map();
       members.forEach(m => memberMap.set(m.id, m));
 
@@ -4034,13 +4391,13 @@
         container.innerHTML = `
           <div class="p-6 text-center text-slate-400 text-xs">
             <i class="fa-regular fa-clock text-2xl mb-1 text-slate-300"></i>
-            <p>No check-ins recorded yet for this session.</p>
+            <p>No check-ins recorded yet for this selection.</p>
           </div>
         `;
         return;
       }
 
-      container.innerHTML = sortedLogs.slice(0, 20).map(log => {
+      container.innerHTML = sortedLogs.slice(0, 25).map(log => {
         const m = memberMap.get(log.member_id) || { name: log.member_id, part: 'Chorister', station: 'Ondo Area', zone: '' };
         const timeWAT = formatWATTime(log.marked_at);
         const timeAgo = formatTimeAgo(log.marked_at);
@@ -4052,6 +4409,8 @@
               : `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600">${log.status}</span>`);
 
         const partColor = getPartBadgeColor(m.part);
+        const sessObj = REHEARSAL_SCHEDULE.find(s => s.id === log.session_id);
+        const sessTag = sessObj ? `<span class="px-1.5 py-0.5 bg-slate-200/80 text-slate-700 rounded text-[9px] font-bold mr-1">${sessObj.displayDate.split(' ')[0]} ${sessObj.displayDate.split(' ')[1]}</span>` : '';
 
         return `
           <div class="p-2.5 rounded-xl border border-slate-100 bg-slate-50/50 hover:bg-slate-50 flex items-center justify-between text-xs transition">
@@ -4060,7 +4419,10 @@
                 ${(m.part || 'C')[0]}
               </span>
               <div class="min-w-0">
-                <div class="font-bold text-slate-900 truncate">${m.name}</div>
+                <div class="font-bold text-slate-900 truncate flex items-center gap-1">
+                  ${scope === 'ALL' ? sessTag : ''}
+                  <span class="truncate">${m.name}</span>
+                </div>
                 <div class="text-[10px] text-slate-500 flex items-center gap-1.5 truncate">
                   <span>${m.part || 'Voice'}</span> &bull; 
                   <span>${m.station || m.zone || 'Ondo Area'}</span>
@@ -4120,77 +4482,138 @@
         document.getElementById('admin-qualified').innerText = qualified;
       }
 
-      // Active Rehearsal Data (find open session or default to sess_1)
-      const activeSession = REHEARSAL_SCHEDULE.find(s => !isSessionLocked(s)) || REHEARSAL_SCHEDULE[0];
-      const activeSessionId = activeSession.id;
+      // Completed sessions calculation
+      const todayWat = getTodayWATString();
+      const completedSessions = REHEARSAL_SCHEDULE.filter(s => ['sess_1', 'sess_2', 'sess_3'].includes(s.id) || s.date < todayWat);
 
-      const titleEl = document.getElementById('admin-active-session-title');
-      if (titleEl) titleEl.innerText = `${activeSession.displayDate} • ${activeSession.type}`;
-      const spotlightEl = document.getElementById('admin-spotlight-name');
-      if (spotlightEl) spotlightEl.innerText = `${activeSession.displayDate} (${activeSession.type}) Attendance Monitor`;
+      // Compute stats for every session
+      const sessionStats = {};
+      REHEARSAL_SCHEDULE.forEach(s => {
+        const pIds = new Set();
+        const eIds = new Set();
+        const aIds = new Set();
+        const stSet = new Set();
+        const pParts = { soprano: 0, alto: 0, tenor: 0, bass: 0 };
 
-      const presentMemberIds = new Set();
-      const excusedMemberIds = new Set();
-      const logs = (state.rawAttendanceLogs || []).filter(l => l.session_id === activeSessionId);
+        state.members.forEach(m => {
+          const st = state.attendance[`${s.id}_${m.id}`];
+          if (st === 'present') {
+            pIds.add(m.id);
+            const p = (m.part || '').toLowerCase();
+            if (pParts[p] !== undefined) pParts[p]++;
+            const stationName = (m.station || m.zone || '').trim();
+            if (stationName) stSet.add(stationName.toLowerCase());
+          } else if (st === 'excused') {
+            eIds.add(m.id);
+          } else if (st === 'absent') {
+            aIds.add(m.id);
+          }
+        });
 
+        (state.rawAttendanceLogs || []).filter(l => l.session_id === s.id).forEach(l => {
+          if (l.status === 'present') pIds.add(l.member_id);
+          else if (l.status === 'excused') eIds.add(l.member_id);
+          else if (l.status === 'absent') aIds.add(l.member_id);
+        });
+
+        sessionStats[s.id] = {
+          session: s,
+          presentCount: pIds.size,
+          excusedCount: eIds.size,
+          absentCount: aIds.size,
+          presentPct: total > 0 ? Math.round((pIds.size / total) * 100) : 0,
+          activeStationsCount: stSet.size,
+          parts: pParts,
+          presentMemberIds: pIds,
+          excusedMemberIds: eIds
+        };
+      });
+
+      // Cross-session cumulative reach
+      const uniqueAttendees = new Set();
+      const attendanceCountByMember = new Map();
       state.members.forEach(m => {
-        const st = state.attendance[`${activeSessionId}_${m.id}`];
-        if (st === 'present') presentMemberIds.add(m.id);
-        else if (st === 'excused') excusedMemberIds.add(m.id);
-      });
-      logs.forEach(l => {
-        if (l.status === 'present') presentMemberIds.add(l.member_id);
-        else if (l.status === 'excused') excusedMemberIds.add(l.member_id);
+        let cnt = 0;
+        completedSessions.forEach(s => {
+          if (state.attendance[`${s.id}_${m.id}`] === 'present') {
+            cnt++;
+            uniqueAttendees.add(m.id);
+          }
+        });
+        attendanceCountByMember.set(m.id, cnt);
       });
 
-      const livePresentCount = presentMemberIds.size;
-      const liveExcusedCount = excusedMemberIds.size;
-      const livePresentPct = total > 0 ? Math.round((livePresentCount / total) * 100) : 0;
+      let perfectAttendees = 0; // attended all completed sessions
+      let twoSessions = 0;
+      let oneSession = 0;
+      attendanceCountByMember.forEach(cnt => {
+        if (cnt >= completedSessions.length && completedSessions.length > 0) perfectAttendees++;
+        else if (cnt === 2) twoSessions++;
+        else if (cnt === 1) oneSession++;
+      });
 
-      if (document.getElementById('live-present-count')) {
-        document.getElementById('live-present-count').innerText = livePresentCount;
-        document.getElementById('live-present-percent').innerText = `${livePresentPct}% of registered choristers`;
-        document.getElementById('live-excused-count').innerText = liveExcusedCount;
+      const totalPresentAcrossSessions = completedSessions.reduce((acc, s) => acc + (sessionStats[s.id] ? sessionStats[s.id].presentCount : 0), 0);
+      const avgAttendance = completedSessions.length > 0 ? Math.round(totalPresentAcrossSessions / completedSessions.length) : 0;
+      const avgPct = total > 0 ? Math.round((avgAttendance / total) * 100) : 0;
+      const uniquePct = total > 0 ? Math.round((uniqueAttendees.size / total) * 100) : 0;
+
+      // Update Top Cumulative Summary Cards
+      if (document.getElementById('all-unique-attendees')) {
+        document.getElementById('all-unique-attendees').innerText = uniqueAttendees.size;
+        document.getElementById('all-unique-pct').innerText = `${uniquePct}% of registered choir (${total} total)`;
+        document.getElementById('all-perfect-attendees').innerText = perfectAttendees;
+        document.getElementById('all-perfect-pct').innerText = `100% attendance (${completedSessions.length}/${completedSessions.length} sessions)`;
+        document.getElementById('all-two-sessions').innerText = twoSessions;
+        document.getElementById('all-two-sessions-pct').innerText = `${Math.round((twoSessions / (total || 1)) * 100)}% of choristers`;
+        document.getElementById('all-avg-attendance').innerText = avgAttendance;
+        document.getElementById('all-avg-pct').innerText = `~${avgPct}% turnout per session`;
       }
 
-      // Voice parts present count
-      let presS = 0, presA = 0, presT = 0, presB = 0;
-      state.members.forEach(m => {
-        if (presentMemberIds.has(m.id)) {
-          const p = (m.part || '').toLowerCase();
-          if (p === 'soprano') presS++;
-          else if (p === 'alto') presA++;
-          else if (p === 'tenor') presT++;
-          else if (p === 'bass') presB++;
+      if (document.getElementById('admin-scope-summary-text')) {
+        document.getElementById('admin-scope-summary-text').innerText = `${completedSessions.length} Completed Practices • ${uniqueAttendees.size} Unique Attendees (${uniquePct}%)`;
+      }
+
+      // Render Side-by-Side Practice Cards Grid
+      renderPracticeCardsGrid(sessionStats, completedSessions);
+
+      // Handle Scope toggle between ALL and single session
+      const scope = state.adminSelectedScope || 'ALL';
+      const allContainer = document.getElementById('admin-all-practices-container');
+      const singleContainer = document.getElementById('admin-single-practice-container');
+      const scopeSelect = document.getElementById('admin-session-scope');
+      if (scopeSelect && scopeSelect.value !== scope) scopeSelect.value = scope;
+
+      let targetSessionId = scope;
+      if (scope === 'ALL') {
+        if (allContainer) allContainer.classList.remove('hidden');
+        if (singleContainer) singleContainer.classList.add('hidden');
+        targetSessionId = 'sess_3'; // default for fallback single queries
+      } else {
+        if (allContainer) allContainer.classList.add('hidden');
+        if (singleContainer) singleContainer.classList.remove('hidden');
+
+        const activeSession = REHEARSAL_SCHEDULE.find(s => s.id === scope) || REHEARSAL_SCHEDULE[0];
+        const spotlightEl = document.getElementById('admin-spotlight-name');
+        if (spotlightEl) spotlightEl.innerText = `${activeSession.displayDate} (${activeSession.type}) Attendance Monitor`;
+
+        const stat = sessionStats[scope] || { presentCount: 0, excusedCount: 0, presentPct: 0, activeStationsCount: 0, parts: {} };
+        if (document.getElementById('live-present-count')) {
+          document.getElementById('live-present-count').innerText = stat.presentCount;
+          document.getElementById('live-present-percent').innerText = `${stat.presentPct}% of registered choristers`;
+          document.getElementById('live-excused-count').innerText = stat.excusedCount;
+          document.getElementById('live-active-stations-count').innerText = stat.activeStationsCount;
+          document.getElementById('live-total-stations-sub').innerText = `reporting stations`;
+          document.getElementById('live-s-count').innerText = stat.parts.soprano || 0;
+          document.getElementById('live-a-count').innerText = stat.parts.alto || 0;
+          document.getElementById('live-t-count').innerText = stat.parts.tenor || 0;
+          document.getElementById('live-b-count').innerText = stat.parts.bass || 0;
         }
-      });
-
-      if (document.getElementById('live-s-count')) {
-        document.getElementById('live-s-count').innerText = presS;
-        document.getElementById('live-a-count').innerText = presA;
-        document.getElementById('live-t-count').innerText = presT;
-        document.getElementById('live-b-count').innerText = presB;
       }
 
-      // Active stations count
-      const activeStations = new Set();
-      const allStations = new Set();
-      state.members.forEach(m => {
-        const st = (m.station || m.zone || '').trim();
-        if (st) {
-          allStations.add(st.toLowerCase());
-          if (presentMemberIds.has(m.id)) activeStations.add(st.toLowerCase());
-        }
-      });
-      if (document.getElementById('live-active-stations-count')) {
-        document.getElementById('live-active-stations-count').innerText = activeStations.size;
-        document.getElementById('live-total-stations-sub').innerText = `of ${allStations.size} stations active`;
-      }
-
-      // Render station table, voice bars, and recent checkins stream
-      renderStationBreakdown(activeSessionId, presentMemberIds, excusedMemberIds);
-      renderVoicePartBars(state.members, presentMemberIds);
-      renderRecentCheckinsStream(state.members, activeSessionId);
+      const activeStat = sessionStats[targetSessionId] || { presentMemberIds: new Set(), excusedMemberIds: new Set() };
+      renderStationBreakdown(scope, sessionStats, completedSessions, targetSessionId, activeStat.presentMemberIds, activeStat.excusedMemberIds);
+      renderVoicePartBars(state.members, scope, sessionStats, completedSessions, activeStat.presentMemberIds);
+      renderRecentCheckinsStream(state.members, scope);
 
       // Timestamp update
       const nowWat = getNowWAT();
