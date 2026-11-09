@@ -4167,6 +4167,15 @@
     }
 
     // STATION BREAKDOWN RENDERER (ALL PRACTICES MATRIX OR SINGLE SESSION)
+    // HELPER: Robust check for member presence in a session
+    function isMemberPresent(sessionId, memberId) {
+      if (state.attendance && state.attendance[`${sessionId}_${memberId}`] === 'present') return true;
+      if (state.rawAttendanceLogs && Array.isArray(state.rawAttendanceLogs)) {
+        return state.rawAttendanceLogs.some(l => l.session_id === sessionId && l.member_id === memberId && l.status === 'present');
+      }
+      return false;
+    }
+
     // HELPER: Format & Normalize Station Name
     function formatStationName(s, zone) {
       let name = (s || zone || 'Other Station').trim();
@@ -4200,21 +4209,21 @@
 
         stationMap[stName].registered++;
 
-        // Calculate per completed session
-        const st1 = state.attendance[`sess_1_${m.id}`];
-        if (st1 === 'present') {
+        // Calculate per completed session using robust isMemberPresent
+        const st1 = isMemberPresent('sess_1', m.id);
+        if (st1) {
           stationMap[stName].d1++;
           stationMap[stName].attendedMemberIds.add(m.id);
         }
 
-        const st2 = state.attendance[`sess_2_${m.id}`];
-        if (st2 === 'present') {
+        const st2 = isMemberPresent('sess_2', m.id);
+        if (st2) {
           stationMap[stName].d2++;
           stationMap[stName].attendedMemberIds.add(m.id);
         }
 
-        const st3 = state.attendance[`sess_3_${m.id}`];
-        if (st3 === 'present') {
+        const st3 = isMemberPresent('sess_3', m.id);
+        if (st3) {
           stationMap[stName].d3++;
           stationMap[stName].attendedMemberIds.add(m.id);
         }
@@ -4395,9 +4404,9 @@
         const p = (m.part || '').toLowerCase();
         if (stats[p]) {
           stats[p].reg++;
-          const s1 = state.attendance[`sess_1_${m.id}`] === 'present';
-          const s2 = state.attendance[`sess_2_${m.id}`] === 'present';
-          const s3 = state.attendance[`sess_3_${m.id}`] === 'present';
+          const s1 = isMemberPresent('sess_1', m.id);
+          const s2 = isMemberPresent('sess_2', m.id);
+          const s3 = isMemberPresent('sess_3', m.id);
           if (s1) stats[p].d1++;
           if (s2) stats[p].d2++;
           if (s3) stats[p].d3++;
@@ -4444,9 +4453,9 @@
         if (!matchedKey) matchedKey = 'akure'; // default
 
         stats[matchedKey].reg++;
-        const s1 = state.attendance[`sess_1_${m.id}`] === 'present';
-        const s2 = state.attendance[`sess_2_${m.id}`] === 'present';
-        const s3 = state.attendance[`sess_3_${m.id}`] === 'present';
+        const s1 = isMemberPresent('sess_1', m.id);
+        const s2 = isMemberPresent('sess_2', m.id);
+        const s3 = isMemberPresent('sess_3', m.id);
         if (s1) stats[matchedKey].d1++;
         if (s2) stats[matchedKey].d2++;
         if (s3) stats[matchedKey].d3++;
@@ -4663,6 +4672,11 @@
         }
       }
 
+      // Initial safe render of breakdowns
+      try { renderVoiceBreakdown(state.members); } catch (e) { console.error('Error in initial renderVoiceBreakdown:', e); }
+      try { renderZoneBreakdown(state.members); } catch (e) { console.error('Error in initial renderZoneBreakdown:', e); }
+      try { renderStationBreakdown(); } catch (e) { console.error('Error in initial renderStationBreakdown:', e); }
+
       const total = state.members.length;
       let sopranos = 0, altos = 0, tenors = 0, basses = 0;
 
@@ -4684,12 +4698,10 @@
         if ((attended / totalSessionsSoFar) >= 0.70) qualified++;
       });
 
-      if (document.getElementById('admin-total-reg')) {
-        document.getElementById('admin-total-reg').innerText = total;
-        document.getElementById('admin-soprano-alto').innerText = `${sopranos} / ${altos}`;
-        document.getElementById('admin-tenor-bass').innerText = `${tenors} / ${basses}`;
-        document.getElementById('admin-qualified').innerText = qualified;
-      }
+      if (document.getElementById('admin-total-reg')) document.getElementById('admin-total-reg').innerText = total;
+      if (document.getElementById('admin-soprano-alto')) document.getElementById('admin-soprano-alto').innerText = `${sopranos} / ${altos}`;
+      if (document.getElementById('admin-tenor-bass')) document.getElementById('admin-tenor-bass').innerText = `${tenors} / ${basses}`;
+      if (document.getElementById('admin-qualified')) document.getElementById('admin-qualified').innerText = qualified;
 
       // Completed sessions calculation
       const todayWat = getTodayWATString();
@@ -4794,7 +4806,7 @@
       }
 
       // Render Side-by-Side Practice Cards Grid
-      renderPracticeCardsGrid(sessionStats, completedSessions);
+      try { renderPracticeCardsGrid(sessionStats, completedSessions); } catch (e) { console.error('Error in renderPracticeCardsGrid:', e); }
 
       // Handle Scope toggle between ALL and single session
       const scope = state.adminSelectedScope || 'ALL';
@@ -4819,25 +4831,25 @@
         const stat = sessionStats[scope] || { presentCount: 0, excusedCount: 0, presentPct: 0, activeStationsCount: 0, parts: {} };
         if (document.getElementById('live-present-count')) {
           document.getElementById('live-present-count').innerText = stat.presentCount;
-          document.getElementById('live-present-percent').innerText = `${stat.presentPct}% of registered choristers`;
-          document.getElementById('live-excused-count').innerText = stat.excusedCount;
-          document.getElementById('live-active-stations-count').innerText = stat.activeStationsCount;
-          document.getElementById('live-total-stations-sub').innerText = `reporting stations`;
-          document.getElementById('live-s-count').innerText = stat.parts.soprano || 0;
-          document.getElementById('live-a-count').innerText = stat.parts.alto || 0;
-          document.getElementById('live-t-count').innerText = stat.parts.tenor || 0;
-          document.getElementById('live-b-count').innerText = stat.parts.bass || 0;
+          if (document.getElementById('live-present-percent')) document.getElementById('live-present-percent').innerText = `${stat.presentPct}% of registered choristers`;
+          if (document.getElementById('live-excused-count')) document.getElementById('live-excused-count').innerText = stat.excusedCount;
+          if (document.getElementById('live-active-stations-count')) document.getElementById('live-active-stations-count').innerText = stat.activeStationsCount;
+          if (document.getElementById('live-total-stations-sub')) document.getElementById('live-total-stations-sub').innerText = `reporting stations`;
+          if (document.getElementById('live-s-count')) document.getElementById('live-s-count').innerText = stat.parts.soprano || 0;
+          if (document.getElementById('live-a-count')) document.getElementById('live-a-count').innerText = stat.parts.alto || 0;
+          if (document.getElementById('live-t-count')) document.getElementById('live-t-count').innerText = stat.parts.tenor || 0;
+          if (document.getElementById('live-b-count')) document.getElementById('live-b-count').innerText = stat.parts.bass || 0;
         }
       }
 
       const activeStat = sessionStats[targetSessionId] || { presentMemberIds: new Set(), excusedMemberIds: new Set() };
       
       // Render At-a-Glance Tables
-      renderVoiceBreakdown(state.members);
-      renderZoneBreakdown(state.members);
-      renderStationBreakdown();
-      renderVoicePartBars(state.members, scope, sessionStats, completedSessions, activeStat.presentMemberIds);
-      renderRecentCheckinsStream(state.members, scope);
+      try { renderVoiceBreakdown(state.members); } catch (e) { console.error('Error in renderVoiceBreakdown:', e); }
+      try { renderZoneBreakdown(state.members); } catch (e) { console.error('Error in renderZoneBreakdown:', e); }
+      try { renderStationBreakdown(); } catch (e) { console.error('Error in renderStationBreakdown:', e); }
+      try { renderVoicePartBars(state.members, scope, sessionStats, completedSessions, activeStat.presentMemberIds); } catch (e) { console.error('Error in renderVoicePartBars:', e); }
+      try { renderRecentCheckinsStream(state.members, scope); } catch (e) { console.error('Error in renderRecentCheckinsStream:', e); }
 
       // Timestamp update
       const nowWat = getNowWAT();
