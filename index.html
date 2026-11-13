@@ -1149,13 +1149,13 @@
     "id": "c_003"
   },
   {
-    "name": "Alabi oliwasade Ruth",
+    "name": "Alabi Oluwasade Ruth",
     "zone": "Akure",
     "part": "Alto",
     "instrument": "Clarinet",
     "accompanist": "Yes",
-    "station": "Akure",
-    "phone": "",
+    "station": "Ijoka Headquarters",
+    "phone": "08062164965",
     "gender": "Female",
     "id": "c_004"
   },
@@ -1209,8 +1209,8 @@
     "part": "Bass",
     "instrument": "Trumpet",
     "accompanist": "No",
-    "station": "Akure",
-    "phone": "",
+    "station": "Alayere",
+    "phone": "08035625698",
     "gender": "Male",
     "id": "c_009"
   },
@@ -1242,8 +1242,8 @@
     "part": "Bass",
     "instrument": "Violin",
     "accompanist": "No",
-    "station": "Akure",
-    "phone": "",
+    "station": "Ile Oluji",
+    "phone": "+2347067105338",
     "gender": "Male",
     "id": "c_012"
   },
@@ -1264,8 +1264,8 @@
     "part": "Bass",
     "instrument": "Baritone",
     "accompanist": "No",
-    "station": "Akure",
-    "phone": "",
+    "station": "Ijoka Headquarters",
+    "phone": "08039199098",
     "gender": "Male",
     "id": "c_014"
   },
@@ -1495,8 +1495,8 @@
     "part": "Soprano",
     "instrument": "Violin",
     "accompanist": "No",
-    "station": "Akure",
-    "phone": "",
+    "station": "Igoba",
+    "phone": "08167021154",
     "gender": "Female",
     "id": "c_035"
   },
@@ -1600,13 +1600,13 @@
     "id": "c_044"
   },
   {
-    "name": "Oladele Opemipo",
+    "name": "Oladele Opemipo Mercy",
     "zone": "Akure",
     "part": "Soprano",
     "instrument": "Violin",
     "accompanist": "No",
-    "station": "Akure",
-    "phone": "",
+    "station": "Oke aro",
+    "phone": "08135631669",
     "gender": "Female",
     "id": "c_045"
   },
@@ -1776,13 +1776,13 @@
     "id": "c_060"
   },
   {
-    "name": "Glory Akinola",
+    "name": "Glory Bodunde Akinola",
     "zone": "Akure",
     "part": "Tenor",
     "instrument": "Organ",
     "accompanist": "Yes",
-    "station": "Akure",
-    "phone": "",
+    "station": "Futa",
+    "phone": "07068027452",
     "gender": "Male",
     "id": "c_061"
   },
@@ -2139,12 +2139,12 @@
     "id": "c_093"
   },
   {
-    "name": "Olatujouye Stella",
+    "name": "Olatujoye Stella",
     "zone": "Okitipupa",
     "part": "Soprano",
     "instrument": "Flute",
     "accompanist": "No",
-    "station": "Okitipupa",
+    "station": "Okitipupa Headquarters",
     "phone": "",
     "gender": "Female",
     "id": "c_094"
@@ -2717,6 +2717,7 @@
 
         if (cloudAttendance && Array.isArray(cloudAttendance)) {
           state.rawAttendanceLogs = cloudAttendance;
+          state.attendance = {};
           const todayWat = getTodayWATString();
           cloudAttendance.forEach(log => {
             const key = `${log.session_id}_${log.member_id}`;
@@ -2769,14 +2770,29 @@
     };
 
     // DUPLICATE DETECTION & DATA CLEANING UTILITIES
+    const YORUBA_NAME_ALIASES = {
+      'dapo': 'oladapo',
+      'sefunmi': 'oluwasefunmi',
+      'bukunmi': 'oluwabukunmi',
+      'yemisi': 'oluwayemisi',
+      'yemi': 'oluwayemisi',
+      'sade': 'oluwasade',
+      'segun': 'olusegun',
+      'tobi': 'oluwatobi',
+      'femi': 'olufemi',
+      'pamilerin': 'oluwapamilerin'
+    };
+
     function normalizeNameForCompare(name) {
       if (!name) return '';
-      return name
+      let clean = name
         .toLowerCase()
         .replace(/^(bro\.|brother|sis\.|sister)\s+/i, '')
         .replace(/[^a-z0-9]/g, ' ')
         .replace(/\s+/g, ' ')
         .trim();
+      const words = clean.split(' ').filter(Boolean).map(w => YORUBA_NAME_ALIASES[w] || w);
+      return words.sort().join(' ');
     }
 
     function normalizePhoneForCompare(phone) {
@@ -2798,9 +2814,11 @@
         if (normNewName && existingName) {
           if (normNewName === existingName) return { member: m, matchReason: 'exact_name' };
 
-          const wordsNew = normNewName.split(' ').sort().join(' ');
-          const wordsExisting = existingName.split(' ').sort().join(' ');
-          if (wordsNew.length > 5 && wordsNew === wordsExisting) {
+          // Token overlap check
+          const wordsNew = normNewName.split(' ');
+          const wordsExisting = existingName.split(' ');
+          const common = wordsNew.filter(w => w.length > 2 && wordsExisting.includes(w));
+          if (common.length >= 2) {
             return { member: m, matchReason: 'name_permutation' };
           }
         }
@@ -2817,11 +2835,11 @@
     }
 
     function loadState() {
-      // Auto-migrate: seed master choristers (v5 with standardized station dropdowns)
+      // Auto-migrate: seed master choristers (v6 with deduplicated and updated master roster)
       const dataVersion = localStorage.getItem('ondo_data_version');
-      if (dataVersion !== '2026_choristers_v5') {
+      if (dataVersion !== '2026_choristers_v6') {
         localStorage.setItem('ondo_choir_members', JSON.stringify(DEFAULT_MEMBERS));
-        localStorage.setItem('ondo_data_version', '2026_choristers_v5');
+        localStorage.setItem('ondo_data_version', '2026_choristers_v6');
       }
 
       const savedMembers = localStorage.getItem('ondo_choir_members');
@@ -2830,6 +2848,23 @@
 
       state.members = (savedMembers && JSON.parse(savedMembers).length > 0) ? JSON.parse(savedMembers) : DEFAULT_MEMBERS;
       
+      // Known duplicate ID remap table
+      const duplicateIdRemap = {
+        'm_1794167536061': 'c_014',
+        'm_1794600049249': 'm_1793992911945',
+        'm_1794600419360': 'm_1793992727749',
+        'm_1794026419516': 'c_004',
+        'm_1794167324570': 'c_035',
+        'm_1794179937396': 'c_061',
+        'm_1793981608343': 'c_045',
+        'm_1794175052553': 'c_094',
+        'm_1793984593037': 'c_009',
+        'm_1794600821393': 'c_012'
+      };
+
+      // Filter out duplicate members from state.members
+      state.members = state.members.filter(m => !duplicateIdRemap[m.id]);
+
       // Auto-deduplicate state.members in local storage & normalize zones
       const dedupedMap = new Map();
       state.members.forEach(m => {
@@ -2855,7 +2890,21 @@
       state.members = Array.from(dedupedMap.values());
       localStorage.setItem('ondo_choir_members', JSON.stringify(state.members));
 
-      state.attendance = savedAttendance ? JSON.parse(savedAttendance) : {};
+      // Remap duplicate attendance logs in local storage
+      const rawAtt = savedAttendance ? JSON.parse(savedAttendance) : {};
+      state.attendance = {};
+      Object.keys(rawAtt).forEach(key => {
+        const parts = key.split('_');
+        const sessId = parts[0] + '_' + parts[1]; // sess_X
+        const memId = parts.slice(2).join('_');
+        const targetMemId = duplicateIdRemap[memId] || memId;
+        const targetKey = `${sessId}_${targetMemId}`;
+        if (!state.attendance[targetKey] || rawAtt[key] === 'present') {
+          state.attendance[targetKey] = rawAtt[key];
+        }
+      });
+      localStorage.setItem('ondo_choir_attendance', JSON.stringify(state.attendance));
+
       state.sheetWebhookUrl = savedWebhook || DEFAULT_WEBHOOK_URL;
       const savedAuth = localStorage.getItem('ondo_officer_authenticated');
       state.isOfficerUnlocked = (savedAuth === 'true');

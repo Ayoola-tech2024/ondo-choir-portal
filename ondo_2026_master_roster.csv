@@ -2,17 +2,17 @@ ID,Full Name,Phone Number,Voice Part,Zone,Station,Instrument,Accompanist,Gender
 c_001,Adegboyega Olufunke Adeola,,Alto,Akure,Akure,Viola,No,Female
 c_002,Adejoro Ruth,,Alto,Akure,Akure,Violin,Yes,Female
 c_003,Ajayi Oluwatoyin Esther,,Alto,Akure,Akure,Viola,No,Female
-c_004,Alabi oliwasade Ruth,,Alto,Akure,Akure,Clarinet,Yes,Female
+c_004,Alabi Oluwasade Ruth,08062164965,Alto,Akure,Ijoka Headquarters,Clarinet,Yes,Female
 c_005,Alfred Bosede Yetunde,,Alto,Akure,Akure,Clarinet,No,Female
 c_006,Alomaja Opemiposi Eniola,,Alto,Akure,Akure,Violin,No,Female
 c_007,Olagookun Folubi,,Alto,Akure,Akure,Clarinet,No,Female
 c_008,Olayeye Bolanle,,Alto,Akure,Akure,Clarinet,No,Female
-c_009,Adelabu Oluwasefunmi Michael,,Bass,Akure,Akure,Trumpet,No,Male
+c_009,Adelabu Oluwasefunmi Michael,08035625698,Bass,Akure,Alayere,Trumpet,No,Male
 c_010,Adewusi Felix,,Bass,Akure,Akure,Clarinet,No,Male
 c_011,Adewusi Great,,Bass,Akure,Akure,Trombonee,Yes,Male
-c_012,Adewusi John Oluwabukunmi,,Bass,Akure,Akure,Violin,No,Male
+c_012,Adewusi John Oluwabukunmi,+2347067105338,Bass,Akure,Ile Oluji,Violin,No,Male
 c_013,Ajayi Ayomide,,Bass,Akure,Akure,Trumpet,No,Male
-c_014,Ajayi Oladapo T,,Bass,Akure,Akure,Baritone,No,Male
+c_014,Ajayi Oladapo T,08039199098,Bass,Akure,Ijoka Headquarters,Baritone,No,Male
 c_015,Akintokunbo Theophilus Ayobami,,Bass,Akure,Akure,Trombonee,No,Male
 c_016,Ambrose Osadugba,,Bass,Akure,Akure,Trombonee,Yes,Male
 c_017,David Teminijesu,,Bass,Akure,Akure,Clarinet,No,Male
@@ -33,7 +33,7 @@ c_031,Akinola Anike,,Soprano,Akure,Akure,Violin,No,Female
 c_032,Akinola Faith,,Soprano,Akure,Akure,Violin,No,Female
 c_033,Akomolafe Jumoke,,Soprano,Akure,Akure,Viola,Yes,Female
 c_034,Akpan Comfort Alarape,,Soprano,Akure,Akure,Violin,No,Female
-c_035,Aladetimehin Kehinde,,Soprano,Akure,Akure,Violin,No,Female
+c_035,Aladetimehin Kehinde,08167021154,Soprano,Akure,Igoba,Violin,No,Female
 c_036,Apata Blessing,,Soprano,Akure,Akure,Flute,No,Female
 c_037,Awosika Caroline,,Soprano,Akure,Akure,Violin,No,Female
 c_038,Ayomipo Alabi,,Soprano,Akure,Akure,Violin,No,Female
@@ -43,7 +43,7 @@ c_041,Famewo Oludunni Demilade,,Soprano,Akure,Akure,Flute,No,Female
 c_042,Famori Onaopemipo,,Soprano,Akure,Akure,Violin,No,Female
 c_043,Iwasanmi Victoria Olufunbi,,Soprano,Akure,Akure,Violin,No,Female
 c_044,Lois Kolawole,,Soprano,Akure,Akure,Violin,No,Female
-c_045,Oladele Opemipo,,Soprano,Akure,Akure,Violin,No,Female
+c_045,Oladele Opemipo Mercy,08135631669,Soprano,Akure,Oke aro,Violin,No,Female
 c_046,Oladumiye Temitope Catherine,,Soprano,Akure,Akure,Violin,No,Female
 c_047,Olowookere Mabel,,Soprano,Akure,Akure,First violin,Yes,Female
 c_048,Olusegun Alice,,Soprano,Akure,Akure,Violin,No,Female
@@ -59,7 +59,7 @@ c_057,Awosika Emmanuel,,Tenor,Akure,Akure,Viola,Yes,Male
 c_058,Daniel Abisodun ADARAMOLA,,Tenor,Akure,Akure,Organ,Yes,Male
 c_059,Daniel Joshua,,Tenor,Akure,Akure,Trumpet,No,Male
 c_060,Edet Uduak Ofeorise,,Tenor,Akure,Akure,Clarinet,No,Male
-c_061,Glory Akinola,,Tenor,Akure,Akure,Organ,Yes,Male
+c_061,Glory Bodunde Akinola,07068027452,Tenor,Akure,Futa,Organ,Yes,Male
 c_062,Ogundairo Marvelous Olamilekan,,Tenor,Akure,Akure,Violin,Yes,Male
 c_063,Ogundairo Oluwasegun Emmanuel,,Tenor,Akure,Akure,Violin,Yes,Male
 c_064,Ogunkorode Boluwatife,,Tenor,Akure,Akure,Trumpet,No,Male
@@ -92,7 +92,7 @@ c_090,Olowu Ayodeji,,Bass,Okitipupa,Okitipupa,Cello,Yes,Male
 c_091,Abisagbo Grace,,Soprano,Okitipupa,Okitipupa,Clarinet,No,Female
 c_092,Adesawe Stella Temitope,,Soprano,Okitipupa,Okitipupa,Flute,No,Female
 c_093,Adesawe faith toluwalase,,Soprano,Okitipupa,Okitipupa,Violin,No,Female
-c_094,Olatujouye Stella,,Soprano,Okitipupa,Okitipupa,Flute,No,Female
+c_094,Olatujoye Stella,,Soprano,Okitipupa,Okitipupa Headquarters,Flute,No,Female
 c_095,Orimisan Faith Ayomiposi,,Soprano,Okitipupa,Okitipupa,Flute,No,Female
 c_096,Johnson Michael,,Tenor,Okitipupa,Okitipupa,Baritone,Yes,Male
 c_097,Olatemiju Adeolu,,Tenor,Okitipupa,Okitipupa,Flute,No,Male
